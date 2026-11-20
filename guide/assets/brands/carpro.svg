@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40" role="img" aria-label="CarPro"><path d="M2 29 Q14 10 32 13" fill="none" stroke="#0a1c33" stroke-width="2.6" stroke-linecap="round"/><path d="M5 36 Q17 24 32 26" fill="none" stroke="#3f97d0" stroke-width="2.6" stroke-linecap="round"/><text x="40" y="31" font-family="'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif" font-size="30" font-weight="800" fill="#0a1c33" textLength="156" lengthAdjust="spacingAndGlyphs" text-anchor="start" font-style="italic">CARPRO</text></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 305 27.5">
+    <defs>
+        <style>.cls-1{stroke-width:0px;}</style>
+    </defs>
+    <path class="cls-1"
+          fill="#fff"
+          d="m208.75,23.21V7.58h-7.7v15.63h7.7Zm-7.7-23.21v7.58l7.7-7.58h-7.7Zm46.28,7.58v15.63h7.7V7.58h-7.7Zm11.65,0l-3.96,3.9h3.96v11.73h7.7V7.58h-7.7Zm7.7,3.9h3.96v11.73h7.7V7.58h-7.7l-3.96,3.9Zm-42.54-3.9l-3.85,3.79v-3.79h-7.7v15.63h7.7v-11.73h3.85v11.73h7.7V7.58h-7.7Zm7.7,3.9h3.96v11.73h7.69V7.58h-7.69l-3.96,3.9Zm64.23-3.9h-5.83c-4.81,0-8.88,3.07-8.94,7.81.06,4.74,4.13,7.81,8.94,7.81h5.83c4.81,0,8.88-3.07,8.94-7.81-.06-4.74-4.13-7.81-8.94-7.81Zm.05,7.81v6.56h-5.93v-13.12h5.93v6.56Zm-153.25-7.96l-2.38,2.35v10.74s2.38,2.35,2.38,2.35h21.62v4.62h4.27V9.79l-2.39-2.35h-23.51Zm21.62,11.51h-19.73v-7.58h19.73v7.58Zm-31.33-.27v4.2h4.26v-4.2h-4.26Zm-6.99-11.22h0s-20.83,0-20.83,0l-3.99,3.93h5.79l-2.75,2.7v5.8l-3.05,3h14.23s12.25.01,12.25.01l2.38-2.35v-10.74l-2.38-2.35h-1.66Zm-20.83,11.5l2.72-2.68v-4.89h6.58l-7.68,7.57h-1.62Zm2.09,0l7.68-7.57h.46s1.1,0,1.1,0l-7.68,7.57h-1.56Zm18.51,0h-16.48l7.68-7.57h8.8v7.57ZM0,9.85v10.65l2.37,2.33h26.25v-3.9H4.23v-7.51h24.39v-3.9H2.37l-2.37,2.33Zm31.89,12.97h4.23v-4.16h-4.23v4.16Zm11.47-15.31l-2.36,2.33v10.65l2.36,2.33h21.44v4.58h4.24V9.86l-2.36-2.34h-23.31Zm21.44,11.41h-19.56v-7.51h19.56v7.51Zm17.72,6.95v.23h1.75l6.48-19.78v-.23h-1.77l-6.46,19.78Zm98.85,0v.23h1.75l6.48-19.78v-.23h-1.77l-6.46,19.78Z"/>
+</svg>
