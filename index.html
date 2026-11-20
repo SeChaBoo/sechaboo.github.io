@@ -576,7 +576,10 @@ function refineRect(lum, W, H, c) {
   var ncx = c.cx + ca * ((dR - dL) / 2) - sa * ((dB - dT) / 2);
   var ncy = c.cy + sa * ((dR - dL) / 2) + ca * ((dB - dT) / 2);
   // 여유 패딩 (덜 가리는 쪽으로 살짝 넓게)
-  var padX = nw * 0.07, padY = nh * 0.10;
+  // 줄어드는 방향으로는 보정하지 않습니다(번호판이 드러나는 쪽이 더 위험)
+  if (nw < c.w) nw = c.w;
+  if (nh < c.h) nh = c.h;
+  var padX = nw * 0.08, padY = nh * 0.12;
   return { cx: ncx, cy: ncy, w: nw + padX * 2, h: nh + padY * 2, ang: c.ang };
 }
 
