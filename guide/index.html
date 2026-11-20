@@ -205,12 +205,12 @@
   .pf-body .link{display:inline-flex; align-items:center; gap:5px; margin-top:8px; font-size:11px; font-weight:800; text-decoration:none;
     color:#0a1c33; border:1px solid #d5e3ef; border-radius:999px; padding:5px 10px}
   .pf-body .link span{color:var(--blue)}
-  .pf-nav{position:absolute; top:0; left:0; right:0; height:calc(85vw - 34px); max-height:330px; pointer-events:none}
+  .pf-nav{position:absolute; top:0; left:0; right:0; height:min(85vw, 330px); pointer-events:none}
   .pf-nav button{pointer-events:auto; position:absolute; top:50%; transform:translateY(-50%); width:34px; height:34px; border-radius:50%;
     border:1px solid rgba(10,28,51,.10); background:rgba(255,255,255,.90); color:#0a1c33; font-size:15px; font-weight:900; cursor:pointer;
     display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px rgba(10,28,51,.18)}
-  .pf-nav button.prev{left:8px}
-  .pf-nav button.next{right:8px}
+  .pf-nav button.prev{left:26px}
+  .pf-nav button.next{right:26px}
   .pf-nav button[disabled]{opacity:.35}
   .dots{display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin-top:6px}
   .dots button{width:5px; height:5px; padding:0; border:0; border-radius:50%; background:#c9dcec; cursor:pointer}
