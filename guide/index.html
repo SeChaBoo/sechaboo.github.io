@@ -100,16 +100,16 @@
 
   /* ── 이벤트 ── */
   .event{
-    margin:0 18px; padding:16px 16px; border-radius:14px;
+    margin:0 18px; padding:15px 16px; border-radius:14px;
     background:linear-gradient(135deg,#fbf3e2,#f3e6cb);
     border:1px solid #e7d3ab; color:#4a3a19;
-    display:flex; gap:12px; align-items:center;
   }
   .event .tag{
-    flex:0 0 auto; background:#b08d4f; color:#fff; font-weight:800; font-size:11px;
-    padding:5px 9px; border-radius:6px; letter-spacing:.04em;
+    display:inline-block; background:#b08d4f; color:#fff; font-weight:800; font-size:10.5px;
+    padding:4px 8px; border-radius:6px; letter-spacing:.06em; margin-bottom:7px;
   }
   .event p{margin:0; font-size:13.5px; line-height:1.5}
+  .event p b{display:block}
   .event p b{font-size:15px; color:#8a6a2a}
   .event .note{font-size:11.5px; color:#7d6a45; display:block; margin-top:3px}
 
@@ -296,7 +296,7 @@
 <!-- ─────────── 히어로 ─────────── -->
 <header class="hero">
   <div class="bg">
-    <img src="assets/hero.jpg" alt="야간에 진행한 벤츠 GLE 출장세차 작업 현장" fetchpriority="high">
+    <img src="assets/hero.jpg" alt="출장세차 작업 중인 포르쉐 마칸" fetchpriority="high">
   </div>
   <div class="inner">
     <span class="badge">창원 · 진해 · 마산 프리미엄 워터리스 출장세차 · 픽업 디테일링</span>
@@ -322,7 +322,7 @@
   <div class="event">
     <span class="tag">이벤트</span>
     <p>
-      <b>픽업 디테일링 이용 시<br>유막 제거 + 유리 발수코팅 10,000원</b>
+      <b>픽업 디테일링 이용 시 유막 제거 + 유리 발수코팅 10,000원</b>
       <span class="note">정상가 전체 50,000원 / 전면만 30,000원 · 예약 시 말씀해 주세요</span>
     </p>
   </div>
@@ -565,6 +565,7 @@
       <div class="shot">
         <span class="rank gold">3 · 포르쉐</span>
         <img src="assets/macan.jpg" alt="포르쉐 마칸 출장세차 작업 차량" loading="lazy">
+
       </div>
       <div class="body">
         <div class="meta">
