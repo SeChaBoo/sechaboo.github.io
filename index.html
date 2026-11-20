@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#11161c" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="번호판 가리개" />
+<meta name="description" content="세차를부탁해 시공 사진의 번호판을 1초에 가려 주는 도구. 사진을 고르고 파란 점 4개만 맞추면 번호판 스티커가 자동으로 덮입니다." />
+<meta property="og:title" content="세차를부탁해 번호판 가리개" />
+<meta property="og:description" content="차량 사진만 고르면 번호판이 1초에 가려집니다." />
+<title>세차를부탁해 번호판 가리개</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+    background: #11161c; color: #f1f5f9; display: flex; flex-direction: column; min-height: 100vh;
+  }
+  header {
+    padding: 12px 16px; background: #182028; border-bottom: 1px solid #26313d;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  }
+  header h1 { margin: 0; font-size: 16px; font-weight: 700; }
+  .badge { font-size: 11px; background: #1d4ed8; color: #fff; padding: 3px 8px; border-radius: 999px; }
+  .toolbar {
+    padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 8px; background: #151c24; border-bottom: 1px solid #26313d;
+  }
+  button, .file-btn {
+    appearance: none; border: 1px solid #334155; background: #1e293b; color: #f8fafc;
+    padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  button.primary, .file-btn.primary { background: #2563eb; border-color: #2563eb; }
+  button.success { background: #059669; border-color: #059669; }
+  button:disabled { opacity: 0.45; cursor: not-allowed; }
+  /* iOS 사파리에서 label 클릭으로 파일 선택창이 확실히 열리도록 display:none 대신 화면 밖에 둡니다 */
+  input[type="file"] { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; }
+  .thumbs {
+    display: flex; gap: 8px; overflow-x: auto; padding: 8px 12px; background: #0f1419;
+    border-bottom: 1px solid #26313d; min-height: 64px; align-items: center;
+  }
+  .thumb {
+    position: relative; width: 52px; height: 52px; flex: 0 0 auto; border-radius: 8px;
+    overflow: hidden; border: 2px solid transparent; cursor: pointer; opacity: 0.7;
+  }
+  .thumb.active { border-color: #3b82f6; opacity: 1; }
+  .thumb.done::after {
+    content: "✓"; position: absolute; right: 2px; bottom: 2px; background: #10b981; color: #fff;
+    font-size: 10px; font-weight: 800; width: 16px; height: 16px; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .stage-wrap {
+    flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px; position: relative; overflow: hidden;
+  }
+  canvas {
+    max-width: 100%; max-height: 68vh; border-radius: 10px; touch-action: none;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.45); background: #0b0f14;
+  }
+  .hint {
+    text-align: center; font-size: 12px; color: #94a3b8; padding: 6px 12px 12px;
+  }
+  .empty {
+    text-align: center; color: #94a3b8; padding: 36px 20px; line-height: 1.6;
+  }
+  .empty img { width: 200px; border-radius: 6px; margin-bottom: 12px; border: 1px solid #334155; }
+  .toast {
+    position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.95); border: 1px solid #334155; color: #f8fafc;
+    font-size: 13px; padding: 10px 14px; border-radius: 10px; max-width: 86vw; text-align: center;
+    opacity: 0; pointer-events: none; transition: opacity .18s ease; z-index: 20; line-height: 1.4;
+  }
+  .toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>🚗 세차를부탁해 번호판 가리개</h1>
+    <span class="badge">오프라인 1초 처리</span>
+  </header>
+
+  <div class="toolbar">
+    <label class="file-btn primary">
+      📷 차량 사진 고르기
+      <input id="photoInput" type="file" accept="image/*" multiple />
+    </label>
+    <button id="autoBtn" disabled>✨ 자동 위치</button>
+    <button id="resetBtn" disabled>↺ 가운데</button>
+    <button id="saveOneBtn" class="success" disabled>⬇ 이 사진 저장</button>
+    <button id="saveAllBtn" class="success" disabled>📦 전체 저장</button>
+    <label class="file-btn" title="번호판 이미지 교체">
+      🖼 스티커 교체
+      <input id="stickerInput" type="file" accept="image/*" />
+    </label>
+  </div>
+
+  <div class="thumbs" id="thumbs">
+    <span style="font-size:12px;color:#64748b;">사진을 여러 장 고르면 여기에 목록이 뜹니다.</span>
+  </div>
+
+  <div class="stage-wrap" id="stageWrap">
+    <div class="empty" id="emptyBox">
+      <img id="previewSticker" alt="세차를 부탁해 번호판" /><br />
+      <b>'세차를 부탁해'</b> 번호판 스티커가 기본 내장돼 있어요.<br />
+      위에서 <b>📷 차량 사진 고르기</b>를 눌러 사진(여러 장 가능)을 선택하세요!<br />
+      파란 점 4개를 번호판 네 꼭짓점에 맞추면 각도까지 자동으로 기울어져 덮입니다.
+    </div>
+    <canvas id="canvas" style="display:none;"></canvas>
+  </div>
+
+  <div class="hint" id="hint">파란 점 4개를 번호판 네 모서리에 드래그하거나, 박스 안을 드래그해 통째로 이동하세요.<br />아이폰은 <b>이 사진 저장</b>을 누르면 공유창이 뜨고, <b>'이미지 저장'</b>을 고르면 사진 앱에 저장됩니다.</div>
+
+<script>
+const DEFAULT_STICKER = "data:image/jpeg;base64,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";
+const stickerImg = new Image();
+stickerImg.src = DEFAULT_STICKER;
+document.getElementById("previewSticker").src = DEFAULT_STICKER;
+
+const items = []; // { name, img, corners: [{x,y}x4], done }
+let currentIdx = -1;
+let dragMode = null; // { type: 'corner'|'move', idx, startX, startY, origCorners }
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const thumbsEl = document.getElementById("thumbs");
+const emptyBox = document.getElementById("emptyBox");
+
+function setButtons(enabled) {
+  ["autoBtn", "resetBtn", "saveOneBtn", "saveAllBtn"].forEach(id => {
+    document.getElementById(id).disabled = !enabled;
+  });
+}
+
+function defaultCorners(w, h) {
+  const pw = w * 0.26;
+  const ph = pw * (stickerImg.height / (stickerImg.width || 1) || 0.22);
+  const cx = w * 0.5, cy = h * 0.62;
+  return [
+    { x: cx - pw / 2, y: cy - ph / 2 },
+    { x: cx + pw / 2, y: cy - ph / 2 },
+    { x: cx + pw / 2, y: cy + ph / 2 },
+    { x: cx - pw / 2, y: cy + ph / 2 },
+  ];
+}
+
+function autoDetectPlate(img) {
+  const sw = 320;
+  const scale = sw / img.width;
+  const sh = Math.round(img.height * scale);
+  const off = document.createElement("canvas");
+  off.width = sw; off.height = sh;
+  const octx = off.getContext("2d");
+  octx.drawImage(img, 0, 0, sw, sh);
+  const data = octx.getImageData(0, 0, sw, sh).data;
+
+  // Score bright neutral-white rectangles that contain dark text edges (a licence plate),
+  // searching the lower-middle part of the photo.
+  const yStart = Math.floor(sh * 0.32), yEnd = Math.floor(sh * 0.86);
+  const xStart = Math.floor(sw * 0.12), xEnd = Math.floor(sw * 0.88);
+  const bw = Math.max(36, Math.round(sw * 0.20));
+  const bh = Math.max(10, Math.round(bw * 0.23));
+  let bestScore = -1, bestX = 0, bestY = 0, found = false;
+
+  for (let y = yStart; y < yEnd - bh; y += 4) {
+    for (let x = xStart; x < xEnd - bw; x += 4) {
+      let bright = 0, edges = 0, count = 0;
+      for (let dy = 0; dy < bh; dy += 2) {
+        for (let dx = 0; dx < bw; dx += 2) {
+          const i = ((y + dy) * sw + (x + dx)) * 4;
+          const r = data[i], g = data[i + 1], b = data[i + 2];
+          const lum = (r + g + b) / 3;
+          const sat = Math.max(r, g, b) - Math.min(r, g, b);
+          if (lum > 165 && sat < 45) bright++;
+          if (dx + 2 < bw) {
+            const j = ((y + dy) * sw + (x + dx + 2)) * 4;
+            const lum2 = (data[j] + data[j + 1] + data[j + 2]) / 3;
+            if (Math.abs(lum - lum2) > 45) edges++;
+          }
+          count++;
+        }
+      }
+      const bRatio = bright / count;
+      const eRatio = edges / count;
+      // 흰 바탕 + 검은 글자 윤곽이 같이 있는 영역만 번호판 후보로 봅니다.
+      if (bRatio < 0.30 || eRatio < 0.10) continue;
+      const cy = (y + bh / 2) / sh;
+      const verticalBonus = cy > 0.45 ? 1 : 0.55; // 번호판은 보통 화면 아래쪽
+      const centerBonus = 1 - Math.abs((x + bw / 2) / sw - 0.5) * 0.6;
+      const score = (bRatio * 0.8 + Math.min(eRatio, 0.40) * 2.6) * centerBonus * verticalBonus;
+      if (score > bestScore) {
+        bestScore = score; bestX = x; bestY = y; found = true;
+      }
+    }
+  }
+  // 번호판을 못 찾으면(차가 작거나 각도가 심한 사진) 화면 아래 가운데에 기본 배치합니다.
+  if (!found) return defaultCorners(img.width, img.height);
+  const x1 = bestX / scale, y1 = bestY / scale, pw = bw / scale, ph = bh / scale;
+  return [
+    { x: x1, y: y1 },
+    { x: x1 + pw, y: y1 },
+    { x: x1 + pw, y: y1 + ph },
+    { x: x1, y: y1 + ph },
+  ];
+}
+
+// Draw perspective-warped sticker onto target context using subdivided quad mesh
+function drawWarpedSticker(targetCtx, corners) {
+  if (!stickerImg.complete || !stickerImg.naturalWidth) return;
+  const sw = stickerImg.naturalWidth, sh = stickerImg.naturalHeight;
+  const N = 12;
+  const [p0, p1, p2, p3] = corners;
+
+  function bilerp(u, v) {
+    const x = (1 - u) * (1 - v) * p0.x + u * (1 - v) * p1.x + u * v * p2.x + (1 - u) * v * p3.x;
+    const y = (1 - u) * (1 - v) * p0.y + u * (1 - v) * p1.y + u * v * p2.y + (1 - u) * v * p3.y;
+    return { x, y };
+  }
+
+  function drawTri(s0, s1, s2, d0, d1, d2) {
+    targetCtx.save();
+    targetCtx.beginPath();
+    targetCtx.moveTo(d0.x, d0.y);
+    targetCtx.lineTo(d1.x, d1.y);
+    targetCtx.lineTo(d2.x, d2.y);
+    targetCtx.closePath();
+    targetCtx.clip();
+
+    const denom = (s0.x * (s1.y - s2.y) + s1.x * (s2.y - s0.y) + s2.x * (s0.y - s1.y));
+    if (Math.abs(denom) < 1e-6) { targetCtx.restore(); return; }
+    const a = (d0.x * (s1.y - s2.y) + d1.x * (s2.y - s0.y) + d2.x * (s0.y - s1.y)) / denom;
+    const b = (d0.y * (s1.y - s2.y) + d1.y * (s2.y - s0.y) + d2.y * (s0.y - s1.y)) / denom;
+    const c = (d0.x * (s2.x - s1.x) + d1.x * (s0.x - s2.x) + d2.x * (s1.x - s0.x)) / denom;
+    const d = (d0.y * (s2.x - s1.x) + d1.y * (s0.x - s2.x) + d2.y * (s1.x - s0.x)) / denom;
+    const e = (d0.x * (s1.x * s2.y - s2.x * s1.y) + d1.x * (s2.x * s0.y - s0.x * s2.y) + d2.x * (s0.x * s1.y - s1.x * s0.y)) / denom;
+    const f = (d0.y * (s1.x * s2.y - s2.x * s1.y) + d1.y * (s2.x * s0.y - s0.x * s2.y) + d2.y * (s0.x * s1.y - s1.x * s0.y)) / denom;
+    targetCtx.transform(a, b, c, d, e, f);
+    targetCtx.drawImage(stickerImg, 0, 0);
+    targetCtx.restore();
+  }
+
+  for (let iy = 0; iy < N; iy++) {
+    const v0 = iy / N, v1 = (iy + 1) / N;
+    for (let ix = 0; ix < N; ix++) {
+      const u0 = ix / N, u1 = (ix + 1) / N;
+      const s00 = { x: u0 * sw, y: v0 * sh }, s10 = { x: u1 * sw, y: v0 * sh };
+      const s11 = { x: u1 * sw, y: v1 * sh }, s01 = { x: u0 * sw, y: v1 * sh };
+      const d00 = bilerp(u0, v0), d10 = bilerp(u1, v0), d11 = bilerp(u1, v1), d01 = bilerp(u0, v1);
+      drawTri(s00, s10, s11, d00, d10, d11);
+      drawTri(s00, s11, s01, d00, d11, d01);
+    }
+  }
+}
+
+let previewScale = 1;
+function render(withHandles = true) {
+  if (currentIdx < 0) return;
+  const it = items[currentIdx];
+  // 큰 사진은 화면에 보이는 크기까지만 그려 아이폰에서도 드래그가 부드럽게 됩니다. (저장은 원본 화질)
+  previewScale = Math.min(1, 2200 / Math.max(it.img.width, it.img.height));
+  const k = previewScale;
+  canvas.width = Math.max(1, Math.round(it.img.width * k));
+  canvas.height = Math.max(1, Math.round(it.img.height * k));
+  ctx.setTransform(k, 0, 0, k, 0, 0);
+  ctx.clearRect(0, 0, it.img.width, it.img.height);
+  ctx.drawImage(it.img, 0, 0);
+  drawWarpedSticker(ctx, it.corners);
+
+  if (withHandles) {
+    ctx.save();
+    ctx.strokeStyle = "#3b82f6";
+    ctx.lineWidth = Math.max(2, canvas.width / 450) / k;
+    ctx.beginPath();
+    it.corners.forEach((p, idx) => idx === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+    ctx.closePath();
+    ctx.stroke();
+
+    const r = Math.max(12, canvas.width / 55) / k;
+    it.corners.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(37, 99, 235, 0.9)";
+      ctx.fill();
+      ctx.lineWidth = Math.max(2, r / 4);
+      ctx.strokeStyle = "#ffffff";
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+  schedulePrep();
+}
+
+function renderThumbs() {
+  thumbsEl.innerHTML = "";
+  items.forEach((it, idx) => {
+    const div = document.createElement("div");
+    div.className = "thumb" + (idx === currentIdx ? " active" : "") + (it.done ? " done" : "");
+    const im = document.createElement("img");
+    im.src = it.thumb;
+    div.appendChild(im);
+    div.onclick = () => { currentIdx = idx; renderThumbs(); render(true); };
+    thumbsEl.appendChild(div);
+  });
+}
+
+function makeThumb(img, size = 140) {
+  const c = document.createElement("canvas");
+  const ratio = (img.height || img.naturalHeight) / (img.width || img.naturalWidth);
+  c.width = size;
+  c.height = Math.max(1, Math.round(size * ratio));
+  c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+  return c.toDataURL("image/jpeg", 0.7);
+}
+
+function canvasPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  return {
+    x: (clientX - rect.left) * (canvas.width / rect.width) / previewScale,
+    y: (clientY - rect.top) * (canvas.height / rect.height) / previewScale,
+  };
+}
+
+function pointInPoly(pt, poly) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const xi = poly[i].x, yi = poly[i].y, xj = poly[j].x, yj = poly[j].y;
+    const intersect = ((yi > pt.y) !== (yj > pt.y)) && (pt.x < (xj - xi) * (pt.y - yi) / ((yj - yi) || 1e-6) + xi);
+    if (intersect) inside = !inside;
+  }
+  return inside;
+}
+
+function onDown(e) {
+  if (currentIdx < 0) return;
+  e.preventDefault();
+  const pt = canvasPos(e);
+  const it = items[currentIdx];
+  const hitR = Math.max(26, canvas.width / 24) / previewScale;
+  for (let i = 0; i < 4; i++) {
+    const dx = pt.x - it.corners[i].x, dy = pt.y - it.corners[i].y;
+    if (Math.hypot(dx, dy) <= hitR) {
+      dragMode = { type: "corner", idx: i };
+      return;
+    }
+  }
+  if (pointInPoly(pt, it.corners)) {
+    dragMode = {
+      type: "move", startX: pt.x, startY: pt.y,
+      origCorners: it.corners.map(c => ({ x: c.x, y: c.y }))
+    };
+  }
+}
+
+function onMove(e) {
+  if (!dragMode || currentIdx < 0) return;
+  e.preventDefault();
+  const pt = canvasPos(e);
+  const it = items[currentIdx];
+  if (dragMode.type === "corner") {
+    it.corners[dragMode.idx] = { x: pt.x, y: pt.y };
+  } else if (dragMode.type === "move") {
+    const dx = pt.x - dragMode.startX, dy = pt.y - dragMode.startY;
+    it.corners = dragMode.origCorners.map(c => ({ x: c.x + dx, y: c.y + dy }));
+  }
+  it.done = true;
+  it.blob = null;
+  render(true);
+}
+
+function onUp() {
+  if (dragMode) { dragMode = null; renderThumbs(); }
+}
+
+canvas.addEventListener("mousedown", onDown);
+window.addEventListener("mousemove", onMove);
+window.addEventListener("mouseup", onUp);
+canvas.addEventListener("touchstart", onDown, { passive: false });
+window.addEventListener("touchmove", onMove, { passive: false });
+window.addEventListener("touchend", onUp);
+
+document.getElementById("photoInput").addEventListener("change", async (e) => {
+  const files = Array.from(e.target.files || []);
+  if (!files.length) return;
+  for (const file of files) {
+    const url = URL.createObjectURL(file);
+    const loaded = await new Promise((res) => {
+      const im = new Image();
+      im.onload = () => res(im);
+      im.onerror = () => res(null);
+      im.src = url;
+    });
+    if (!loaded) { toast("읽을 수 없는 사진이 있어요: " + file.name, 3000); continue; }
+    const img = limitSize(loaded);
+    items.push({ name: file.name.replace(/\.[^.]+$/, ""), img, thumb: makeThumb(img), corners: autoDetectPlate(img), done: false, blob: null });
+  }
+  if (!items.length) return;
+  if (currentIdx < 0) currentIdx = 0;
+  emptyBox.style.display = "none";
+  canvas.style.display = "block";
+  setButtons(true);
+  renderThumbs();
+  render(true);
+});
+
+// 아이폰 사파리에서 큰 사진 여러 장을 다루다 메모리가 터지지 않도록 긴 변을 4096px로 제한
+function limitSize(img, max = 4096) {
+  const w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+  if (Math.max(w, h) <= max) return img;
+  const scale = max / Math.max(w, h);
+  const c = document.createElement("canvas");
+  c.width = Math.round(w * scale);
+  c.height = Math.round(h * scale);
+  const cx = c.getContext("2d");
+  cx.imageSmoothingQuality = "high";
+  cx.drawImage(img, 0, 0, c.width, c.height);
+  return c;
+}
+
+document.getElementById("stickerInput").addEventListener("change", (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  stickerImg.onload = () => { items.forEach(it => it.blob = null); render(true); };
+  stickerImg.src = url;
+});
+
+document.getElementById("autoBtn").onclick = () => {
+  if (currentIdx < 0) return;
+  items[currentIdx].corners = autoDetectPlate(items[currentIdx].img);
+  items[currentIdx].blob = null;
+  render(true);
+};
+
+document.getElementById("resetBtn").onclick = () => {
+  if (currentIdx < 0) return;
+  const it = items[currentIdx];
+  it.corners = defaultCorners(it.img.width, it.img.height);
+  it.blob = null;
+  render(true);
+};
+
+function exportItem(it) {
+  const out = document.createElement("canvas");
+  out.width = it.img.width; out.height = it.img.height;
+  const octx = out.getContext("2d");
+  octx.drawImage(it.img, 0, 0);
+  drawWarpedSticker(octx, it.corners);
+  return new Promise(res => out.toBlob(blob => res(blob), "image/jpeg", 0.94));
+}
+
+const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+const toastEl = document.createElement("div");
+toastEl.className = "toast";
+document.body.appendChild(toastEl);
+let toastTimer = null;
+function toast(msg, ms = 2600) {
+  toastEl.textContent = msg;
+  toastEl.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove("show"), ms);
+}
+
+function anchorDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.rel = "noopener";
+  a.style.position = "fixed";
+  a.style.left = "-9999px";
+  a.textContent = "save";
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { a.remove(); URL.revokeObjectURL(url); }, 60000);
+}
+
+// iOS 사파리는 <a download>가 막히는 경우가 있어 공유 시트(사진 앱에 저장)를 먼저 씁니다.
+async function saveImage(blob, filename, allowShare) {
+  if (allowShare && navigator.canShare) {
+    try {
+      const file = new File([blob], filename, { type: "image/jpeg" });
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: filename });
+        return "shared";
+      }
+    } catch (err) {
+      if (err && err.name === "AbortError") return "cancelled";
+    }
+  }
+  anchorDownload(blob, filename);
+  return "downloaded";
+}
+
+document.getElementById("saveOneBtn").onclick = async () => {
+  if (currentIdx < 0) return;
+  const it = items[currentIdx];
+  // iOS 사파리는 사용자 동작 안에서 바로 공유해야 해서, 미리 만들어 둔 파일이 있으면 그걸 씁니다.
+  if (it.blob) {
+    saveImage(it.blob, `${it.name}_세차를부탁해.jpg`, true);
+    it.done = true;
+    renderThumbs();
+    return;
+  }
+  toast("저장 준비 중…", 1200);
+  const blob = await exportItem(it);
+  await saveImage(blob, `${it.name}_세차를부탁해.jpg`, true);
+  it.done = true;
+  renderThumbs();
+};
+
+document.getElementById("saveAllBtn").onclick = async () => {
+  if (isIOS) {
+    toast("아이폰은 한 장씩 저장해 주세요. 저장하면 공유창에서 '이미지 저장'을 누르면 사진 앱에 바로 들어갑니다.", 4200);
+  }
+  for (let i = 0; i < items.length; i++) {
+    const blob = await exportItem(items[i]);
+    anchorDownload(blob, `${items[i].name}_세차를부탁해.jpg`);
+    items[i].done = true;
+    await new Promise(r => setTimeout(r, 350));
+  }
+  renderThumbs();
+};
+// 미리보기용으로만 쓰는 사본을 만들어 두면, 저장 버튼을 누를 때 기다림 없이 바로 저장됩니다.
+let prepTimer = null;
+function schedulePrep() {
+  clearTimeout(prepTimer);
+  prepTimer = setTimeout(async () => {
+    if (currentIdx < 0) return;
+    const it = items[currentIdx];
+    if (it.blob) return;
+    try { it.blob = await exportItem(it); } catch (e) { /* 저장 버튼에서 다시 시도 */ }
+  }, 500);
+}
+
+</script>
+</body>
+</html>
