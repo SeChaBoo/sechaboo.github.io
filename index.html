@@ -233,7 +233,7 @@ function PlateDetector(rgba, width, height, options) {
   var best = null;
   for (var qi = 0; qi < chains.length; qi++) {
     var ch = chains[qi];
-    var qd = buildPlateQuad(sm, W, H, ch, false, sat);
+    var qd = buildPlateQuad(sm, W, H, ch, sat);
     if (!qd) continue;
     var f = quadFeatures(sm, W, H, qd, ch);
     if (!f) continue;
@@ -428,12 +428,10 @@ function sampleLum(lum, W, H, X, Y) {
 }
 
 /* 글자 줄 -> 번호판 사각형 */
-function buildPlateQuad(lum, W, H, ch, dbgFlag, satArr) {
-  var opt_fitEdges = true;
-  function rej(why) { if (dbgFlag && typeof PLATE_REJECT !== "undefined") PLATE_REJECT.push(why); return null; }
+function buildPlateQuad(lum, W, H, ch, satArr) {
   var n = ch.length;
   var capH = median(ch.map(function (g) { return g.h; }));
-  if (capH < 3) return rej("capH");
+  if (capH < 3) return null;
 
   // 기울기: 글자 위/아래 변 회귀 평균
   function slopeOf(getY) {
@@ -446,7 +444,7 @@ function buildPlateQuad(lum, W, H, ch, dbgFlag, satArr) {
     return Math.abs(den) > 1e-6 ? (c * s4 - s1 * s2) / den : 0;
   }
   var slope = 0.5 * (slopeOf(function (g) { return g.y + g.h; }) + slopeOf(function (g) { return g.y; }));
-  if (Math.abs(slope) > 0.5) return rej("slope " + slope.toFixed(2));
+  if (Math.abs(slope) > 0.5) return null;
   var ang = Math.atan(slope);
   var ca = Math.cos(ang), sa = Math.sin(ang);
 
@@ -473,7 +471,7 @@ function buildPlateQuad(lum, W, H, ch, dbgFlag, satArr) {
     }
   }
   var spanU = uMax - uMin;
-  if (spanU < capH * 1.1) return rej("spanU");
+  if (spanU < capH * 1.1) return null;
 
   // 바탕 밝기 기준값: 글자 주변(밝은 바탕) 상위값
   var bgs = [];
@@ -568,14 +566,14 @@ function buildPlateQuad(lum, W, H, ch, dbgFlag, satArr) {
   }
 
   var w2 = uR - uL, h2 = vB - vT;
-  if (!(w2 > capH * 1.4) || !(h2 > capH * 0.85)) return rej("size w2=" + w2.toFixed(1) + " h2=" + h2.toFixed(1) + " capH=" + capH.toFixed(1));
+  if (!(w2 > capH * 1.4) || !(h2 > capH * 0.85)) return null;
   var ratio = w2 / h2;
-  if (ratio < 1.15 || ratio > 7.0) return rej("ratio " + ratio.toFixed(2));
+  if (ratio < 1.15 || ratio > 7.0) return null;
 
   // 네 변을 각각 직선으로 정밀 조정 (원근/비틀림 반영)
   var lines = fitEdges(lum, W, H, px2, uL, uR, vT, vB, ang, capH, bgRef, pickEdge);
   var fq = quadFromLines(lines);
-  if (!fq) return rej("lines");
+  if (!fq) return null;
 
   var ccx = (fq[0].u + fq[2].u) / 2, ccy = (fq[0].v + fq[2].v) / 2;
   var cc = px2(ccx, ccy);
@@ -698,11 +696,22 @@ function quadFeatures(lum, W, H, qd, ch) {
     if (du > uMax) uMax = du;
   }
   var fill = (uMax - uMin) / Math.max(qd.w, 1);
+  // 글자 높이/간격이 고른지 (번호판은 글자 크기가 일정하다)
+  var hs = [], gaps = [];
+  for (var gi = 0; gi < ch.length; gi++) hs.push(ch[gi].h);
+  for (var gj = 1; gj < ch.length; gj++) {
+    var gA = ch[gj - 1], gB = ch[gj];
+    gaps.push(gB.x - (gA.x + gA.w));
+  }
+  var hsMean = hs.reduce(function (a, b) { return a + b; }, 0) / hs.length;
+  var hVar = 0;
+  for (var gk = 0; gk < hs.length; gk++) hVar += (hs[gk] - hsMean) * (hs[gk] - hsMean);
+  var hCV = Math.sqrt(hVar / hs.length) / Math.max(hsMean, 1e-3);
   var eStr = qd.edges.map(function (e) { return e.strength; });
   return {
     ratio: qd.w / qd.h, bgLum: bgLum, darkLum: darkLum, contrast: contrast, ringLum: ringLum,
     brightFrac: brightFrac, inkFrac: inkFrac, bgStd: bgStd,
-    fill: fill, n: ch.length, capH: qd.capH,
+    fill: fill, n: ch.length, capH: qd.capH, hCV: hCV,
     edgeMin: Math.min.apply(null, eStr),
     edgeAvg: eStr.reduce(function (a, b) { return a + b; }, 0) / 4,
     kinds: qd.edges.map(function (e) { return e.kind; })
@@ -721,6 +730,7 @@ function scoreCandidate(f, qd, W, H) {
   if (f.inkFrac < 0.08 || f.inkFrac > 0.62) return 0;
   if (f.contrast < 45) return 0;
   if (f.edgeMin < 10) return 0;          // 네 변 모두 뚜렷한 경계
+  if (f.hCV > 0.16) return 0;            // 글자 높이가 고르지 않으면 번호판이 아님
   if (f.bgLum - f.ringLum < 38) return 0; // 번호판 바탕이 주변보다 밝다
 
   var pos = Math.exp(-Math.pow(cy - 0.70, 2) / (2 * 0.27 * 0.27));
@@ -749,28 +759,36 @@ function scoreCandidate(f, qd, W, H) {
 }
 
 // 사진 한 장에서 번호판 4꼭짓점을 찾습니다. 못 찾으면 null.
+// 1차는 작게(빠르게), 못 찾으면 더 크게 다시 봅니다. 먼 차 사진은 큰 해상도에서만 글자가 읽힙니다.
 function detectPlateOnImage(img) {
-  try {
-    const maxSide = 900;
-    const k = Math.min(1, maxSide / Math.max(img.width, img.height));
-    const w = Math.max(16, Math.round(img.width * k));
-    const h = Math.max(16, Math.round(img.height * k));
-    const cv = document.createElement("canvas");
-    cv.width = w; cv.height = h;
-    const c2d = cv.getContext("2d", { willReadFrequently: true });
-    c2d.imageSmoothingQuality = "high";
-    c2d.drawImage(img, 0, 0, w, h);
-    const data = c2d.getImageData(0, 0, w, h).data;
-    const res = PlateDetector(data, w, h, { work: maxSide, upscale: false });
-    if (!res) return null;
-    // 인식은 줄인 사본에서 했으므로 원본 사진 좌표로 되돌립니다 (이걸 빠뜨리면 스티커가 왼쪽 위로 어긋납니다)
-    return res.corners.map(p => ({ x: p.x / k, y: p.y / k }));
-  } catch (err) {
-    console.warn("번호판 자동 인식 실패", err);
-    return null;
+  const maxSideList = [900, 1400, 1800];
+  let prevKey = "";
+  for (let si = 0; si < maxSideList.length; si++) {
+    const maxSide = maxSideList[si];
+    try {
+      const k = Math.min(2, maxSide / Math.max(img.width, img.height));
+      const w = Math.max(16, Math.round(img.width * k));
+      const h = Math.max(16, Math.round(img.height * k));
+      const key = w + "x" + h;
+      if (key === prevKey) continue;   // 같은 크기면 다시 계산하지 않습니다
+      prevKey = key;
+      const cv = document.createElement("canvas");
+      cv.width = w; cv.height = h;
+      const c2d = cv.getContext("2d", { willReadFrequently: true });
+      c2d.imageSmoothingQuality = "high";
+      c2d.drawImage(img, 0, 0, w, h);
+      const data = c2d.getImageData(0, 0, w, h).data;
+      const res = PlateDetector(data, w, h, { work: maxSide, upscale: false });
+      if (res) {
+        // 인식은 줄인(또는 늘린) 사본에서 했으므로 원본 사진 좌표로 되돌립니다
+        return res.corners.map(p => ({ x: p.x / k, y: p.y / k }));
+      }
+    } catch (err) {
+      console.warn("번호판 자동 인식 실패", err);
+    }
   }
+  return null;
 }
-
 
 // Draw perspective-warped sticker onto target context using subdivided quad mesh
 function drawWarpedSticker(targetCtx, corners) {
