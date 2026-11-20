@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>세차를부탁해｜창원·진해 프리미엄 출장세차 · 픽업 디테일링 안내</title>
+<meta name="description" content="창원·진해·마산 프리미엄 워터리스 출장세차와 픽업 디테일링. 대표자 직접 시공, 루미너스·케미컬가이·코흐케미 정품 케미컬. 차종별 요금표와 실제 작업 사례를 확인하세요.">
+<meta name="theme-color" content="#14161a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="세차를부탁해｜창원·진해 출장세차 · 픽업 디테일링">
+<meta property="og:description" content="대표자 직접 시공 · 정품 디테일링 케미컬 · 차종별 요금표 · 실제 작업 사례">
+<meta property="og:image" content="https://wjdanr7733-commits.github.io/guide/assets/hero.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%2314161a'/%3E%3Ctext x='50' y='68' font-size='56' text-anchor='middle' fill='%23c8a86a'%3E%EC%84%B8%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --ink:#121316; --sub:#5c6169; --line:#e9e9ec; --bg:#ffffff; --soft:#f6f6f7;
+    --gold:#b08d4f; --gold-soft:#f4ecdc; --dark:#14161a; --dark2:#1e2127;
+    --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","맑은 고딕",system-ui,sans-serif;
+    font-size:16px; line-height:1.62; letter-spacing:-0.01em;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:calc(76px + env(safe-area-inset-bottom));
+  }
+  img{display:block; max-width:100%}
+  a{color:inherit}
+  .wrap{max-width:540px; margin:0 auto}
+  section{padding:34px 18px}
+  section.tight{padding-top:26px}
+  .eyebrow{
+    display:inline-block; font-size:12px; font-weight:700; letter-spacing:.08em;
+    color:var(--gold); text-transform:uppercase; margin:0 0 8px;
+  }
+  h2{font-size:21px; line-height:1.35; margin:0 0 8px; letter-spacing:-0.02em}
+  h2 .thin{font-weight:500; color:var(--sub)}
+  .lead{color:var(--sub); font-size:14.5px; margin:0 0 18px}
+
+  /* ── 상단 바 ── */
+  .topbar{
+    position:sticky; top:0; z-index:40;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:10px 16px; background:rgba(20,22,26,.94);
+    -webkit-backdrop-filter:saturate(180%) blur(12px); backdrop-filter:saturate(180%) blur(12px);
+    color:#fff; font-size:13px;
+  }
+  .topbar .brand{font-weight:700; letter-spacing:-0.02em}
+  .topbar .brand small{font-weight:500; color:#b9bcc4; font-size:11px; margin-left:6px}
+  .topbar a.call{
+    display:inline-flex; align-items:center; gap:5px;
+    background:#fff; color:#14161a; text-decoration:none;
+    font-weight:700; font-size:12.5px; padding:7px 11px; border-radius:999px; white-space:nowrap;
+  }
+
+  /* ── 히어로 ── */
+  .hero{position:relative; color:#fff; overflow:hidden; padding:0}
+  .hero .bg{position:relative; height:clamp(430px, 78vh, 560px)}
+  .hero .bg img{width:100%; height:100%; object-fit:cover; object-position:50% 42%}
+  .hero .bg::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(12,13,16,.42) 0%, rgba(12,13,16,.15) 32%, rgba(12,13,16,.72) 70%, #14161a 100%);
+  }
+  .hero .inner{
+    position:absolute; inset:auto 0 0 0; padding:0 18px 22px; max-width:540px; margin:0 auto;
+  }
+  .hero .badge{
+    display:inline-flex; align-items:center; gap:6px;
+    border:1px solid rgba(255,255,255,.42); color:#fff;
+    font-size:11.5px; font-weight:600; letter-spacing:.01em;
+    padding:5px 10px; border-radius:999px; margin-bottom:14px;
+    background:rgba(255,255,255,.08);
+  }
+  .hero h1{
+    font-size:34px; line-height:1.18; margin:0 0 8px; letter-spacing:-0.03em; font-weight:800;
+  }
+  .hero p.sub{
+    margin:0 0 18px; font-size:14px; color:#e2e4e8; line-height:1.6;
+  }
+  .hero p.sub b{color:#fff}
+  .cta-row{display:flex; gap:8px; margin-bottom:14px}
+  .btn{
+    flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:1px; text-decoration:none; border-radius:12px; padding:11px 8px;
+    font-weight:700; font-size:14px; line-height:1.25;
+  }
+  .btn small{font-weight:600; font-size:11px; opacity:.78; letter-spacing:0}
+  .btn-primary{background:#fff; color:#14161a}
+  .btn-gold{background:linear-gradient(135deg,#c9a263,#a9853f); color:#1a1710}
+  .btn-ghost{background:rgba(255,255,255,.1); color:#fff; border:1px solid rgba(255,255,255,.35)}
+  .hero .facts{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,.16);
+    border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,.16);
+  }
+  .hero .facts div{background:rgba(16,18,21,.55); padding:9px 8px; text-align:center}
+  .hero .facts b{display:block; font-size:12.5px; color:#fff; letter-spacing:-0.02em}
+  .hero .facts span{font-size:10.5px; color:#b6bac2}
+
+  /* ── 이벤트 ── */
+  .event{
+    margin:0 18px; padding:16px 16px; border-radius:14px;
+    background:linear-gradient(135deg,#fbf3e2,#f3e6cb);
+    border:1px solid #e7d3ab; color:#4a3a19;
+    display:flex; gap:12px; align-items:center;
+  }
+  .event .tag{
+    flex:0 0 auto; background:#b08d4f; color:#fff; font-weight:800; font-size:11px;
+    padding:5px 9px; border-radius:6px; letter-spacing:.04em;
+  }
+  .event p{margin:0; font-size:13.5px; line-height:1.5}
+  .event p b{font-size:15px; color:#8a6a2a}
+  .event .note{font-size:11.5px; color:#7d6a45; display:block; margin-top:3px}
+
+  /* ── 서비스 ── */
+  .svc{display:grid; gap:12px}
+  .card{background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:18px}
+  .card h3{margin:0 0 4px; font-size:17px; letter-spacing:-0.02em; display:flex; align-items:center; gap:8px}
+  .card .kicker{font-size:11.5px; font-weight:700; color:var(--gold); letter-spacing:.04em; margin:0 0 10px}
+  .card ul{margin:0; padding:0 0 0 2px; list-style:none}
+  .card li{position:relative; padding-left:16px; font-size:14px; color:#2b2f36; margin:0 0 6px; line-height:1.55}
+  .card li::before{content:""; position:absolute; left:2px; top:8px; width:5px; height:5px; border-radius:50%; background:var(--gold)}
+  .card li:last-child{margin-bottom:0}
+  .forwhom{
+    margin-top:12px; background:var(--soft); border-radius:10px; padding:10px 12px;
+    font-size:12.5px; color:var(--sub); line-height:1.5;
+  }
+  .forwhom b{color:var(--ink)}
+  .vs{
+    display:flex; gap:8px; margin-top:12px; font-size:12.5px; color:var(--sub);
+    background:#fff; border:1px dashed #ddd; border-radius:12px; padding:12px 14px;
+  }
+
+  /* ── 제품 ── */
+  .prod{display:grid; gap:10px}
+  .prodcard{border:1px solid var(--line); border-radius:14px; padding:15px 16px; background:#fff}
+  .prodhead{display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:8px}
+  .prodhead .part{font-size:15.5px; font-weight:800; letter-spacing:-0.02em}
+  .prodhead .part span{font-size:11.5px; font-weight:600; color:var(--sub); margin-left:5px}
+  .prodhead .use{font-size:11px; color:var(--gold); font-weight:700}
+  .prodbody{font-size:13.5px; color:#33383f; line-height:1.6; margin:0}
+  .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+  .chip{
+    font-size:11.5px; font-weight:700; letter-spacing:-0.01em; color:#3a3e45;
+    background:#f3f1ec; border:1px solid #e6e0d2; border-radius:999px; padding:4px 9px;
+  }
+  .chip.gold{background:var(--gold-soft); border-color:#e5d3ae; color:#7d5f24}
+  .note-box{
+    margin-top:12px; font-size:12px; color:var(--sub); background:var(--soft);
+    border-radius:10px; padding:11px 13px; line-height:1.55;
+  }
+
+  /* ── 가격 ── */
+  .price{background:var(--dark); color:#fff; border-radius:20px; padding:20px 16px; margin:0 18px}
+  .price h2{color:#fff}
+  .price .lead{color:#a9aeb7; margin-bottom:14px}
+  .car-tabs{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px}
+  .car-tabs button{
+    font:inherit; font-size:12.5px; font-weight:600; letter-spacing:-0.02em;
+    color:#c9cdd4; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14);
+    padding:8px 11px; border-radius:999px; cursor:pointer; transition:.15s;
+  }
+  .car-tabs button[aria-pressed="true"]{background:#fff; color:#14161a; border-color:#fff; font-weight:800}
+  .price-out{
+    background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+    border-radius:14px; padding:15px 16px;
+  }
+  .price-out .pick{font-size:12.5px; color:#a9aeb7; margin:0 0 10px}
+  .price-out .pick b{color:#fff; font-size:13.5px}
+  .price-lines{display:grid; gap:9px; margin:0}
+  .pl{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:0}
+  .pl .label{font-size:13px; color:#c9cdd4}
+  .pl .label em{font-style:normal; font-size:11px; color:#8f959f; display:block; line-height:1.3}
+  .pl .val{font-size:20px; font-weight:800; letter-spacing:-0.02em; white-space:nowrap}
+  .pl .val.small{font-size:16px}
+  .pl .val span{font-size:12px; font-weight:600; color:#a9aeb7; margin-left:2px}
+  .save{font-size:11.5px; color:#c9a263; font-weight:700; margin:9px 0 0}
+  .pickup{margin-top:14px; border-top:1px solid rgba(255,255,255,.12); padding-top:14px}
+  .pickup h4{margin:0 0 9px; font-size:13.5px; color:#fff; font-weight:700}
+  .pickup .pl{page-break-inside:avoid}
+  .pickup .pl + .pl{margin-top:8px}
+  .pickup .label{color:#c9cdd4}
+  .pickup .val{font-size:15px; font-weight:700}
+  .price .fine{font-size:11.5px; color:#8f959f; margin:14px 0 0; line-height:1.55}
+  details.allprice{margin-top:12px}
+  details.allprice summary{
+    cursor:pointer; list-style:none; font-size:12.5px; font-weight:700; color:#c9a263;
+    padding:10px 0 2px;
+  }
+  details.allprice summary::-webkit-details-marker{display:none}
+  details.allprice summary::after{content:" ＋"; font-weight:600}
+  details.allprice[open] summary::after{content:" －"}
+  table.pt{width:100%; border-collapse:collapse; margin-top:10px; font-size:12.5px}
+  table.pt th,table.pt td{padding:8px 4px; border-bottom:1px solid rgba(255,255,255,.1); text-align:right}
+  table.pt th:first-child,table.pt td:first-child{text-align:left}
+  table.pt thead th{color:#8f959f; font-weight:600; font-size:11px; border-bottom-color:rgba(255,255,255,.2)}
+  table.pt td{color:#e8eaee}
+
+  /* ── 포트폴리오 ── */
+  .pf-list{display:grid; gap:14px}
+  .pf{border:1px solid var(--line); border-radius:18px; overflow:hidden; background:#fff}
+  .pf .shot{position:relative; background:#eee}
+  .pf .shot img{width:100%; aspect-ratio:4/3; object-fit:cover}
+  .pf .shot.two{display:grid; grid-template-columns:1fr 1fr; gap:2px}
+  .pf .shot.two img{aspect-ratio:3/4}
+  .pf .rank{
+    position:absolute; top:10px; left:10px;
+    background:rgba(20,22,26,.82); color:#fff; font-size:11px; font-weight:700;
+    padding:5px 9px; border-radius:999px; -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px);
+  }
+  .pf .rank.gold{background:linear-gradient(135deg,#c9a263,#a9853f); color:#1a1710}
+  .pf .body{padding:15px 16px 16px}
+  .pf .meta{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:9px}
+  .pf .tag{font-size:11px; font-weight:700; color:#4a4f57; background:var(--soft); border-radius:6px; padding:3px 7px}
+  .pf .tag.t1{background:#eef3ff; color:#31518f}
+  .pf .tag.t2{background:#eef8f1; color:#2f6b45}
+  .pf h3{margin:0 0 7px; font-size:17px; letter-spacing:-0.02em}
+  .pf .desc{margin:0; font-size:13.5px; color:#3a3f46; line-height:1.6}
+  .pf .desc li{margin:0 0 4px}
+  .pf .desc ul{margin:6px 0 0; padding-left:16px}
+  .pf .desc ul li::marker{color:var(--gold)}
+  .pf .link{
+    display:inline-flex; align-items:center; gap:6px; margin-top:12px;
+    font-size:12.5px; font-weight:700; text-decoration:none; color:#14161a;
+    border:1px solid #dcdce0; border-radius:999px; padding:8px 13px;
+  }
+  .pf .link span{color:var(--gold); font-size:11px}
+  .pf .links{display:flex; flex-wrap:wrap; gap:8px}
+
+  /* ── 이용 방법 ── */
+  .steps{display:grid; gap:10px; counter-reset:s}
+  .step{display:flex; gap:12px; align-items:flex-start; background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 15px}
+  .step .num{
+    flex:0 0 auto; width:26px; height:26px; border-radius:50%;
+    background:var(--dark); color:#fff; font-size:12.5px; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step b{display:block; font-size:14.5px; margin-bottom:2px}
+  .step p{margin:0; font-size:13px; color:var(--sub); line-height:1.55}
+
+  /* ── 지역 ── */
+  .area-chips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px}
+  .area-chips span{
+    font-size:12.5px; font-weight:600; color:#3a3f46; background:#f3f1ec;
+    border:1px solid #e6e0d2; border-radius:999px; padding:5px 10px;
+  }
+
+  /* ── 문의 ── */
+  .contact{background:var(--dark2); color:#fff; border-radius:20px; padding:22px 18px; margin:0 18px}
+  .contact h2{color:#fff; margin-bottom:6px}
+  .contact p{color:#b9bcc4; font-size:13.5px; margin:0 0 16px}
+  .contact .rows{display:grid; gap:8px; margin-bottom:14px}
+  .contact .row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    border-bottom:1px solid rgba(255,255,255,.12); padding-bottom:9px;
+  }
+  .contact .row:last-child{border-bottom:0; padding-bottom:0}
+  .contact .row .k{font-size:12px; color:#9aa0a9}
+  .contact .row .v{font-size:14.5px; font-weight:700; text-decoration:none; color:#fff}
+  .contact .rows2{display:flex; gap:8px}
+  .contact .rows2 .btn{font-size:13.5px; padding:11px 6px}
+
+  /* ── 푸터 ── */
+  footer{padding:26px 18px 30px; color:#8b9099; font-size:11.5px; line-height:1.7; text-align:center}
+  footer b{color:#40454d; font-size:12px}
+  footer a{color:#5c6169; text-decoration:none; border-bottom:1px solid #dcdce0}
+
+  /* ── 하단 고정 바 ── */
+  .bottombar{
+    position:fixed; left:0; right:0; bottom:0; z-index:50;
+    background:rgba(255,255,255,.97); border-top:1px solid var(--line);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    padding:9px 12px calc(9px + env(safe-area-inset-bottom));
+  }
+  .bottombar .inner{max-width:540px; margin:0 auto; display:flex; gap:8px}
+  .bottombar a{
+    flex:1; display:flex; align-items:center; justify-content:center; gap:7px;
+    text-decoration:none; font-weight:800; font-size:14.5px; letter-spacing:-0.02em;
+    padding:12px 8px; border-radius:12px;
+  }
+  .bottombar a.tel{background:var(--dark); color:#fff}
+  .bottombar a.sms{background:linear-gradient(135deg,#c9a263,#a9853f); color:#1a1710}
+  .bottombar a small{font-weight:600; font-size:11.5px; opacity:.75}
+
+  .divider{height:8px; background:var(--soft); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">세차를부탁해 <small>창원·진해·마산</small></div>
+  <a class="call" href="tel:050895964390">전화 문의</a>
+</div>
+
+<!-- ─────────── 히어로 ─────────── -->
+<header class="hero">
+  <div class="bg">
+    <img src="assets/hero.jpg" alt="야간에 진행한 벤츠 GLE 출장세차 작업 현장" fetchpriority="high">
+  </div>
+  <div class="inner">
+    <span class="badge">창원 · 진해 · 마산 프리미엄 워터리스 출장세차 · 픽업 디테일링</span>
+    <h1>세차를부탁해</h1>
+    <p class="sub">
+      차량을 맡기러 갈 시간 없으실 때,<br>
+      <b>대표자가 직접</b> 차량 상태에 맞춰 관리합니다.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="tel:050895964390">전화 문의<small>0508-9596-4390</small></a>
+      <a class="btn btn-gold" href="sms:01098148253">문자 예약<small>010-9814-8253</small></a>
+    </div>
+    <div class="facts">
+      <div><b>대표자 직접</b><span>시공·관리</span></div>
+      <div><b>정품 케미컬</b><span>3개 브랜드</span></div>
+      <div><b>4회 정기권</b><span>합리적 관리</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ─────────── 이벤트 ─────────── -->
+<section class="tight" style="padding-bottom:8px">
+  <div class="event">
+    <span class="tag">이벤트</span>
+    <p>
+      <b>픽업 디테일링 이용 시<br>유막 제거 + 유리 발수코팅 10,000원</b>
+      <span class="note">정상가 전체 50,000원 / 전면만 30,000원 · 예약 시 말씀해 주세요</span>
+    </p>
+  </div>
+</section>
+
+<!-- ─────────── 서비스 안내 ─────────── -->
+<section>
+  <span class="eyebrow">Service</span>
+  <h2>출장세차와 픽업 디테일링, <span class="thin">방식이 다릅니다</span></h2>
+  <p class="lead">차량을 어디에서 관리하느냐에 따라 작업 범위와 시간이 달라집니다. 내 차 상태에 맞는 쪽을 선택하시면 됩니다.</p>
+
+  <div class="svc">
+    <div class="card">
+      <h3>🚿 워터리스 출장세차</h3>
+      <p class="kicker">고객님 주차 공간으로 방문</p>
+      <ul>
+        <li>차량을 맡길 필요 없이 <b>주차된 자리에서</b> 작업합니다.</li>
+        <li>물을 뿌리지 않는 <b>워터리스 방식</b>으로 진행합니다.</li>
+        <li>차량 상태·오염 정도에 맞춰 전문 케미컬과 윤활을 적용합니다.</li>
+        <li>아파트 지하주차장·주택·관사 등 주차 환경을 확인 후 방문합니다.</li>
+        <li><b>1회권</b> 또는 <b>4회 정기권</b>으로 이용하실 수 있습니다.</li>
+      </ul>
+      <div class="forwhom"><b>이런 분께</b> · 시간 내기 어려운 분 · 정기적으로 관리하고 싶은 분 · 야간 작업이 필요한 분</div>
+    </div>
+
+    <div class="card">
+      <h3>🧽 픽업 디테일링</h3>
+      <p class="kicker">차량 픽업 → 전용 공간 맞춤 작업 → 안전 인도</p>
+      <ul>
+        <li>차량을 <b>직접 픽업</b>해 별도 작업 공간에서 관리한 뒤 다시 인도합니다.</li>
+        <li>픽업 전 차량 상태를 확인하고 <b>필요한 작업을 먼저 정합니다.</b></li>
+        <li>1회성 자동차보험 등록 후 안전하게 이동합니다.</li>
+        <li>실내 오염, 반려동물 털, 송진·수액, 유막처럼 시간이 필요한 작업에 적합합니다.</li>
+        <li>평일 1대 · 주말 2대 한정으로 한 대에 충분한 시간을 씁니다.</li>
+      </ul>
+      <div class="forwhom"><b>이런 분께</b> · 실내까지 함께 관리하고 싶은 분 · 손이 많이 가는 오염이 있는 분 · 차량을 오래 세워두기 어려운 분</div>
+    </div>
+  </div>
+
+  <div class="vs">
+    <span><b style="color:#121316">기본 케어</b>(외부 / 내·외부)와 <b style="color:#121316">프리미엄 케어</b> 중에서 선택하며, 오염 상태에 따라 작업 범위를 먼저 안내드립니다.</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─────────── 사용 제품 ─────────── -->
+<section>
+  <span class="eyebrow">Products</span>
+  <h2>부위별로 <span class="thin">다른 정품 케미컬</span></h2>
+  <p class="lead">저가 벌크 약제가 아니라, 도장면과 소재에 맞춰 구분해 사용합니다.</p>
+
+  <div class="prod">
+    <div class="prodcard">
+      <div class="prodhead">
+        <div class="part">실외<span>도장면</span></div>
+        <div class="use">프리워시 → 본세차</div>
+      </div>
+      <p class="prodbody">
+        오염을 충분히 불려내는 <b>프리워시</b>를 먼저 거치고 본세차로 진행합니다. 도장면에 남은 잔여 오염은 검수 후 필요한 단계만 추가합니다. 마무리는 <b>왁스 또는 외장 습식코팅</b>으로 정리합니다.
+      </p>
+      <div class="chips">
+        <span class="chip gold">Chemical Guys 케미컬가이</span>
+        <span class="chip gold">LUMINUS 루미너스</span>
+        <span class="chip gold">Koch-Chemie 코흐케미</span>
+      </div>
+    </div>
+
+    <div class="prodcard">
+      <div class="prodhead">
+        <div class="part">휠·타이어</div>
+        <div class="use">분진 집중 케어</div>
+      </div>
+      <p class="prodbody">
+        브레이크 분진과 도로 오염은 휠 굴곡과 스포크 안쪽까지 확인해 제거합니다. 타이어는 오염 제거 후 드레싱으로 마무리합니다.
+      </p>
+      <div class="chips">
+        <span class="chip">LUMINUS 루미너스</span>
+        <span class="chip">Chemical Guys 케미컬가이</span>
+        <span class="chip">Koch-Chemie 코흐케미</span>
+      </div>
+    </div>
+
+    <div class="prodcard">
+      <div class="prodhead">
+        <div class="part">실내</div>
+        <div class="use">먼지 · 시트 오염</div>
+      </div>
+      <p class="prodbody">
+        눈에 보이는 먼지만 털어내지 않고, 오염된 부위를 중심으로 소재에 맞는 세정제를 골라 작업합니다. 마무리 코팅까지 진행합니다.
+      </p>
+      <div class="chips">
+        <span class="chip">LUMINUS 루미너스</span>
+        <span class="chip">Chemical Guys 케미컬가이</span>
+        <span class="chip">Koch-Chemie 코흐케미</span>
+      </div>
+    </div>
+
+    <div class="prodcard">
+      <div class="prodhead">
+        <div class="part">유리</div>
+        <div class="use">유막 제거 + 발수</div>
+      </div>
+      <p class="prodbody">
+        유막은 기름 성분이라 일반 세차로는 잘 지워지지 않습니다. 전용 리무버로 유막을 제거한 뒤 발수코팅으로 시야를 정리합니다.
+      </p>
+      <div class="chips">
+        <span class="chip gold">라보코스메티카 비트레오 (Vitreo) · 유막 제거</span>
+        <span class="chip gold">기온쿼츠 Q² 뷰 (GYEON Q² View) · 발수코팅</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    유리 유막 제거와 발수코팅은 <b>별도 작업</b>이며, 픽업 디테일링 이용 시 현재 <b>10,000원</b> 이벤트로 진행 중입니다. 특수 오염(송진·수액·반려견 털·과자 부스러기 등)과 엔진룸 세척·전체 광택은 기본에 포함되지 않아 <b>사전 안내 후</b> 진행합니다.
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─────────── 가격 ─────────── -->
+<section style="padding-left:0; padding-right:0">
+  <div class="price">
+    <span class="eyebrow">Price</span>
+    <h2>내 차는 <span style="color:#c9a263">얼마일까요?</span></h2>
+    <p class="lead">차종을 고르면 바로 확인할 수 있습니다.</p>
+
+    <div class="car-tabs" role="group" aria-label="차종 선택">
+      <button type="button" aria-pressed="true" data-car="light">경차</button>
+      <button type="button" aria-pressed="false" data-car="small">소형·준중형</button>
+      <button type="button" aria-pressed="false" data-car="mid">중형·대형</button>
+      <button type="button" aria-pressed="false" data-car="suv-s">소형 SUV</button>
+      <button type="button" aria-pressed="false" data-car="suv-m">중형 SUV</button>
+      <button type="button" aria-pressed="false" data-car="suv-l">대형 SUV</button>
+    </div>
+
+    <div class="price-out">
+      <p class="pick">선택한 차종 <b id="pickedCar">경차</b><span id="pickedEx" style="color:#8f959f; font-size:11.5px"> · 모닝, 레이 등</span></p>
+      <div class="price-lines">
+        <p class="pl">
+          <span class="label">출장세차 1회<em>워터리스 · 주차 공간 방문</em></span>
+          <span class="val" id="priceOnce">15,000<span>원</span></span>
+        </p>
+        <p class="pl">
+          <span class="label">출장세차 정기권<em>4회 기준</em></span>
+          <span class="val" id="pricePass">40,000<span>원</span></span>
+        </p>
+      </div>
+      <p class="save" id="passSave">1회씩 4번 받는 것보다 20,000원 저렴합니다</p>
+
+      <div class="pickup">
+        <h4>픽업 디테일링 <span style="font-weight:600; color:#8f959f; font-size:11px">픽업비 별도</span></h4>
+        <p class="pl"><span class="label">기본 케어 · 외부</span><span class="val">45,000 ~ 70,000원</span></p>
+        <p class="pl"><span class="label">기본 케어 · 내·외부</span><span class="val">55,000 ~ 80,000원</span></p>
+        <p class="pl"><span class="label">프리미엄 케어<em>디테일링 관리 포함</em></span><span class="val">70,000 ~ 95,000원</span></p>
+        <p style="font-size:11.5px; color:#8f959f; margin:9px 0 0; line-height:1.5">경차 ~ 카니발·승합 차량 기준입니다. 픽업·딜리버리 비용은 지역과 이동 거리에 따라 별도 안내드립니다.</p>
+      </div>
+    </div>
+
+    <details class="allprice">
+      <summary>출장세차 전체 가격표 보기</summary>
+      <table class="pt">
+        <thead>
+          <tr><th>차종</th><th>1회</th><th>정기권(4회)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>경차</td><td>15,000원</td><td>40,000원</td></tr>
+          <tr><td>소형·준중형</td><td>20,000원</td><td>50,000원</td></tr>
+          <tr><td>중형·대형</td><td>25,000원</td><td>60,000원</td></tr>
+          <tr><td>소형 SUV</td><td>25,000원</td><td>60,000원</td></tr>
+          <tr><td>중형 SUV</td><td>30,000원</td><td>70,000원</td></tr>
+          <tr><td>대형 SUV</td><td>35,000원</td><td>80,000원</td></tr>
+        </tbody>
+      </table>
+      <p class="fine">유리 추가 옵션 정상가 · 유막 제거 + 발수코팅 전체 50,000원 / 전면만 30,000원</p>
+    </details>
+
+    <p class="fine">
+      ※ 차량 크기와 오염 상태에 따라 금액이 달라질 수 있습니다.<br>
+      ※ 심한 오염·특수 오염은 작업 전 별도로 안내드립니다.
+    </p>
+  </div>
+</section>
+
+<!-- ─────────── 포트폴리오 ─────────── -->
+<section>
+  <span class="eyebrow">Portfolio</span>
+  <h2>실제 작업 차량 <span class="thin">— 고급 차량부터</span></h2>
+  <p class="lead">모든 사진은 대표자가 직접 작업한 차량입니다. 카드를 누르면 네이버 블로그 작업일지로 이동합니다.</p>
+
+  <div class="pf-list">
+
+    <article class="pf">
+      <div class="shot">
+        <span class="rank gold">1 · 포르쉐</span>
+        <img src="assets/cayenne.jpg" alt="포르쉐 카이엔 쿠페 픽업 디테일링 작업 차량" loading="lazy">
+      </div>
+      <div class="body">
+        <div class="meta">
+          <span class="tag t1">픽업 디테일링</span>
+          <span class="tag">창원 프리빌리지</span>
+          <span class="tag t2">2026.11</span>
+        </div>
+        <h3>포르쉐 카이엔 쿠페</h3>
+        <div class="desc">
+          외관은 양호했지만 유리 곳곳에 유막이 상당량 있었던 차량입니다.
+          <ul>
+            <li>전면 유막 제거 기본 + 운전석·조수석 측면 유리 서비스</li>
+            <li>실내 먼지·시트 오염 세정 및 마무리 코팅</li>
+            <li>외장 습식코팅</li>
+          </ul>
+        </div>
+        <a class="link" href="https://blog.naver.com/sechabooo/224478992693" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
+      </div>
+    </article>
+
+    <article class="pf">
+      <div class="shot">
+        <span class="rank gold">2 · 벤츠</span>
+        <img src="assets/gwagon.jpg" alt="벤츠 G바겐 출장세차 작업 차량" loading="lazy">
+      </div>
+      <div class="body">
+        <div class="meta">
+          <span class="tag t1">워터리스 출장세차</span>
+          <span class="tag">창원 · 진해</span>
+        </div>
+        <h3>벤츠 G바겐</h3>
+        <div class="desc">
+          차체 면적이 크고 각진 부분이 많아 먼지가 눈에 잘 띄는 차량입니다. 전체 외관을 확인한 뒤 쌓인 먼지를 정리하고, 마무리 후 남은 오염을 다시 확인했습니다.
+          <ul>
+            <li>차체 전반 먼지·오염 제거</li>
+            <li>각 부분 오염 확인 후 재검수</li>
+          </ul>
+        </div>
+        <a class="link" href="https://blog.naver.com/sechabooo/224415101938" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
+      </div>
+    </article>
+
+    <article class="pf">
+      <div class="shot">
+        <span class="rank gold">3 · 포르쉐</span>
+        <img src="assets/macan.jpg" alt="포르쉐 마칸 출장세차 작업 차량" loading="lazy">
+      </div>
+      <div class="body">
+        <div class="meta">
+          <span class="tag t1">워터리스 출장세차</span>
+          <span class="tag">진해 남문동 호반베르디움</span>
+        </div>
+        <h3>포르쉐 마칸</h3>
+        <div class="desc">
+          같은 주차장에서 벤츠 E클래스와 2대를 함께 진행했습니다. 단순히 외관만 닦는 방식이 아니라 차량 상태·소재를 고려해 전문 케미컬로 외장을 관리했습니다.
+          <ul>
+            <li>프리미엄 2대 동시 진행</li>
+            <li>차량 특성·오염 상태에 맞춘 외장 관리</li>
+          </ul>
+        </div>
+        <a class="link" href="https://blog.naver.com/sechabooo/224454105922" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
+      </div>
+    </article>
+
+    <article class="pf">
+      <div class="shot two">
+        <span class="rank gold">4 · 벤츠</span>
+        <img src="assets/gle_before.jpg" alt="벤츠 GLE 휠 브레이크 분진 제거 전" loading="lazy">
+        <img src="assets/gle_after.jpg" alt="벤츠 GLE 휠 브레이크 분진 제거 후" loading="lazy">
+      </div>
+      <div class="body">
+        <div class="meta">
+          <span class="tag t1">야간 출장세차</span>
+          <span class="tag">창원 마산</span>
+        </div>
+        <h3>벤츠 GLE</h3>
+        <div class="desc">
+          야간에 조명을 활용해 진행한 레드 컬러 GLE 작업입니다. 휠 굴곡과 틈이 많은 디자인이라 스포크 안쪽까지 확인하며 브레이크 분진을 제거했습니다.
+          <ul>
+            <li>야간 방문 작업</li>
+            <li>휠·타이어 브레이크 분진 집중 케어 (사진: 작업 전 → 후)</li>
+          </ul>
+        </div>
+        <a class="link" href="https://blog.naver.com/sechabooo/224390859798" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
+      </div>
+    </article>
+
+    <article class="pf">
+      <div class="shot">
+        <span class="rank">5 · 제네시스</span>
+        <img src="assets/gv80.jpg" alt="제네시스 GV80 세차 작업 차량" loading="lazy">
+      </div>
+      <div class="body">
+        <div class="meta">
+          <span class="tag t1">세차 · 3PH</span>
+          <span class="tag">창원</span>
+        </div>
+        <h3>제네시스 GV80</h3>
+        <div class="desc">
+          사고 수리 후 처음으로 맡겨주신 차량입니다. 전체적으로 물때와 오염이 남아 있어 단계적으로 불려내는 3PH 세차로 진행했습니다.
+          <ul>
+            <li>3PH 세차로 단계적 오염 제거</li>
+            <li>그릴·엠블럼·몰딩 틈새 디테일</li>
+            <li>왁스 마무리</li>
+          </ul>
+        </div>
+        <a class="link" href="https://blog.naver.com/sechabooo/224430171740" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
+      </div>
+    </article>
+
+    <article class="pf">
+      <div class="shot">
+        <span class="rank">6 · 벤츠</span>
+        <img src="assets/eclass.jpg" alt="벤츠 E클래스 출장세차 작업 차량" loading="lazy">
+      </div>
+      <div class="body">
+        <div class="meta">
+          <span class="tag t1">워터리스 출장세차</span>
+          <span class="tag">창원 · 진해</span>
+        </div>
+        <h3>벤츠 E클래스</h3>
+        <div class="desc">
+          나무 밑에 주차한 뒤 수액·꽃가루 같은 낙진이 붙어 문의해 주신 차량입니다. 무리하게 문지르지 않고 오염 특성에 맞는 전용 약품으로 클리닝했습니다.
+          <ul>
+            <li>낙진(수액·꽃가루) 전용 약품 클리닝</li>
+            <li>도장면 부담을 줄이는 방법으로 진행</li>
+          </ul>
+        </div>
+        <a class="link" href="https://blog.naver.com/sechabooo/224447418305" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
+      </div>
+    </article>
+
+    <article class="pf">
+      <div class="shot two">
+        <span class="rank">7 · BMW · 미니</span>
+        <img src="assets/bmwx2.jpg" alt="BMW X2 픽업세차 작업 차량" loading="lazy">
+        <img src="assets/mini.jpg" alt="미니쿠퍼 픽업세차 작업 차량" loading="lazy">
+      </div>
+      <div class="body">
+        <div class="meta">
+          <span class="tag t1">픽업 세차</span>
+          <span class="tag">창원 · 진해</span>
+        </div>
+        <h3>BMW X2 · 미니쿠퍼</h3>
+        <div class="desc">
+          제네시스와 함께 주말에 3대를 진행한 작업입니다. 작업 대수를 늘리는 대신 프리워시에 충분한 시간을 투자합니다.
+          <ul>
+            <li>프리워시로 오염을 충분히 불려낸 후 본세차</li>
+            <li>오염이 심한 부위는 브러쉬 디테일</li>
+            <li>케미컬가이 등 고급 케미컬 사용</li>
+          </ul>
+        </div>
+        <a class="link" href="https://blog.naver.com/sechabooo/224412589964" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
+      </div>
+    </article>
+
+    <article class="pf">
+      <div class="shot two">
+        <span class="rank">8 · 기아 · 현대</span>
+        <img src="assets/ev6.jpg" alt="기아 EV6 검정 차량 픽업 디테일링" loading="lazy">
+        <img src="assets/grandeur.jpg" alt="현대 그랜저 IG 송진 제거 작업" loading="lazy">
+      </div>
+      <div class="body">
+        <div class="meta">
+          <span class="tag t1">픽업 디테일링</span>
+          <span class="tag">창원 토월성원아파트 · 창원</span>
+        </div>
+        <h3>기아 EV6 · 그랜저 IG</h3>
+        <div class="desc">
+          검정 EV6는 프리미엄 케어로, 그랜저 IG는 송진 고착 오염 제거와 페인트클렌징으로 진행했습니다.
+          <ul>
+            <li>EV6 — 검정 도장면 상태를 고려한 프리미엄 케어</li>
+            <li>그랜저 IG — 송진 제거 후 도장면 페인트클렌징</li>
+          </ul>
+        </div>
+        <div class="links">
+          <a class="link" href="https://blog.naver.com/sechabooo/224463523398" target="_blank" rel="noopener">EV6 후기 <span>→</span></a>
+          <a class="link" href="https://blog.naver.com/sechabooo/224462287165" target="_blank" rel="noopener">그랜저 IG 후기 <span>→</span></a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─────────── 이용 방법 ─────────── -->
+<section>
+  <span class="eyebrow">How it works</span>
+  <h2>예약은 <span class="thin">세 단계면 충분합니다</span></h2>
+  <p class="lead">차종과 주차 위치, 오염 부위 사진을 함께 보내주시면 작업 범위를 더 정확하게 잡을 수 있습니다.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <div>
+        <b>문의 · 예약</b>
+        <p>전화 또는 문자로 차종·지역·희망 시간을 알려주세요. 사진을 보내주시면 오염 상태를 먼저 확인합니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div>
+        <b>방문 또는 픽업</b>
+        <p>출장세차는 주차된 곳으로 방문하고, 픽업 디테일링은 1회성 자동차보험 등록 후 차량을 인수합니다.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div>
+        <b>작업 완료 안내</b>
+        <p>작업 내용과 추가된 부분을 안내드리고 차량을 인도합니다. 다음 관리 시점도 함께 알려드립니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─────────── 지역 ─────────── -->
+<section>
+  <span class="eyebrow">Area</span>
+  <h2>가능 지역</h2>
+  <p class="lead">아파트·주택·사무실·관공서 등 차량이 주차된 곳이라면 일정에 맞춰 방문합니다.</p>
+  <div class="area-chips">
+    <span>창원시</span><span>진해구</span><span>마산</span>
+    <span>남문동</span><span>풍호동</span><span>석동</span><span>자은동</span>
+    <span>용원동</span><span>웅동</span><span>경화동</span><span>충무동</span><span>이동</span>
+  </div>
+  <p style="font-size:12.5px; color:#5c6169; margin:0">
+    그 외 지역은 이동 거리에 따라 가능 여부와 비용을 안내드립니다.
+  </p>
+</section>
+
+<!-- ─────────── 문의 ─────────── -->
+<section style="padding-left:0; padding-right:0">
+  <div class="contact">
+    <h2>예약 · 문의</h2>
+    <p>차종과 주차 위치를 알려주시면 가능한 일정과 요금을 안내해 드립니다.</p>
+    <div class="rows">
+      <div class="row"><span class="k">전화 문의</span><a class="v" href="tel:050895964390">0508-9596-4390</a></div>
+      <div class="row"><span class="k">문자 예약</span><a class="v" href="sms:01098148253">010-9814-8253</a></div>
+      <div class="row"><span class="k">블로그</span><a class="v" href="https://blog.naver.com/sechabooo" target="_blank" rel="noopener">blog.naver.com/sechabooo</a></div>
+      <div class="row"><span class="k">링크</span><a class="v" href="https://litt.ly/sechaboo" target="_blank" rel="noopener">litt.ly/sechaboo</a></div>
+      <div class="row"><span class="k">스레드</span><a class="v" href="https://www.threads.com/@sechaboo" target="_blank" rel="noopener">@sechaboo</a></div>
+    </div>
+    <div class="rows2">
+      <a class="btn btn-primary" href="tel:050895964390">전화하기</a>
+      <a class="btn btn-gold" href="sms:01098148253">문자하기</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <b>세차를부탁해</b><br>
+  창원 · 진해 · 마산 프리미엄 워터리스 출장세차 &amp; 픽업 디테일링<br>
+  대표자 직접 시공 · <a href="tel:050895964390">0508-9596-4390</a> · <a href="sms:01098148253">010-9814-8253</a><br>
+  <span style="color:#a8adb5; font-size:11px">본 페이지의 사진은 실제 작업 차량입니다.</span>
+</footer>
+
+<div class="bottombar">
+  <div class="inner">
+    <a class="tel" href="tel:050895964390">📞 전화 <small>0508-9596-4390</small></a>
+    <a class="sms" href="sms:01098148253">💬 문자 <small>010-9814-8253</small></a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var cars = {
+    light:  {name:'경차',           once:15000, pass:40000, ex:'모닝, 레이 등'},
+    small:  {name:'소형·준중형',     once:20000, pass:50000, ex:'아반떼, K3 등'},
+    mid:    {name:'중형·대형',       once:25000, pass:60000, ex:'그랜저, K5, E클래스 등'},
+    'suv-s':{name:'소형 SUV',       once:25000, pass:60000, ex:'셀토스, 코나, 티볼리 등'},
+    'suv-m':{name:'중형 SUV',       once:30000, pass:70000, ex:'싼타페, 쏘렌토, GV80 등'},
+    'suv-l':{name:'대형 SUV',       once:35000, pass:80000, ex:'팰리세이드, G바겐 등'}
+  };
+  var tabs = document.querySelectorAll('.car-tabs button');
+  var picked = document.getElementById('pickedCar');
+  var pickedEx = document.getElementById('pickedEx');
+  var once = document.getElementById('priceOnce');
+  var pass = document.getElementById('pricePass');
+  var save = document.getElementById('passSave');
+  function fmt(n){ return n.toLocaleString('ko-KR'); }
+  function render(key){
+    var c = cars[key]; if(!c) return;
+    picked.textContent = c.name;
+    pickedEx.textContent = ' · ' + c.ex;
+    once.innerHTML = fmt(c.once) + '<span>원</span>';
+    pass.innerHTML = fmt(c.pass) + '<span>원</span>';
+    var diff = c.once * 4 - c.pass;
+    save.textContent = diff > 0
+      ? '1회씩 4번 받는 것보다 ' + fmt(diff) + '원 저렴합니다'
+      : '정기권으로 꾸준히 관리하실 수 있습니다';
+    tabs.forEach(function(b){
+      b.setAttribute('aria-pressed', b.dataset.car === key ? 'true' : 'false');
+    });
+  }
+  tabs.forEach(function(b){
+    b.addEventListener('click', function(){ render(b.dataset.car); });
+  });
+  render('light');
+})();
+</script>
+</body>
+</html>
