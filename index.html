@@ -145,35 +145,34 @@ function defaultCorners(w, h) {
   ];
 }
 
-/* 번호판 자동 인식기: 사진을 줄여 문자(번호판 글자) 덩어리를 찾고,
-   그 줄에 맞는 사각형이 번호판일 확률을 점수로 매겨 가장 그럴듯한 곳을 고릅니다.
-   기울기(차량 각도)까지 반영한 4꼭짓점을 돌려줍니다. */
 /* 세차를부탁해 번호판 자동 탐지기 (순수 JS, 외부 라이브러리 없음)
- * 입력: PlateDetector(rgba, width, height)  rgba = Uint8ClampedArray(RGBA)
- * 출력: null 또는 {corners:[{x,y},{x,y},{x,y},{x,y}], score, cx, cy, w, h}
- *       corners 순서: 좌상, 우상, 우하, 좌하 (번호판 기준, 기울기 반영)
- * 단계: 축소 -> 휘도/채도 -> 국소평균 대비 문자 마스크 -> 연결요소 -> 문자 체인
- *       -> 후보 사각형마다 특징(대비/문자군/여백/밝기/테두리) 점수 -> 최적 후보
- *       -> 네 변을 밝기 경계에 맞춰 미세 조정 + 여유 패딩 -> 4꼭짓점
- */
-/* 세차를부탁해 번호판 자동 탐지기 (순수 JS, 외부 라이브러리 없음)
- * 입력: PlateDetector(rgba, width, height)  rgba = Uint8ClampedArray(RGBA)
- * 출력: null 또는 {corners:[{x,y},{x,y},{x,y},{x,y}], score, cx, cy, w, h}
- *       corners 순서: 좌상, 우상, 우하, 좌하 (번호판 기준, 기울기 반영)
- * 단계: 축소 -> 휘도/채도 -> 국소평균 대비 문자 마스크 -> 연결요소 -> 문자 체인
- *       -> 후보 사각형마다 특징(대비/문자군/여백/밝기/테두리) 점수 -> 최적 후보
- *       -> 네 변을 밝기 경계에 맞춰 미세 조정 + 여유 패딩 -> 4꼭짓점
+ * 입력: PlateDetector(rgba, width, height, options)
+ * 출력: null 또는 {corners:[{x,y}x4], score, cx, cy, w, h, ang}
+ *       corners: 좌상, 우상, 우하, 좌하 (번호판 기준, 기울기 반영)
+ *
+ * 단계
+ *  1) 긴 변 900px로 축소 + 휘도/채도
+ *  2) 국소 평균 대비 '어두운 획' 마스크 -> 연결요소
+ *  3) 세로로 쪼개진 글자 조각 합치기 -> 글자 후보
+ *  4) 글자 줄(체인) 만들기
+ *  5) 줄마다 번호판 사각형 추정:
+ *     글자 바깥쪽으로 '밝은 바탕 + 어두운 테두리선'을 찾아 네 변 결정
+ *  6) 네 변을 각각 직선으로 다시 맞춰(원근 반영) 4꼭짓점 산출
+ *  7) 특징(비율/바탕밝기/대비/글자수/크기/위치/테두리) 점수화 -> 최적 후보
  */
 function PlateDetector(rgba, width, height, options) {
   var opt = options || {};
-  var WORK = opt.work || 1400;
-  var scale = Math.min(1, WORK / Math.max(width, height));
-  var W = Math.max(16, Math.round(width * scale));
-  var H = Math.max(16, Math.round(height * scale));
+  var WORK = opt.work || 900;
+  var allowUp = opt.upscale !== false;
+  var scale = allowUp ? (WORK / Math.max(width, height)) : Math.min(1, WORK / Math.max(width, height));
+  if (!allowUp) scale = Math.min(1, WORK / Math.max(width, height));
+  scale = Math.min(scale, opt.maxScale || 2.0);
+  var W = Math.max(24, Math.round(width * scale));
+  var H = Math.max(24, Math.round(height * scale));
+
+  // ---------- 1) 휘도/채도 ----------
   var lum = new Float32Array(W * H);
   var sat = new Float32Array(W * H);
-
-  // ---- 1) 축소 + 휘도/채도 ----
   var sx = width / W, sy = height / H;
   for (var y = 0; y < H; y++) {
     var y0 = Math.floor(y * sy), y1 = Math.min(height, Math.max(y0 + 1, Math.floor((y + 1) * sy)));
@@ -196,60 +195,70 @@ function PlateDetector(rgba, width, height, options) {
       sat[idx] = Math.max(r, g, b) - Math.min(r, g, b);
     }
   }
+  var sm = boxBlurM(boxBlurM(lum, W, H, 1), W, H, 1);
 
-  // ---- 2) 국소 평균 ----
-  var rad = Math.max(3, Math.round(Math.min(W, H) * 0.022));
-  var local = boxBlur(lum, W, H, rad);
-
-  // ---- 3) 문자 마스크 ----
-  var mask = new Uint8Array(W * H);
-  for (var q = 0; q < W * H; q++) {
-    if (local[q] - lum[q] > 16 && lum[q] < 246) mask[q] = 1;
+  // ---------- 2) 어두운 획 마스크 ----------
+  var rN = Math.max(2, Math.round(Math.min(W, H) * 0.007));
+  var rW = Math.max(rN + 2, Math.round(Math.min(W, H) * 0.026));
+  var mN = boxBlurM(lum, W, H, rN);
+  var mW = boxBlurM(lum, W, H, rW);
+  var N = W * H;
+  var mask = new Uint8Array(N);
+  for (var i = 0; i < N; i++) {
+    var dW = mW[i] - lum[i], dN = mN[i] - lum[i];
+    if (dW > 11 && dN > 4 && lum[i] < 242) mask[i] = 1;
   }
 
+  // ---------- 3) 연결요소 -> 글자 후보 ----------
   var comps = components(mask, W, H);
-  if (!comps.length) return null;
-  var chains = buildChains(comps, H, W);
-  if (!chains.length) return null;
-
-  // ---- 4) 후보 점수화 ----
-  var VARIANTS = [[1, 1], [1.06, 1], [0.94, 1], [1, 1.07], [1, 0.93],
-                  [1.06, 1.07], [0.94, 0.93], [1.06, 0.93], [0.94, 1.07]];
-  var best = null;
-  for (var ci = 0; ci < chains.length; ci++) {
-    var ch = chains[ci];
-    if (ch.cy / H < 0.32) continue;
-    for (var vi = 0; vi < VARIANTS.length; vi++) {
-      var cand = { cx: ch.cx, cy: ch.cy, w: ch.w * VARIANTS[vi][0], h: ch.h * VARIANTS[vi][1], ang: ch.ang, n: ch.n };
-      var f = patchFeatures(lum, sat, W, H, cand);
-      if (!f) continue;
-      var s = scoreCandidate(f, cand, H, W);
-      if (s > 0 && (!best || s > best.score)) {
-        best = { score: s, cx: cand.cx, cy: cand.cy, w: cand.w, h: cand.h, ang: cand.ang, n: cand.n };
-      }
-    }
+  var raw = [];
+  var hMin = Math.max(2.5, H * 0.0035);
+  var hMax = H * 0.24;
+  for (var ci = 0; ci < comps.length; ci++) {
+    var c = comps[ci];
+    if (c.h < hMin || c.h > hMax) continue;
+    if (c.w < 1.2 || c.w > c.h * 2.3 + 2) continue;
+    if (c.a < Math.max(4, c.w * c.h * 0.10)) continue;
+    if (c.x <= 1 || c.y <= 1 || c.x + c.w >= W - 2 || c.y + c.h >= H - 2) continue; // 테두리 조각 제외
+    raw.push(c);
   }
-  if (!best || best.score < 0.035) return null;
+  var glyphs = mergeGlyphParts(raw);
+  if (glyphs.length < 2) return null;
+  glyphs.sort(function (a, b) { return a.cx - b.cx; });
 
-  // ---- 5) 네 변 미세 조정 + 패딩 ----
-  var rect = refineRect(lum, W, H, best);
-  var corners = rectCorners(rect);
-  var out = [];
-  for (var k = 0; k < 4; k++) out.push({ x: corners[k].x / scale, y: corners[k].y / scale });
-  return { corners: out, score: best.score, cx: rect.cx / scale, cy: rect.cy / scale, w: rect.w / scale, h: rect.h / scale, ang: rect.ang };
+  // ---------- 4) 글자 줄 ----------
+  var chains = buildChains(glyphs, W, H);
+
+  // ---------- 5~7) 후보 평가 ----------
+  var best = null;
+  for (var qi = 0; qi < chains.length; qi++) {
+    var ch = chains[qi];
+    var qd = buildPlateQuad(sm, W, H, ch, false, sat);
+    if (!qd) continue;
+    var f = quadFeatures(sm, W, H, qd, ch);
+    if (!f) continue;
+    var sc = scoreCandidate(f, qd, W, H);
+    if (sc > 0 && (!best || sc > best.score)) best = { score: sc, quad: qd, f: f };
+  }
+  if (!best || best.score < 0.05) return null;
+
+  var q2 = best.quad, out = [];
+  for (var k = 0; k < 4; k++) out.push({ x: q2.p[k].x / scale, y: q2.p[k].y / scale });
+  return {
+    corners: out, score: best.score,
+    cx: q2.cx / scale, cy: q2.cy / scale, w: q2.w / scale, h: q2.h / scale, ang: q2.ang
+  };
 }
 
-/* ---------------- helpers ---------------- */
+/* ================= 기본 유틸 ================= */
 
-function boxBlur(src, W, H, r) {
-  var tmp = new Float32Array(W * H);
-  var out = new Float32Array(W * H);
-  var i, x, y, sum, n;
+function boxBlurM(src, W, H, r) {
+  var tmp = new Float32Array(W * H), out = new Float32Array(W * H);
+  var x, y, sum, n = 2 * r + 1;
   for (y = 0; y < H; y++) {
     var row = y * W;
     sum = 0;
     for (x = -r; x <= r; x++) sum += src[row + Math.min(W - 1, Math.max(0, x))];
-    n = 2 * r + 1;
     for (x = 0; x < W; x++) {
       tmp[row + x] = sum / n;
       sum -= src[row + Math.min(W - 1, Math.max(0, x - r))];
@@ -259,7 +268,6 @@ function boxBlur(src, W, H, r) {
   for (x = 0; x < W; x++) {
     sum = 0;
     for (y = -r; y <= r; y++) sum += tmp[Math.min(H - 1, Math.max(0, y)) * W + x];
-    n = 2 * r + 1;
     for (y = 0; y < H; y++) {
       out[y * W + x] = sum / n;
       sum -= tmp[Math.min(H - 1, Math.max(0, y - r)) * W + x];
@@ -274,13 +282,10 @@ function components(mask, W, H) {
   for (var i = 0; i < label.length; i++) label[i] = -1;
   var stack = new Int32Array(W * H);
   var comps = [];
-  var dirs = [-1 - W, -1, -1 + W, -W, 1 - W, 1, 1 + W, W];
   for (var start = 0; start < W * H; start++) {
     if (!mask[start] || label[start] >= 0) continue;
-    var id = comps.length;
-    var sp = 0;
-    stack[sp++] = start;
-    label[start] = id;
+    var id = comps.length, sp = 0;
+    stack[sp++] = start; label[start] = id;
     var minX = W, maxX = -1, minY = H, maxY = -1, area = 0, sumX = 0, sumY = 0;
     while (sp > 0) {
       var cur = stack[--sp];
@@ -290,12 +295,16 @@ function components(mask, W, H) {
       if (cx2 > maxX) maxX = cx2;
       if (cy < minY) minY = cy;
       if (cy > maxY) maxY = cy;
-      for (var d = 0; d < 8; d++) {
-        var nb = cur + dirs[d];
-        var nby = (nb / W) | 0, nbx = nb - nby * W;
-        if (nby < 0 || nby >= H || nbx < 0 || nbx >= W) continue;
-        if (Math.abs(nbx - cx2) > 1 || Math.abs(nby - cy) > 1) continue;
-        if (mask[nb] && label[nb] < 0) { label[nb] = id; stack[sp++] = nb; }
+      for (var dy = -1; dy <= 1; dy++) {
+        var ny = cy + dy;
+        if (ny < 0 || ny >= H) continue;
+        for (var dx = -1; dx <= 1; dx++) {
+          if (!dx && !dy) continue;
+          var nx = cx2 + dx;
+          if (nx < 0 || nx >= W) continue;
+          var nb = ny * W + nx;
+          if (mask[nb] && label[nb] < 0) { label[nb] = id; stack[sp++] = nb; }
+        }
       }
     }
     comps.push({ x: minX, y: minY, w: maxX - minX + 1, h: maxY - minY + 1, a: area, cx: sumX / area, cy: sumY / area });
@@ -303,307 +312,456 @@ function components(mask, W, H) {
   return comps;
 }
 
-function buildChains(comps, H, W) {
-  var hMin = Math.max(4, H * 0.0035), hMax = H * 0.095;
-  var gl = [];
-  for (var i = 0; i < comps.length; i++) {
-    var c = comps[i];
-    if (c.h < hMin || c.h > hMax) continue;
-    if (c.w < 1 || c.w > c.h * 2.4) continue;
-    if (c.a < Math.max(5, c.w * c.h * 0.08)) continue;
-    gl.push(c);
-  }
-  if (gl.length < 3) return [];
-  gl.sort(function (a, b) { return a.cx - b.cx; });
-  var raw = [];
-  for (var s = 0; s < gl.length; s++) {
-    var acc = [s];
-    for (var j = s + 1; j < gl.length; j++) {
-      var lp = gl[acc[acc.length - 1]], gj = gl[j];
-      var hAvg = Math.max(lp.h, gj.h);
-      if (Math.abs(gj.h - lp.h) > 0.36 * hAvg) continue;
-      var gap = gj.x - (lp.x + lp.w);
-      if (gap < -1.0 * Math.min(lp.h, gj.h) || gap > 1.15 * hAvg) continue;
-      if (Math.abs((gj.y + gj.h) - (lp.y + lp.h)) > 0.46 * lp.h) continue;
-      acc.push(j);
-      if (acc.length >= 13) break;
+/* 세로로 쪼개진 글자 조각('소'의 ㅅ과 ㅗ, '8'의 위/아래) 합치기 */
+function mergeGlyphParts(list) {
+  var out = list.map(function (c) { return { x: c.x, y: c.y, w: c.w, h: c.h, a: c.a }; });
+  var changed = true, guard = 0;
+  while (changed && guard++ < 4) {
+    changed = false;
+    out.sort(function (a, b) { return a.x - b.x; });
+    for (var i = 0; i < out.length && !changed; i++) {
+      for (var j = i + 1; j < out.length; j++) {
+        var A = out[i], B = out[j];
+        if (B.x > A.x + A.w + 1) break;
+        // 폭이 비슷한 조각만 (작은 얼룩이 큰 덩어리에 흡수되지 않게)
+        var wmin = Math.min(A.w, B.w), wmax = Math.max(A.w, B.w);
+        if (wmin < 0.55 * wmax) continue;
+        var ox = Math.min(A.x + A.w, B.x + B.w) - Math.max(A.x, B.x);
+        if (ox < 0.55 * wmin) continue;
+        var oy = Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y);
+        if (oy > 0.30 * Math.min(A.h, B.h)) continue;      // 위아래로 쌓인 조각만
+        var vgap = Math.max(A.y, B.y) - Math.min(A.y + A.h, B.y + B.h);
+        if (vgap > 0.45 * Math.max(A.h, B.h)) continue;
+        var nh = Math.max(A.y + A.h, B.y + B.h) - Math.min(A.y, B.y);
+        if (nh > 1.9 * Math.max(A.h, B.h)) continue;
+        var nw = Math.max(A.x + A.w, B.x + B.w) - Math.min(A.x, B.x);
+        if (nw > nh * 2.2 + 2) continue;
+        var merged = { x: Math.min(A.x, B.x), y: Math.min(A.y, B.y), w: nw, h: nh, a: A.a + B.a };
+        out.splice(j, 1); out.splice(i, 1, merged);
+        changed = true; break;
+      }
     }
-    if (acc.length >= 3) raw.push(acc);
   }
-  // 두 덩어리로 끊긴 번호판 문자열 합치기
-  var merged = raw.slice();
-  for (var a1 = 0; a1 < raw.length; a1++) {
-    for (var b1 = 0; b1 < raw.length; b1++) {
-      if (a1 === b1) continue;
-      var ga = raw[a1], gb = raw[b1];
-      var ax0 = Infinity, ax1 = -Infinity, ah = 0, abase = 0;
-      for (var i1 = 0; i1 < ga.length; i1++) { ax0 = Math.min(ax0, gl[ga[i1]].x); ax1 = Math.max(ax1, gl[ga[i1]].x + gl[ga[i1]].w); ah += gl[ga[i1]].h; }
-      ah /= ga.length;
-      var lastA = gl[ga[ga.length - 1]];
-      abase = lastA.y + lastA.h;
-      var bx0 = Infinity, bh = 0, bbase = 0;
-      for (var i2 = 0; i2 < gb.length; i2++) { bx0 = Math.min(bx0, gl[gb[i2]].x); bh += gl[gb[i2]].h; }
-      bh /= gb.length;
-      var firstB = gl[gb[0]];
-      bbase = firstB.y + firstB.h;
-      if (bx0 <= ax1) continue;
-      var gapp = bx0 - ax1;
-      if (Math.abs(ah - bh) > 0.30 * Math.max(ah, bh)) continue;
-      if (gapp > 2.0 * Math.max(ah, bh)) continue;
-      if (Math.abs(abase - bbase) > 0.45 * Math.max(ah, bh)) continue;
-      var comb = [];
-      var seen = {};
-      for (var i3 = 0; i3 < ga.length; i3++) { if (!seen[ga[i3]]) { seen[ga[i3]] = 1; comb.push(ga[i3]); } }
-      for (var i4 = 0; i4 < gb.length; i4++) { if (!seen[gb[i4]]) { seen[gb[i4]] = 1; comb.push(gb[i4]); } }
-      comb.sort(function (p, r) { return p - r; });
-      merged.push(comb);
+  for (var k = 0; k < out.length; k++) { out[k].cx = out[k].x + out[k].w / 2; out[k].cy = out[k].y + out[k].h / 2; }
+  return out;
+}
+
+function compatGlyphs(a, b) {
+  var ha = a.h, hb = b.h, mx = Math.max(ha, hb), mn = Math.min(ha, hb);
+  if (hb < ha * 0.62 || hb > ha * 1.55) return false;
+  var gap = b.x - (a.x + a.w);
+  if (gap > 2.2 * mx) return false;
+  if (gap < -1.0 * mn) return false;
+  if (Math.abs((b.y + b.h) - (a.y + a.h)) > 0.55 * mx) return false;
+  return true;
+}
+
+function buildChains(glyphs, W, H) {
+  var n = glyphs.length, raw = [];
+  // 모든 글자에서 오른쪽으로 이어 붙여 후보 줄을 만든다 (중복은 뒤에서 정리)
+  for (var i = 0; i < n; i++) {
+    var ch = [glyphs[i]], cur = glyphs[i], idxs = [i];
+    while (ch.length < 12) {
+      // 줄이 지나치게 길어지면(글자 높이 대비 8배) 자름
+      var spanNow = (cur.x + cur.w) - glyphs[i].x;
+      var hMed = median(ch.map(function (g) { return g.h; }));
+      if (spanNow > 7.4 * hMed) break;
+      var bestJ = -1, bestGap = 1e9;
+      for (var j = 0; j < n; j++) {
+        if (j === i && ch.length === 1) continue;
+        var g = glyphs[j];
+        if (g.cx <= cur.cx) continue;
+        var gap = g.x - (cur.x + cur.w);
+        if (gap > 2.2 * Math.max(g.h, cur.h)) continue;
+        if (!compatGlyphs(cur, g)) continue;
+        if (gap < bestGap) { bestGap = gap; bestJ = j; }
+      }
+      if (bestJ < 0) break;
+      if (idxs.indexOf(bestJ) >= 0) break;
+      cur = glyphs[bestJ]; ch.push(cur); idxs.push(bestJ);
     }
+    if (ch.length >= 3) raw.push(idxs);
+  }
+  // 부분집합/중복 정리 (긴 줄 우선)
+  raw.sort(function (a, b) { return b.length - a.length; });
+  var kept = [];
+  for (var r = 0; r < raw.length; r++) {
+    var set = raw[r], dup = false;
+    for (var k = 0; k < kept.length; k++) {
+      var sup = kept[k], inter = 0;
+      for (var m = 0; m < set.length; m++) if (sup.indexOf(set[m]) >= 0) inter++;
+      if (inter >= set.length * 0.8) { dup = true; break; }
+    }
+    if (!dup) kept.push(set);
+    if (kept.length >= 24) break;
   }
   var out = [];
-  var seenKey = {};
-  for (var m = 0; m < merged.length; m++) {
-    var idx = merged[m].slice().sort(function (p, r) { return p - r; });
-    var key = idx.join(',');
-    if (seenKey[key]) continue;
-    seenKey[key] = 1;
-    var gs = [], hm = 0, x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
-    for (var k = 0; k < idx.length; k++) {
-      var g = gl[idx[k]];
-      gs.push(g); hm += g.h;
-      x0 = Math.min(x0, g.x); x1 = Math.max(x1, g.x + g.w);
-      y0 = Math.min(y0, g.y); y1 = Math.max(y1, g.y + g.h);
-    }
-    hm /= gs.length;
-    // 기울기: 글자 밑변 회귀
-    var sxm = 0, sym = 0, sxx = 0, sxy = 0, nn = gs.length;
-    for (var t = 0; t < nn; t++) {
-      var gx = gs[t].x + gs[t].w / 2, gy = gs[t].y + gs[t].h;
-      sxm += gx; sym += gy; sxx += gx * gx; sxy += gx * gy;
-    }
-    var den = nn * sxx - sxm * sxm;
-    var slope = Math.abs(den) > 1e-6 ? (nn * sxy - sxm * sym) / den : 0;
-    out.push({
-      cx: (x0 + x1) / 2, cy: (y0 + y1) / 2,
-      w: (x1 - x0) / 0.86, h: hm / 0.60,
-      ang: Math.atan(slope), n: gs.length
-    });
+  for (var q = 0; q < kept.length; q++) {
+    var ch2 = kept[q].map(function (ix) { return glyphs[ix]; });
+    ch2.sort(function (a, b) { return a.cx - b.cx; });
+    var hs = ch2.map(function (g) { return g.h; });
+    var hm = median(hs), ok = true;
+    for (var t = 0; t < ch2.length; t++) if (Math.abs(ch2[t].h - hm) > 0.5 * hm) ok = false;
+    if (!ok) continue;
+    // 줄이 끊긴 데가 너무 크면 자름 (한 번의 큰 공백은 번호판 띄어쓰기로 허용)
+    out.push(ch2);
   }
-  // 유사 후보 정리
-  out.sort(function (a, b) { return b.n - a.n; });
-  var uniq = [];
-  for (var u = 0; u < out.length; u++) {
-    var c1 = out[u], dup = false;
-    for (var v2 = 0; v2 < uniq.length; v2++) {
-      var u1 = uniq[v2];
-      if (Math.abs(c1.cx - u1.cx) < Math.min(c1.w, u1.w) * 0.45 &&
-          Math.abs(c1.cy - u1.cy) < Math.min(c1.h, u1.h) * 0.5) { dup = true; break; }
-    }
-    if (!dup) uniq.push(c1);
-    if (uniq.length >= 30) break;
-  }
-  return uniq;
+  return out;
+}
+
+function median(arr) {
+  if (!arr.length) return 0;
+  var a = arr.slice().sort(function (x, y) { return x - y; });
+  var m = a.length >> 1;
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
 }
 
 function sampleLum(lum, W, H, X, Y) {
   if (X < 0) X = 0; if (Y < 0) Y = 0;
   if (X > W - 1.001) X = W - 1.001;
   if (Y > H - 1.001) Y = H - 1.001;
-  var x0 = Math.floor(X), y0 = Math.floor(Y);
+  var x0 = X | 0, y0 = Y | 0;
   var fx = X - x0, fy = Y - y0;
   var i = y0 * W + x0;
-  var a = lum[i], b = lum[i + 1], c = lum[i + W], d = lum[i + W + 1];
-  return a * (1 - fx) * (1 - fy) + b * fx * (1 - fy) + c * (1 - fx) * fy + d * fx * fy;
+  return lum[i] * (1 - fx) * (1 - fy) + lum[i + 1] * fx * (1 - fy) +
+         lum[i + W] * (1 - fx) * fy + lum[i + W + 1] * fx * fy;
 }
 
-function warpPatch(lum, W, H, cx, cy, w, h, ang, PW) {
-  var PH = Math.max(8, Math.round(PW * h / Math.max(w, 1e-3)));
-  var patch = new Float32Array(PW * PH);
+/* 글자 줄 -> 번호판 사각형 */
+function buildPlateQuad(lum, W, H, ch, dbgFlag, satArr) {
+  var opt_fitEdges = true;
+  function rej(why) { if (dbgFlag && typeof PLATE_REJECT !== "undefined") PLATE_REJECT.push(why); return null; }
+  var n = ch.length;
+  var capH = median(ch.map(function (g) { return g.h; }));
+  if (capH < 3) return rej("capH");
+
+  // 기울기: 글자 위/아래 변 회귀 평균
+  function slopeOf(getY) {
+    var s1 = 0, s2 = 0, s3 = 0, s4 = 0, c = 0;
+    for (var i = 0; i < n; i++) {
+      var g = ch[i], gx = g.x + g.w / 2, gy = getY(g);
+      s1 += gx; s2 += gy; s3 += gx * gx; s4 += gx * gy; c++;
+    }
+    var den = c * s3 - s1 * s1;
+    return Math.abs(den) > 1e-6 ? (c * s4 - s1 * s2) / den : 0;
+  }
+  var slope = 0.5 * (slopeOf(function (g) { return g.y + g.h; }) + slopeOf(function (g) { return g.y; }));
+  if (Math.abs(slope) > 0.5) return rej("slope " + slope.toFixed(2));
+  var ang = Math.atan(slope);
   var ca = Math.cos(ang), sa = Math.sin(ang);
-  for (var v = 0; v < PH; v++) {
-    var dv = ((v + 0.5) / PH - 0.5) * h;
-    for (var u = 0; u < PW; u++) {
-      var du = ((u + 0.5) / PW - 0.5) * w;
-      var X = cx + ca * du - sa * dv;
-      var Y = cy + sa * du + ca * dv;
-      patch[v * PW + u] = sampleLum(lum, W, H, X, Y);
-    }
-  }
-  return { data: patch, w: PW, h: PH };
-}
 
-function percentile(arr, p) {
-  var n = arr.length;
-  var step = Math.max(1, Math.floor(n / 512));
-  var sample = [];
-  for (var i = 0; i < n; i += step) sample.push(arr[i]);
-  sample.sort(function (a, b) { return a - b; });
-  var k = Math.min(sample.length - 1, Math.max(0, Math.round((sample.length - 1) * p)));
-  return sample[k];
-}
+  var cx0 = 0, cy0 = 0;
+  for (var j = 0; j < n; j++) { cx0 += ch[j].x + ch[j].w / 2; cy0 += ch[j].y + ch[j].h / 2; }
+  cx0 /= n; cy0 /= n;
 
-function patchFeatures(lum, sat, W, H, c) {
-  if (c.w < 16 || c.h < 6) return null;
-  var p = warpPatch(lum, W, H, c.cx, c.cy, c.w, c.h, c.ang, 180);
-  var pw = p.w, ph = p.h, d = p.data;
-  var bandTop = Math.floor(ph * 0.22), bandBot = Math.max(bandTop + 2, Math.floor(ph * 0.78));
-  var band = [];
-  for (var y = bandTop; y < bandBot; y++) for (var x = 0; x < pw; x++) band.push(d[y * pw + x]);
-  if (band.length < 60) return null;
-  var lo = percentile(band, 0.06), hi = percentile(d, 0.88);
-  var contrast = hi - lo;
-  var thr = lo + 0.45 * contrast;
-  var darkCount = 0;
-  for (var i1 = 0; i1 < band.length; i1++) if (band[i1] < thr) darkCount++;
-  var dkf = darkCount / band.length;
-  // 문자군 개수 + 행 전이수
-  var groups = 0, prev = 0;
-  var colDark = new Float32Array(pw);
-  for (var x2 = 0; x2 < pw; x2++) {
-    var cnt = 0, rowsN = 0;
-    for (var y2 = bandTop; y2 < bandBot; y2++) { if (d[y2 * pw + x2] < thr) cnt++; rowsN++; }
-    colDark[x2] = cnt / Math.max(rowsN, 1);
+  function toFrame(px, py) {
+    var dx = px - cx0, dy = py - cy0;
+    return { u: dx * ca + dy * sa, v: -dx * sa + dy * ca };
   }
-  for (var x3 = 0; x3 < pw; x3++) {
-    var on = colDark[x3] > 0.30 ? 1 : 0;
-    if (on && !prev) groups++;
-    prev = on;
-  }
-  var transList = [];
-  var stepY = Math.max(1, Math.floor((bandBot - bandTop) / 7));
-  for (var yr = bandTop; yr < bandBot; yr += stepY) {
-    var lastBit = 0, tr = 0;
-    for (var xr = 0; xr < pw; xr++) {
-      var bit = d[yr * pw + xr] < thr ? 1 : 0;
-      if (bit !== lastBit) tr++;
-      lastBit = bit;
-    }
-    transList.push(tr);
-  }
-  transList.sort(function (a, b) { return a - b; });
-  var trans = transList[Math.floor(transList.length / 2)] || 0;
-  // 좌우 여백에 글자가 없는지
-  var mcol = Math.max(1, Math.round(pw * 0.05));
-  var margL = 0, margR = 0;
-  for (var xm = 0; xm < mcol; xm++) { margL += colDark[xm]; margR += colDark[pw - 1 - xm]; }
-  margL /= mcol; margR /= mcol;
-  var marg = Math.max(margL, margR);
-  // 위/아래 띠: 밝고 고른 번호판 바탕
-  var tSum = 0, tN = 0, bSum = 0, bN = 0, tSq = 0, bSq = 0;
-  var mh = Math.max(1, Math.floor(ph * 0.12));
-  for (var yt = 0; yt < mh; yt++) {
-    for (var xt = 0; xt < pw; xt++) { var vt = d[yt * pw + xt]; tSum += vt; tSq += vt * vt; tN++; }
-    for (var xb = 0; xb < pw; xb++) { var vb = d[(ph - 1 - yt) * pw + xb]; bSum += vb; bSq += vb * vb; bN++; }
-  }
-  var tMean = tSum / tN, bMean = bSum / bN;
-  var bgMed = (tMean + bMean) / 2;
-  var bgStd = (Math.sqrt(Math.max(0, tSq / tN - tMean * tMean)) + Math.sqrt(Math.max(0, bSq / bN - bMean * bMean))) / 2;
-  // 주변 대비(테두리)
-  var big = warpPatch(lum, W, H, c.cx, c.cy, c.w * 1.6, c.h * 2.4, c.ang, 120);
-  var ringVals = [];
-  for (var yb = 0; yb < big.h; yb++) {
-    for (var xbx = 0; xbx < big.w; xbx++) {
-      var fy = (yb + 0.5) / big.h, fx2 = (xbx + 0.5) / big.w;
-      if (fy > 0.22 && fy < 0.78 && fx2 > 0.18 && fx2 < 0.82) continue;
-      ringVals.push(big.data[yb * big.w + xbx]);
+  function px2(u, v) { return { x: cx0 + ca * u - sa * v, y: cy0 + sa * u + ca * v }; }
+
+  var uMin = 1e9, uMax = -1e9, vMin = 1e9, vMax = -1e9;
+  for (var k = 0; k < n; k++) {
+    var g2 = ch[k];
+    var pts = [[g2.x, g2.y], [g2.x + g2.w, g2.y], [g2.x, g2.y + g2.h], [g2.x + g2.w, g2.y + g2.h]];
+    for (var t = 0; t < 4; t++) {
+      var q = toFrame(pts[t][0], pts[t][1]);
+      if (q.u < uMin) uMin = q.u;
+      if (q.u > uMax) uMax = q.u;
+      if (q.v < vMin) vMin = q.v;
+      if (q.v > vMax) vMax = q.v;
     }
   }
-  ringVals.sort(function (a, b) { return a - b; });
-  var ringMed = ringVals.length ? ringVals[Math.floor(ringVals.length / 2)] : bgMed;
+  var spanU = uMax - uMin;
+  if (spanU < capH * 1.1) return rej("spanU");
+
+  // 바탕 밝기 기준값: 글자 주변(밝은 바탕) 상위값
+  var bgs = [];
+  for (var su = -0.8; su <= 0.8; su += 0.1) {
+    for (var sv = 0.2; sv <= 0.8; sv += 0.2) {
+      var uu = uMin - capH * 0.15 + (spanU + capH * 0.3) * su;
+      var vv = vMin + (vMax - vMin) * sv;
+      var pt0 = px2(uu, vv);
+      bgs.push(sampleLum(lum, W, H, pt0.x, pt0.y));
+    }
+  }
+  bgs.sort(function (a, b) { return a - b; });
+  var bgRef = bgs[Math.floor(bgs.length * 0.85)];
+
+  // 변 위치 후보 평가 (변에 나란한 평균 밝기 프로파일 기반)
+  function pickEdge(axis, sign, base, range, tCenter, alongHalf, expectDist, expectSigma, refExtent) {
+    var steps = 11, stepPx = 0.5;
+    var lo = base - range, hi = base + range;
+    var cnt = Math.max(7, Math.floor((hi - lo) / stepPx) + 1);
+    var prof = new Float32Array(cnt);
+    for (var pi = 0; pi < cnt; pi++) {
+      var s = lo + pi * stepPx, sum = 0;
+      for (var ai = 0; ai < steps; ai++) {
+        var t = tCenter - alongHalf + 2 * alongHalf * (ai / (steps - 1));
+        var P = (axis === "u") ? px2(s, t) : px2(t, s);
+        sum += sampleLum(lum, W, H, P.x, P.y);
+      }
+      prof[pi] = sum / steps;
+    }
+    var inOff = Math.max(4, Math.round((capH * 0.20) / stepPx));
+    var bestVal = -1, bestPos = base, bestResp = 0, bestKind = "none";
+    for (var q = 5; q < cnt - 5; q++) {
+      var baseL = Math.max(prof[q - 4], prof[q + 4]);
+      var lineResp = baseL - prof[q];
+      var gradResp = Math.abs(prof[q - 3] - prof[q + 3]);
+      var resp = Math.max(lineResp, gradResp);
+      var inIdx = (sign > 0) ? q - inOff : q + inOff;
+      if (inIdx < 0 || inIdx >= cnt) continue;
+      var innerL = 0, ic = 0;
+      for (var ii = Math.max(0, inIdx - 2); ii <= Math.min(cnt - 1, inIdx + 2); ii++) { innerL += prof[ii]; ic++; }
+      innerL /= Math.max(1, ic);
+      var warm = Math.min(1, Math.max(0.08, (innerL - bgRef * 0.45) / (bgRef * 0.35 + 1e-3)));
+      var s2 = lo + q * stepPx;
+      var prior = 1;
+      if (expectSigma > 0) {
+        var dist = Math.abs(refExtent - s2);
+        prior = Math.exp(-Math.pow((dist - expectDist) / expectSigma, 2));
+      }
+      var val = resp * warm * (0.10 + 0.9 * prior);
+      if (val > bestVal) { bestVal = val; bestPos = s2; bestResp = resp; bestKind = lineResp >= gradResp ? "line" : "grad"; }
+    }
+    return { pos: bestPos, strength: bestResp, kind: bestKind };
+  }
+
+  // 번호판 세로 크기는 글자 높이에서 유도 (한국 번호판: 판 높이 ≈ 글자 높이 × 1.5)
+  var plateH = capH * 1.50;
+  var vC = (vMin + vMax) / 2;
+  var vT0 = vC - plateH / 2, vB0 = vC + plateH / 2;
+  var alongHalfV = (vMax - vMin) * 0.5 + capH * 0.05;
+  var alongHalfU = (uMax - uMin) * 0.5;
+
+  var eL = pickEdge("u", -1, uMin - capH * 0.9, capH * 0.9, vC, alongHalfV, capH * 0.55, capH * 0.45, uMin);
+  var eR = pickEdge("u", 1, uMax + capH * 0.9, capH * 0.9, vC, alongHalfV, capH * 0.55, capH * 0.45, uMax);
+  var eT = pickEdge("v", -1, vT0, plateH * 0.22, 0, alongHalfU, vMin - vT0, plateH * 0.12, vMin);
+  var eB = pickEdge("v", 1, vB0, plateH * 0.22, 0, alongHalfU, vB0 - vMax, plateH * 0.12, vMax);
+
+  var uL = eL.pos, uR = eR.pos, vT = eT.pos, vB = eB.pos;
+
+  // 번호판 좌우에 붙은 색 띠(KOR 등)도 번호판이므로 포함
+  if (satArr) {
+    function coloredStrip(dir) {
+      var edge = (dir < 0) ? uL : uR;
+      var maxExt = capH * 1.15, s0 = edge;
+      for (var d = 0; d <= maxExt; d += 0.5) {
+        var sPos = edge + dir * d, sumSat = 0, sumLum = 0, cnt2 = 0;
+        for (var vv = 0.2; vv <= 0.8; vv += 0.15) {
+          var vPos = vT + (vB - vT) * vv;
+          var P2 = px2(sPos, vPos);
+          var xi = Math.round(P2.x), yi = Math.round(P2.y);
+          if (xi < 0 || yi < 0 || xi >= W || yi >= H) continue;
+          sumSat += satArr[yi * W + xi];
+          sumLum += sampleLum(lum, W, H, P2.x, P2.y);
+          cnt2++;
+        }
+        if (!cnt2) break;
+        if (sumSat / cnt2 > 32 && sumLum / cnt2 < bgRef * 1.02) s0 = sPos; else break;
+      }
+      return s0;
+    }
+    uL = coloredStrip(-1);
+    uR = coloredStrip(1);
+  }
+
+  var w2 = uR - uL, h2 = vB - vT;
+  if (!(w2 > capH * 1.4) || !(h2 > capH * 0.85)) return rej("size w2=" + w2.toFixed(1) + " h2=" + h2.toFixed(1) + " capH=" + capH.toFixed(1));
+  var ratio = w2 / h2;
+  if (ratio < 1.15 || ratio > 7.0) return rej("ratio " + ratio.toFixed(2));
+
+  // 네 변을 각각 직선으로 정밀 조정 (원근/비틀림 반영)
+  var lines = fitEdges(lum, W, H, px2, uL, uR, vT, vB, ang, capH, bgRef, pickEdge);
+  var fq = quadFromLines(lines);
+  if (!fq) return rej("lines");
+
+  var ccx = (fq[0].u + fq[2].u) / 2, ccy = (fq[0].v + fq[2].v) / 2;
+  var cc = px2(ccx, ccy);
+  var pad = 0.015;
+  var expanded = [];
+  for (var c2 = 0; c2 < 4; c2++) {
+    var du = (fq[c2].u - ccx) * (1 + pad * 2);
+    var dv = (fq[c2].v - ccy) * (1 + pad * 2);
+    var pt = px2(du + ccx, dv + ccy);
+    expanded.push({ x: pt.x, y: pt.y });
+  }
   return {
-    ratio: c.w / Math.max(c.h, 1e-3), contrast: contrast, dkf: dkf, groups: groups,
-    trans: trans, marg: marg, bgMed: bgMed, bgStd: bgStd, step: bgMed - ringMed, pw: pw, ph: ph
+    p: expanded, ang: ang, cx: cc.x, cy: cc.y, w: w2, h: h2, capH: capH,
+    edges: [eL, eR, eT, eB], u: [uL, uR, vT, vB]
   };
 }
 
-function scoreCandidate(f, c, H, W) {
-  var cy = c.cy / H, cx = c.cx / W;
-  if (cy < 0.32) return 0;
-  if (f.ratio < 1.55 || f.ratio > 5.8) return 0;
-  var posy = Math.exp(-Math.pow(cy - 0.74, 2) / (2 * 0.24 * 0.24));
-  var posx = Math.exp(-Math.pow(cx - 0.5, 2) / (2 * 0.34 * 0.34));
-  var a1 = Math.exp(-Math.pow(Math.log(f.ratio) - Math.log(4.8), 2) / (2 * 0.36 * 0.36));
-  var a2 = Math.exp(-Math.pow(Math.log(f.ratio) - Math.log(2.2), 2) / (2 * 0.30 * 0.30));
-  var ap = Math.max(a1, a2);
-  var gq = Math.exp(-Math.pow(f.groups - 8.0, 2) / (2 * 3.8 * 3.8));
-  var tq = Math.exp(-Math.pow(Math.min(f.trans, 18) - 10.0, 2) / (2 * 4.2 * 4.2));
-  var cq = Math.min(1, Math.max(0, (f.contrast - 35) / 95));
-  var nq = Math.min(1, Math.max(0, (c.n - 2.5) / 4.0));
-  var sq = Math.min(1, Math.max(0, f.step / 45));
-  var uq = Math.exp(-f.bgStd / 26.0);
-  var bq = Math.min(1, Math.max(0.3, (f.bgMed - 95) / 70));
-  return Math.pow(0.3 + 0.7 * posy, 0.6) * Math.pow(0.55 + 0.45 * posx, 0.4) *
-         Math.pow(0.35 + 0.65 * ap, 0.7) * Math.pow(0.4 + 0.6 * gq, 0.6) *
-         Math.pow(0.45 + 0.55 * tq, 0.5) * Math.pow(0.3 + 0.7 * cq, 0.6) *
-         (0.15 + 0.85 * nq) * Math.pow(0.3 + 0.7 * sq, 0.8) * Math.pow(uq, 0.5) * Math.pow(bq, 0.4);
-}
-
-/* 네 변을 주변 밝기 경계에 맞춰 조정(각 변 독립 1차원 탐색) + 여유 패딩 */
-function refineRect(lum, W, H, c) {
-  var ca = Math.cos(c.ang), sa = Math.sin(c.ang);
-  var halfW = c.w / 2, halfH = c.h / 2;
-  function shiftFor(axis, sign, limit) {
-    // axis 'u' -> 좌우 변, 'v' -> 상하 변; sign +1/-1
-    var bestD = 0, bestScore = -1, baseScore = 0;
-    for (var k = -6; k <= 6; k++) {
-      var d = (k / 6) * limit;
-      var sum = 0, cnt = 0;
-      for (var t = -4; t <= 4; t++) {
-        var frac = t / 5;
-        var du, dv;
-        if (axis === 'u') { du = sign * (halfW + d); dv = frac * halfH; }
-        else { du = frac * halfW; dv = sign * (halfH + d); }
-        // 경계 방향 밝기 변화(법선 방향 그래디언트)
-        var nx = (axis === 'u') ? ca : -sa;
-        var ny = (axis === 'u') ? sa : ca;
-        var X = c.cx + ca * du - sa * dv, Y = c.cy + sa * du + ca * dv;
-        var l1 = sampleLum(lum, W, H, X - nx * 2, Y - ny * 2);
-        var l2 = sampleLum(lum, W, H, X + nx * 2, Y + ny * 2);
-        sum += Math.abs(l2 - l1); cnt++;
-      }
-      var v = cnt ? sum / cnt : 0;
-      if (k === 6) baseScore = v;   // d = 0 지점
-      if (v > bestScore) { bestScore = v; bestD = d; }
+/* 네 변 정밀 조정: 각 변을 (s = a*t + b) 직선으로 맞춤 */
+function fitEdges(lum, W, H, px2, uL, uR, vT, vB, ang, capH, bgRef, pickEdge) {
+  var lines = { uL: { a: 0, b: uL }, uR: { a: 0, b: uR }, vT: { a: 0, b: vT }, vB: { a: 0, b: vB } };
+  function fitSide(axis, sign, base, alongLo, alongHi, range, alongHalf) {
+    var N = 9, pts = [];
+    for (var i = 0; i < N; i++) {
+      var t = alongLo + (alongHi - alongLo) * (i / (N - 1));
+      var e = pickEdge(axis, sign, base, range, t, alongHalf, 0, 0, base);
+      pts.push({ t: t, s: e.pos, r: e.strength });
     }
-    // 원래 자리보다 확실히(1.3배) 좋을 때만 움직입니다 — 엉뚱한 경계로 끌려가지 않게
-    if (baseScore > 0 && bestScore < baseScore * 1.3) return 0;
-    return bestScore >= 6 ? bestD : 0;
+    var maxR = 0;
+    for (var p = 0; p < pts.length; p++) if (pts[p].r > maxR) maxR = pts[p].r;
+    var kept = pts.filter(function (q) { return q.r > maxR * 0.55; });
+    if (kept.length < 3) return { a: 0, b: base };
+    var slopes = [];
+    for (var i1 = 0; i1 < kept.length; i1++) for (var j1 = i1 + 1; j1 < kept.length; j1++) {
+      var dt = kept[j1].t - kept[i1].t;
+      if (Math.abs(dt) < 1e-3) continue;
+      slopes.push((kept[j1].s - kept[i1].s) / dt);
+    }
+    if (!slopes.length) return { a: 0, b: base };
+    var a = median(slopes);
+    if (Math.abs(a) > 0.4) return { a: 0, b: base };
+    var b = median(kept.map(function (q) { return q.s - a * q.t; }));
+    return { a: a, b: b };
   }
-  var dL = shiftFor('u', -1, c.w * 0.06);
-  var dR = shiftFor('u', 1, c.w * 0.06);
-  var dT = shiftFor('v', -1, c.h * 0.10);
-  var dB = shiftFor('v', 1, c.h * 0.10);
-  var nw = c.w + dR - dL, nh = c.h + dB - dT;
-  var ncx = c.cx + ca * ((dR - dL) / 2) - sa * ((dB - dT) / 2);
-  var ncy = c.cy + sa * ((dR - dL) / 2) + ca * ((dB - dT) / 2);
-  // 여유 패딩 (덜 가리는 쪽으로 살짝 넓게)
-  // 줄어드는 방향으로는 보정하지 않습니다(번호판이 드러나는 쪽이 더 위험)
-  if (nw < c.w) nw = c.w;
-  if (nh < c.h) nh = c.h;
-  var padX = nw * 0.08, padY = nh * 0.12;
-  return { cx: ncx, cy: ncy, w: nw + padX * 2, h: nh + padY * 2, ang: c.ang };
+  var plateH = vB - vT, plateW = uR - uL;
+  lines.uL = fitSide("u", -1, uL, vT + plateH * 0.22, vB - plateH * 0.22, capH * 0.30, plateH * 0.22);
+  lines.uR = fitSide("u", 1, uR, vT + plateH * 0.22, vB - plateH * 0.22, capH * 0.30, plateH * 0.22);
+  lines.vT = fitSide("v", -1, vT, uL + plateW * 0.14, uR - plateW * 0.14, plateH * 0.14, plateW * 0.10);
+  lines.vB = fitSide("v", 1, vB, uL + plateW * 0.14, uR - plateW * 0.14, plateH * 0.14, plateW * 0.10);
+  return lines;
 }
 
-function rectCorners(r) {
-  var ca = Math.cos(r.ang), sa = Math.sin(r.ang);
-  var hw = r.w / 2, hh = r.h / 2;
-  function pt(u, v) { return { x: r.cx + ca * u - sa * v, y: r.cy + sa * u + ca * v }; }
-  return [pt(-hw, -hh), pt(hw, -hh), pt(hw, hh), pt(-hw, hh)];
+/* 직선 4개의 교점 -> 꼭짓점
+   u변: u = a*v + b , v변: v = a*u + b */
+function quadFromLines(L) {
+  function interX(uLine, vLine) {
+    var a1 = uLine.a, b1 = uLine.b, a2 = vLine.a, b2 = vLine.b;
+    var den = 1 - a1 * a2;
+    if (Math.abs(den) < 1e-6) return null;
+    var u = (a1 * b2 + b1) / den;
+    var v = a2 * u + b2;
+    return { u: u, v: v };
+  }
+  var p0 = interX(L.uL, L.vT), p1 = interX(L.uR, L.vT), p2 = interX(L.uR, L.vB), p3 = interX(L.uL, L.vB);
+  if (!p0 || !p1 || !p2 || !p3) return null;
+  var wA = Math.hypot(p1.u - p0.u, p1.v - p0.v), wB = Math.hypot(p2.u - p3.u, p2.v - p3.v);
+  var hA = Math.hypot(p3.u - p0.u, p3.v - p0.v), hB = Math.hypot(p2.u - p1.u, p2.v - p1.v);
+  if (wA < 4 || hA < 3) return null;
+  if (Math.abs(wA - wB) > 0.28 * Math.max(wA, wB)) return null;
+  if (Math.abs(hA - hB) > 0.32 * Math.max(hA, hB)) return null;
+  return [p0, p1, p2, p3];
 }
 
+/* 사각형 특징 */
+function quadFeatures(lum, W, H, qd, ch) {
+  var pts = qd.p;
+  function bl(u, v) {
+    return {
+      x: (1 - u) * (1 - v) * pts[0].x + u * (1 - v) * pts[1].x + u * v * pts[2].x + (1 - u) * v * pts[3].x,
+      y: (1 - u) * (1 - v) * pts[0].y + u * (1 - v) * pts[1].y + u * v * pts[2].y + (1 - u) * v * pts[3].y
+    };
+  }
+  var inside = [], S = 26;
+  for (var i = 0; i < S; i++) for (var j = 0; j < S; j++) {
+    var P = bl((i + 0.5) / S, (j + 0.5) / S);
+    inside.push(sampleLum(lum, W, H, P.x, P.y));
+  }
+  inside.sort(function (a, b) { return a - b; });
+  var bgLum = inside[Math.floor(inside.length * 0.85)];
+  var darkLum = inside[Math.floor(inside.length * 0.08)];
+  var contrast = bgLum - darkLum;
+  // 번호판 바탕처럼 밝은 화소 비율 / 글자(어두운 획) 비율 / 바탕 균일도
+  var mid = darkLum + 0.5 * contrast;
+  var brightFrac = 0, inkFrac = 0, bSum = 0, bSum2 = 0, bN = 0;
+  for (var bi = 0; bi < inside.length; bi++) {
+    var v = inside[bi];
+    if (v > mid) brightFrac++; else inkFrac++;
+    if (v > mid) { bSum += v; bSum2 += v * v; bN++; }
+  }
+  brightFrac /= inside.length;
+  inkFrac /= inside.length;
+  var bgStd = bN ? Math.sqrt(Math.max(0, bSum2 / bN - Math.pow(bSum / bN, 2))) : 99;
+
+  var ring = [];
+  for (var k = 0; k < 22; k++) for (var m = 0; m < 4; m++) {
+    var t = 0.05 + m * 0.05;
+    var a = (k + 0.5) / 22;
+    var uv = [[a, -t], [a, 1 + t], [-t, a], [1 + t, a]][m];
+    var P2 = bl(uv[0], uv[1]);
+    ring.push(sampleLum(lum, W, H, P2.x, P2.y));
+  }
+  ring.sort(function (a, b) { return a - b; });
+  var ringLum = ring[Math.floor(ring.length * 0.5)];
+
+  var ca = Math.cos(qd.ang), sa = Math.sin(qd.ang);
+  var uMin = 1e9, uMax = -1e9, hsum = 0;
+  for (var g = 0; g < ch.length; g++) {
+    var gx = ch[g].x + ch[g].w / 2, gy = ch[g].y + ch[g].h / 2;
+    var du = (gx - qd.cx) * ca + (gy - qd.cy) * sa;
+    if (du < uMin) uMin = du;
+    if (du > uMax) uMax = du;
+  }
+  var fill = (uMax - uMin) / Math.max(qd.w, 1);
+  var eStr = qd.edges.map(function (e) { return e.strength; });
+  return {
+    ratio: qd.w / qd.h, bgLum: bgLum, darkLum: darkLum, contrast: contrast, ringLum: ringLum,
+    brightFrac: brightFrac, inkFrac: inkFrac, bgStd: bgStd,
+    fill: fill, n: ch.length, capH: qd.capH,
+    edgeMin: Math.min.apply(null, eStr),
+    edgeAvg: eStr.reduce(function (a, b) { return a + b; }, 0) / 4,
+    kinds: qd.edges.map(function (e) { return e.kind; })
+  };
+}
+
+function scoreCandidate(f, qd, W, H) {
+  var cy = qd.cy / H, cx = qd.cx / W;
+  if (cy < 0.28) return 0;
+  // ---- 하드 컷: 번호판이 아닌 구조는 후보에서 제외 ----
+  if (f.ratio < 1.75 || f.ratio > 5.9) return 0;
+  if (f.n < 4) return 0;
+  if (f.fill < 0.48 || f.fill > 1.02) return 0;
+  if (f.bgLum < 95) return 0;            // 번호판 바탕은 밝다
+  if (f.brightFrac < 0.42) return 0;     // 바탕 밝은 화소가 절반 가까이
+  if (f.inkFrac < 0.08 || f.inkFrac > 0.62) return 0;
+  if (f.contrast < 45) return 0;
+  if (f.edgeMin < 10) return 0;          // 네 변 모두 뚜렷한 경계
+  if (f.bgLum - f.ringLum < 38) return 0; // 번호판 바탕이 주변보다 밝다
+
+  var pos = Math.exp(-Math.pow(cy - 0.70, 2) / (2 * 0.27 * 0.27));
+  var posx = Math.exp(-Math.pow(cx - 0.5, 2) / (2 * 0.42 * 0.42));
+  var r = f.ratio;
+  var a1 = Math.exp(-Math.pow(Math.log(r / 4.75), 2) / (2 * 0.30 * 0.30));
+  var a2 = Math.exp(-Math.pow(Math.log(r / 2.25), 2) / (2 * 0.22 * 0.22));
+  var ratioS = Math.max(a1, a2 * 0.9);
+  var chh = f.capH / H;
+  var sizeS = 1.0;
+  if (chh < 0.016) sizeS = Math.pow(chh / 0.016, 3);
+  else if (chh > 0.13) sizeS = Math.pow(0.13 / chh, 2);
+  var brightS = Math.min(1, Math.max(0, (f.bgLum - 110) / 50));
+  var faceS = Math.exp(-Math.pow((f.brightFrac - 0.68) / 0.17, 2));
+  var inkS = Math.exp(-Math.pow((f.inkFrac - 0.28) / 0.14, 2));
+  var uniS = Math.exp(-Math.pow(f.bgStd / 30, 2));
+  var contrastS = Math.min(1, Math.max(0, (f.contrast - 55) / 70));
+  var edgeS = Math.min(1, f.edgeMin / 18);
+  var nS = f.n >= 6 ? 1 : (f.n === 5 ? 0.92 : 0.8);
+  var fillS = Math.exp(-Math.pow((f.fill - 0.80) / 0.20, 2));
+  return Math.pow(0.10 + 0.90 * pos, 0.4) * Math.pow(0.5 + 0.5 * posx, 0.3) *
+         Math.pow(ratioS, 1.4) * Math.pow(sizeS, 1.5) * Math.pow(0.1 + 0.9 * brightS, 0.9) *
+         Math.pow(faceS, 0.9) * Math.pow(0.25 + 0.75 * inkS, 0.7) * Math.pow(0.3 + 0.7 * uniS, 0.6) *
+         Math.pow(0.3 + 0.7 * contrastS, 0.6) * Math.pow(0.2 + 0.8 * edgeS, 0.5) *
+         Math.pow(nS, 0.5) * Math.pow(0.4 + 0.6 * fillS, 0.5);
+}
 
 // 사진 한 장에서 번호판 4꼭짓점을 찾습니다. 못 찾으면 null.
 function detectPlateOnImage(img) {
   try {
-    const maxSide = 1400;
+    const maxSide = 900;
     const k = Math.min(1, maxSide / Math.max(img.width, img.height));
     const w = Math.max(16, Math.round(img.width * k));
     const h = Math.max(16, Math.round(img.height * k));
     const cv = document.createElement("canvas");
     cv.width = w; cv.height = h;
     const c2d = cv.getContext("2d", { willReadFrequently: true });
+    c2d.imageSmoothingQuality = "high";
     c2d.drawImage(img, 0, 0, w, h);
     const data = c2d.getImageData(0, 0, w, h).data;
-    const res = PlateDetector(data, w, h, { work: maxSide });
+    const res = PlateDetector(data, w, h, { work: maxSide, upscale: false });
     if (!res) return null;
     return res.corners.map(p => ({ x: p.x, y: p.y }));
   } catch (err) {
