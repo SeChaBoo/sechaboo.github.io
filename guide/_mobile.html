@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>mobile check</title>
+<style>
+  html,body{margin:0;padding:0;background:#e9eaee}
+  iframe{display:block;width:390px;height:844px;border:0;background:#fff}
+</style>
+</head>
+<body>
+<iframe id="f" src="index.html" title="mobile preview"></iframe>
+<script>
+(function(){
+  var m = location.hash.match(/y=(\d+)/);
+  var y = m ? parseInt(m[1],10) : 0;
+  var f = document.getElementById('f');
+  f.addEventListener('load', function(){
+    try { f.contentWindow.scrollTo(0, y); } catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
