@@ -763,7 +763,8 @@ function detectPlateOnImage(img) {
     const data = c2d.getImageData(0, 0, w, h).data;
     const res = PlateDetector(data, w, h, { work: maxSide, upscale: false });
     if (!res) return null;
-    return res.corners.map(p => ({ x: p.x, y: p.y }));
+    // 인식은 줄인 사본에서 했으므로 원본 사진 좌표로 되돌립니다 (이걸 빠뜨리면 스티커가 왼쪽 위로 어긋납니다)
+    return res.corners.map(p => ({ x: p.x / k, y: p.y / k }));
   } catch (err) {
     console.warn("번호판 자동 인식 실패", err);
     return null;
