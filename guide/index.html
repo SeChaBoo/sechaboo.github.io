@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>세차를부탁해｜창원·진해 출장세차 · 픽업 디테일링 안내</title>
-<meta name="description" content="창원·진해 프리미엄 출장세차와 픽업 디테일링. 대표자 직접 시공, 차종별 요금표(출장·픽업), 작업 과정, 실제 작업 차량 18대, 부위별 케미컬 라인업 안내.">
+<meta name="description" content="창원·진해 프리미엄 출장세차와 픽업 디테일링. 대표자 직접 시공, 차종별 요금표(출장·픽업), 작업 과정과 실내 디테일링 실제 작업 컷, 실제 작업 차량 20대, 부위별 정품 브랜드 라인업 안내.">
 <meta name="theme-color" content="#0a1c33">
 <meta property="og:type" content="website">
 <meta property="og:title" content="세차를부탁해｜창원·진해 출장세차 · 픽업 디테일링">
-<meta property="og:description" content="대표자 직접 시공 · 차종별 요금표 · 실제 작업 차량 18대 · 부위별 정품 케미컬">
+<meta property="og:description" content="대표자 직접 시공 · 차종별 요금표 · 실제 작업 차량 20대 · 부위별 정품 브랜드 라인업">
 <meta property="og:image" content="https://wjdanr7733-commits.github.io/guide/assets/brand-logo.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a1c33'/%3E%3Ctext x='50' y='70' font-size='54' text-anchor='middle' fill='%234aa8e0'%3E%EC%84%B8%3C/text%3E%3C/svg%3E">
 <style>
@@ -93,6 +93,26 @@
   .svc-note{margin:10px 0 0; padding:11px 13px; background:var(--soft); border:1px solid #e0edf7; border-radius:12px; font-size:12px; color:#35506b; line-height:1.55}
   .svc-note b{color:#0a1c33}
 
+  /* 기본 케어 vs 프리미엄 케어 */
+  .care{display:grid; gap:8px; margin-top:11px}
+  .care-card{border:1px solid var(--line); border-radius:13px; padding:12px 13px; background:#fff}
+  .care-card .ch{display:flex; align-items:center; gap:6px; margin-bottom:5px}
+  .care-card .ch .t{font-size:13.5px; font-weight:800; letter-spacing:-0.02em}
+  .care-card .ch .rec{font-size:9.5px; font-weight:900; color:#04121f; background:linear-gradient(135deg,#8fd3ff,#4aa8e0); border-radius:5px; padding:2px 7px}
+  .care-card .sum{margin:0 0 7px; font-size:11.5px; color:#4d6175; line-height:1.5}
+  .care-card .sum b{color:#0a1c33}
+  .care-card ul{margin:0; padding:0; list-style:none; display:grid; gap:4px}
+  .care-card li{position:relative; padding-left:12px; font-size:11.5px; color:#40566d; line-height:1.45}
+  .care-card li::before{content:""; position:absolute; left:0; top:6px; width:5px; height:5px; border-radius:50%; background:#c3d8ea}
+  .care-card.prem{background:linear-gradient(170deg,#0a1c33,#123a5f); border-color:#123a5f; box-shadow:0 8px 20px rgba(10,28,51,.16)}
+  .care-card.prem .ch .t{color:#fff}
+  .care-card.prem .sum{color:#bfd8ee}
+  .care-card.prem .sum b{color:#fff}
+  .care-card.prem li{color:#c6dcf0}
+  .care-card.prem li::before{background:var(--sky)}
+  .care-card.prem li b{color:#fff}
+  .care-note{margin:8px 0 0; font-size:10.5px; color:#7b8fa3; line-height:1.5; text-align:center}
+
   /* 작업 과정 */
   .video-box{position:relative; border-radius:16px; overflow:hidden; background:#071527; box-shadow:0 10px 26px rgba(10,28,51,.16)}
   .video-box video{width:100%; aspect-ratio:16/9; object-fit:cover; background:#071527}
@@ -105,6 +125,31 @@
   .st .n{position:absolute; top:6px; left:6px; width:19px; height:19px; border-radius:50%; background:rgba(255,255,255,.92); color:#0a1c33;
     font-size:10.5px; font-weight:900; display:flex; align-items:center; justify-content:center}
   .st .lbl small{display:block; font-weight:500; font-size:9.5px; color:#cfe2f2}
+
+  /* 실내 작업 갤러리 */
+  .ig-head{display:flex; align-items:center; justify-content:space-between; gap:8px; margin:20px 0 2px}
+  .ig-head h3{margin:0; font-size:15.5px; letter-spacing:-0.02em}
+  .ig-head h3 .thin{font-weight:500; color:var(--sub)}
+  .ig-nav{display:flex; align-items:center; gap:5px}
+  .ig-nav button{width:26px; height:26px; border-radius:50%; border:1px solid #d5e3ef; background:#fff; color:#0a1c33;
+    font-size:14px; font-weight:900; line-height:1; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0}
+  .ig-nav button[disabled]{opacity:.32}
+  .ig-count{font-size:10.5px; font-weight:800; color:var(--blue); background:var(--sky-100); border-radius:999px; padding:3px 8px; white-space:nowrap}
+  .ig-lead{margin:0 0 9px; font-size:11.5px; color:var(--sub); line-height:1.5}
+  .ig-wrap{margin:0 -18px}
+  .ig-track{display:flex; gap:9px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none; padding:2px 18px 6px}
+  .ig-track::-webkit-scrollbar{display:none}
+  .ic{flex:0 0 68%; max-width:270px; scroll-snap-align:center; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff}
+  .ic-shot{position:relative; aspect-ratio:4/3; background:#eef4fa}
+  .ic-shot img{width:100%; height:100%; object-fit:cover}
+  .ic-tag{position:absolute; top:7px; left:7px; font-size:9px; font-weight:800; padding:3px 6px; border-radius:999px;
+    background:rgba(10,28,51,.86); color:#fff; -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px)}
+  .ic-tag.ex{background:rgba(255,255,255,.94); color:#3d5570; border:1px solid #d7e5f2}
+  .ic-body{padding:9px 11px 11px}
+  .ic-body h4{margin:0 0 3px; font-size:12.5px; letter-spacing:-0.02em}
+  .ic-body p{margin:0; font-size:11px; color:#4d6175; line-height:1.45}
+  .ic-body a{display:inline-block; margin-top:6px; font-size:10.5px; font-weight:800; color:var(--blue); text-decoration:none}
 
   /* 가격 */
   .price{background:linear-gradient(170deg,#0a1c33,#11395e); color:#fff; border-radius:20px; padding:18px 14px; margin:0 14px}
@@ -156,9 +201,19 @@
   /* 제품 */
   .brandstrip{display:flex; gap:7px; overflow-x:auto; padding:2px 0 6px; margin-bottom:12px; scrollbar-width:none}
   .brandstrip::-webkit-scrollbar{display:none}
-  .bchip{flex:0 0 auto; min-width:104px; background:var(--sky-50); border:1px solid #dceaf6; border-radius:11px; padding:9px 10px}
-  .bchip b{display:block; font-size:11.5px; letter-spacing:-0.02em; color:#0a1c33}
-  .bchip span{font-size:9.5px; color:#5b6b7c; line-height:1.35; display:block; margin-top:2px}
+  .bchip{flex:0 0 auto; width:118px; background:var(--sky-50); border:1px solid #dceaf6; border-radius:11px; padding:9px 9px 10px}
+  .bchip .lg{height:21px; display:flex; align-items:center; margin-bottom:6px}
+  .bchip .lg img{height:21px; width:auto; max-width:100%; object-fit:contain; object-position:left center}
+  .bchip b{display:block; font-size:11px; letter-spacing:-0.02em; color:#0a1c33; line-height:1.3}
+  .bchip span{font-size:9px; color:#5b6b7c; line-height:1.35; display:block; margin-top:2px}
+  .brain{display:flex; flex-wrap:wrap; gap:5px; margin:9px 0 6px}
+  .bp{display:inline-flex; align-items:center; gap:5px; border:1px solid #e2eef8; background:#f7fbfe; border-radius:999px; padding:3px 8px 3px 6px}
+  .bp img{height:12px; width:auto; max-width:42px; object-fit:contain}
+  .bp i{font-style:normal; font-size:10px; font-weight:700; color:#41607d; white-space:nowrap}
+  .in-photo{display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:10px 0 0}
+  .in-photo figure{margin:0; border-radius:9px; overflow:hidden; background:#eef4fa; border:1px solid var(--line)}
+  .in-photo img{width:100%; aspect-ratio:4/3; object-fit:cover}
+  .in-photo figcaption{font-size:9.5px; color:#5b6b7c; padding:3px 5px; background:#fff; line-height:1.3}
   .acc{border:1px solid var(--line); border-radius:13px; background:#fff; overflow:hidden}
   .acc+.acc{margin-top:8px}
   .acc summary{list-style:none; cursor:pointer; padding:13px 14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
@@ -168,6 +223,7 @@
   .acc summary .chips{margin-left:auto; display:flex; gap:4px; flex-wrap:wrap; justify-content:flex-end}
   .acc summary .chips i{font-style:normal; font-size:9.5px; font-weight:700; color:#41607d; background:#f2f7fb; border:1px solid #e0ecf6; border-radius:999px; padding:2px 6px}
   .acc summary .chips i.soon{color:#fff; background:#1f7fc0; border-color:#1f7fc0; letter-spacing:.02em}
+  .acc summary .chips i.more{color:#14558a; background:var(--sky-100); border-color:#cfe6f8}
   .acc summary .arw{color:#93a7bb; font-size:11px; font-weight:800}
   .acc[open] summary .arw{transform:rotate(180deg)}
   .acc .body{padding:0 14px 13px; border-top:1px solid var(--line); margin-top:0}
@@ -181,6 +237,23 @@
   .coming span.t{font-size:10.5px; font-weight:700; color:#123a5f; line-height:1.4}
   .note-box{margin-top:11px; font-size:11px; color:#5b6b7c; background:var(--soft); border:1px solid #e4eff8; border-radius:10px; padding:10px 12px; line-height:1.55}
   .note-box b{color:#0a1c33}
+
+  /* 예약 전 확인사항 */
+  .bookwrap{padding:14px 18px 0}
+  .book{border:1px solid var(--line); border-radius:13px; background:#fff; overflow:hidden}
+  .book summary{list-style:none; cursor:pointer; padding:12px 13px; display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+  .book summary::-webkit-details-marker{display:none}
+  .book summary .bt{font-size:13.5px; font-weight:800; letter-spacing:-0.02em}
+  .book summary .bs{font-size:10.5px; font-weight:700; color:var(--blue); background:var(--sky-100); border-radius:5px; padding:2px 6px}
+  .book summary .arw{margin-left:auto; color:#93a7bb; font-size:11px; font-weight:800; transition:.15s}
+  .book[open] summary .arw{transform:rotate(180deg)}
+  .book .bb{border-top:1px solid var(--line); padding:4px 13px 12px}
+  .book .row{display:flex; gap:10px; padding:8px 0; border-bottom:1px solid #eef4fa}
+  .book .row:last-child{border-bottom:0; padding-bottom:2px}
+  .book .row .k{flex:0 0 62px; font-size:11px; font-weight:800; color:#41607d}
+  .book .row .v{font-size:11.5px; color:#40566d; line-height:1.5}
+  .book .row .v b{color:#0a1c33}
+  .book .row .v small{display:block; margin-top:2px; font-size:10px; color:#7b8fa3; line-height:1.45}
 
   /* 포트폴리오 */
   .pf-head{display:flex; align-items:flex-end; justify-content:space-between; gap:10px}
@@ -265,7 +338,7 @@
   </p>
   <div class="facts">
     <div><b>대표자 직접</b><span>시공·관리</span></div>
-    <div><b>정품 케미컬</b><span>5개 브랜드 라인업</span></div>
+    <div><b>정품 케미컬</b><span>10개 브랜드 라인업</span></div>
     <div><b>정기 관리</b><span>월 1·2·4회</span></div>
   </div>
   <div class="cta-row">
@@ -300,6 +373,28 @@
     </div>
   </div>
   <p class="svc-note"><b>오염이 심한 차량</b>은 필요에 따라 <b>3PH 세차</b>(산성·알칼리·중성 단계별 오염 분해), <b>페인트클렌징</b>(송진·묵은 오염·유분 제거) 등 맞춤 공정을 추가하며, 추가 작업은 <b>작업 전 먼저 안내</b>드립니다.</p>
+
+  <div class="care">
+    <div class="care-card">
+      <div class="ch"><span class="t">기본 케어</span></div>
+      <p class="sum">일상적인 주행 먼지·가벼운 오염을 정리하는 <b>표준 내·외부 세차</b></p>
+      <ul>
+        <li>주기적으로 관리하는 차량에 적합</li>
+        <li>묵은 오염·틈새 오염은 범위 밖(제한)</li>
+      </ul>
+    </div>
+    <div class="care-card prem">
+      <div class="ch"><span class="t">프리미엄 케어</span><span class="rec">추천</span></div>
+      <p class="sum">평소 세차가 아닌, <b>한 번 제대로 관리하고 싶은 차량</b> — 손이 안 닿는 틈새와 컨디션까지</p>
+      <ul>
+        <li>외부 오염 불림 + 정밀 세정, <b>휠 안쪽·휠살 집중 케어</b></li>
+        <li>손잡이·사이드머러·엠불럼·몰딩·그릴 틈새</li>
+        <li>실내 대시보드·송풍구·컵홀더·시트 틈새를 <b>브러쉬 디테일링</b>으로</li>
+        <li><b>가죽시트 세정 + 전용 보호제 마감</b> (필요 시 3PH·페인트클렌징)</li>
+      </ul>
+    </div>
+  </div>
+  <p class="care-note">프리미엄 케어는 픽업세차 <b>프리미엄</b> 코스로 진행되며, 차량 상태에 따른 추가 작업은 작업 전에 안내드립니다.</p>
 </section>
 
 <div class="divider"></div>
@@ -311,7 +406,7 @@
   <p class="lead">거품으로 오염을 불려내고, 틈새와 실내를 따로 케어한 뒤 유리까지 마무리합니다.</p>
 
   <div class="video-box">
-    <video src="assets/process.mp4" poster="assets/process-poster.jpg" autoplay muted loop playsinline preload="metadata" controls
+    <video src="assets/process.mp4?v=2" poster="assets/process-poster.jpg" autoplay muted loop playsinline preload="metadata" controls
            aria-label="세차 시공 과정 예시 영상"></video>
   </div>
   <p class="cap">시공 과정 예시 이미지 / 영상 · 실제 고객 차량 촬영본이 아닙니다</p>
@@ -338,6 +433,56 @@
       <div class="lbl">유리 유막·발수<small>비딩 확인</small></div>
     </div>
   </div>
+
+  <div class="ig-head">
+    <h3>실내 디테일링 <span class="thin">실제 작업 컷</span></h3>
+    <div class="ig-nav">
+      <button type="button" id="igPrev" aria-label="이전 사진">‹</button>
+      <span class="ig-count" id="igCount">1 / 7</span>
+      <button type="button" id="igNext" aria-label="다음 사진">›</button>
+    </div>
+  </div>
+  <p class="ig-lead">송풍구·버튼, 센터콘솔, 도어트림, 가죽 시트까지 — 손이 닿기 어려운 곳을 폼과 브러쉬로 나눠 케어합니다.</p>
+
+  <div class="ig-wrap">
+    <div class="ig-track" id="igTrack">
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-vent.jpg" alt="아반떼 AD 송풍구에 세정 폼을 넣어 케어하는 실제 작업 컷" loading="lazy"></div>
+        <div class="ic-body"><h4>아반떼 AD · 송풍구</h4><p>슬랫 사이까지 폼을 넣어 오염을 불려낸 뒤 브러쉬로 마무리했습니다.</p><a href="https://blog.naver.com/sechabooo/224464699820" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag ex">예시 이미지</span><img src="assets/ex-brush.jpg" alt="디테일링 브러쉬로 송풍구를 닦는 작업 예시 이미지" loading="lazy"></div>
+        <div class="ic-body"><h4>송풍구·버튼 브러쉬</h4><p>버튼 틈과 슬랫 사이는 브러쉬로 한 칸씩 닦아냅니다.</p></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-seat.jpg" alt="기아 레이 가죽 시트에 폼을 올려 케어하는 실제 작업 컷" loading="lazy"></div>
+        <div class="ic-body"><h4>기아 레이 · 가죽 시트</h4><p>가죽 시트에 폼을 올려 오염을 불려내고 브러쉬로 닦아냈습니다.</p><a href="https://blog.naver.com/sechabooo/224431082719" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag ex">예시 이미지</span><img src="assets/ex-steam.jpg" alt="가좍 시트를 스팀으로 케어하는 작업 예시 이미지" loading="lazy"></div>
+        <div class="ic-body"><h4>가좍 시트 스팀</h4><p>스팀으로 시트 틈과 눌린 자국을 정리합니다.</p></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-console.jpg" alt="아반떼 AD 센터콘솔과 컵홀더를 세정하는 실제 작업 컷" loading="lazy"></div>
+        <div class="ic-body"><h4>아반떼 AD · 센터콘솔</h4><p>컵홀더·기어 노부 주변까지 세정제로 골라 정리했습니다.</p><a href="https://blog.naver.com/sechabooo/224464699820" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-door.jpg" alt="아반떼 AD 도어트림을 세정제로 닦아내는 실제 작업 컷" loading="lazy"></div>
+        <div class="ic-body"><h4>아반떼 AD · 도어트림</h4><p>손잡이·암레스트처럼 손이 많이 닿는 부위를 골라 케어했습니다.</p><a href="https://blog.naver.com/sechabooo/224464699820" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-rear.jpg" alt="티볼리 뒷좌석 가좍 시트를 폼으로 케어하는 실제 작업 컷" loading="lazy"></div>
+        <div class="ic-body"><h4>티볼리 · 뒷좌석</h4><p>뒷좌석 시트 전체를 폼으로 케어하고 마무리했습니다.</p><a href="https://blog.naver.com/sechabooo/224442360393" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+      </article>
+    </div>
+  </div>
+  <p class="cap">실제 작업 컷은 촬영한 차량명을 표기했고, 브러쉬·스팀 컷 2장은 시공 과정 예시 이미지입니다</p>
 </section>
 
 <!-- ───────── 가격 ───────── -->
@@ -384,37 +529,76 @@
   </div>
 </section>
 
+<!-- ───────── 예약 전 확인사항 ───────── -->
+<section class="bookwrap">
+  <details class="book">
+    <summary>
+      <span class="bt">예약 전 확인사항</span>
+      <span class="bs">예약금 2만원 · 추가비용 사전 안내</span>
+      <span class="arw">▾</span>
+    </summary>
+    <div class="bb">
+      <div class="row"><span class="k">예약금</span><span class="v"><b>20,000원 선불</b><small>신한은행 110-640-843743 · 예금주 박지민<br>당일 취소·변경 환불 불가 / 천재지변·업체 사정은 100% 환불</small></span></div>
+      <div class="row"><span class="k">예약 시 전달</span><span class="v">차량 주소 · 연락처 · 차량번호 · 차종 · 차량 색상 · 차량 위치</span></div>
+      <div class="row"><span class="k">추가 비용</span><span class="v">고성능 브레이크 분진 집중 케어 <b>+5,000원</b><br>심한 먼지·오염도 추가 작업 <b>+5,000원</b><small>추가 작업은 사전 안내 후 진행</small></span></div>
+      <div class="row"><span class="k">사전 고지</span><span class="v">도색·랩핑·기존 손상 사전 고지 / 귀중품·짐 사전 정리<small>천장(헤드라이너) 전체 세척은 진행하지 않고 안전 범위만 부분 케어합니다</small></span></div>
+    </div>
+  </details>
+</section>
+
 <div class="divider"></div>
 
 <!-- ───────── 사용 제품 ───────── -->
 <section>
   <span class="eyebrow">Products</span>
   <h2>부위별로 <span class="thin">다른 정품 케미컬</span></h2>
-  <p class="lead">도장면·휠·실내·유리에 맞춰 제품군을 나눠 사용합니다. 항목을 눌러 라인업을 확인하세요.</p>
+  <p class="lead">도장면·휠·실내·유리를 나눠 정품 케미컬로 케어합니다. 부위를 누르면 브랜드 라인업이 열립니다.</p>
 
   <div class="brandstrip">
-    <div class="bchip"><b>라보코스메티카</b><span>이탈리아 · 유리·세정 전문 라인</span></div>
-    <div class="bchip"><b>기온쿼츠 GYEON</b><span>스웨덴 · 세라믹 코팅·발수</span></div>
-    <div class="bchip"><b>케미컬가이</b><span>미국 · 세차·드레싱 라인 폭넓음</span></div>
-    <div class="bchip"><b>루미너스</b><span>국내 · 워터리스·실내 케어</span></div>
-    <div class="bchip"><b>코흐케미</b><span>독일 · 산업용 기반 세정제</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/labocosmetica.svg" alt="Labocosmetica 로고" loading="lazy"></div><b>라보코스메티카</b><span>이탈리아 · 유리·세정 전문</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/gyeon.svg" alt="GYEON 로고" loading="lazy"></div><b>기온쿼츠 GYEON</b><span>스웨덴 · 세라믹 코팅·발수</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/chemicalguys.svg" alt="Chemical Guys 로고" loading="lazy"></div><b>케미컬가이</b><span>미국 · 세차·드레싱 폭넓음</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/luminus.svg" alt="LUMINUS 로고" loading="lazy"></div><b>루미너스</b><span>국내 · 워터리스·실내 케어</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/kochchemie.svg" alt="Koch-Chemie 로고" loading="lazy"></div><b>코흐케미</b><span>독일 · 산업용 기반 세정제</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/carpro.svg" alt="CarPro 로고" loading="lazy"></div><b>카프로</b><span>미국 · 철분 제거·코팅</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/sonax.svg" alt="SONAX 로고" loading="lazy"></div><b>소낙스</b><span>독일 · 세차·광택 대표 브랜드</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/meguiars.svg" alt="Meguiar's 로고" loading="lazy"></div><b>맥과이어스</b><span>미국 · 왁스·컴파운드</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/soft99.svg" alt="Soft99 로고" loading="lazy"></div><b>소프트99</b><span>일본 · 발수 왁스 강자</span></div>
+    <div class="bchip"><div class="lg"><img src="assets/brands/autofinesse.svg" alt="Auto Finesse 로고" loading="lazy"></div><b>오토피네스</b><span>영국 · 디테일링 케어</span></div>
   </div>
 
   <details class="acc" open>
     <summary>
       <span class="part">실외</span><span class="use">도장면</span>
-      <span class="chips"><i>코흐케미</i><i>케미컬가이</i><i>루미너스</i></span>
+      <span class="chips"><i>코흐케미</i><i>카프로</i><i>맥과이어스</i><i class="more">+4</i></span>
       <span class="arw">▾</span>
     </summary>
     <div class="body">
+      <div class="brain">
+        <span class="bp"><img src="assets/brands/kochchemie.svg" alt="" loading="lazy"><i>코흐케미</i></span>
+        <span class="bp"><img src="assets/brands/carpro.svg" alt="" loading="lazy"><i>카프로</i></span>
+        <span class="bp"><img src="assets/brands/meguiars.svg" alt="" loading="lazy"><i>맥과이어스</i></span>
+        <span class="bp"><img src="assets/brands/sonax.svg" alt="" loading="lazy"><i>소낙스</i></span>
+        <span class="bp"><img src="assets/brands/chemicalguys.svg" alt="" loading="lazy"><i>케미컬가이</i></span>
+        <span class="bp"><img src="assets/brands/autofinesse.svg" alt="" loading="lazy"><i>오토피네스</i></span>
+        <span class="bp"><img src="assets/brands/luminus.svg" alt="" loading="lazy"><i>루미너스</i></span>
+      </div>
       <p class="flow">프리워시 → 본세차 → (필요 시) 3PH 세차·페인트클렌징 → 왁스 / 습식코팅</p>
       <dl>
         <dt>코흐케미 (Koch-Chemie)</dt>
-        <dd>독일 산업용 케미컬 기반. 거품 세정과 철분·유분 분해 계열을 단계적으로 쓰기 좋아 오염이 많은 차량에 먼저 검토합니다.</dd>
+        <dd>프리워시·거품 세정으로 묵은 오염을 단계적으로 불려냅니다.</dd>
+        <dt>카프로 (CarPro)</dt>
+        <dd>철분 제거(Iron.X)·샴푸(Reset) 계열로 도장면에 박힌 철분과 미세 오염을 정리합니다.</dd>
+        <dt>맥과이어스 (Meguiar's)</dt>
+        <dd>Gold Class 샴푸·Mirror Glaze 컴파운드 계열로 광택·마무리를 맡습니다.</dd>
+        <dt>소낙스 (SONAX)</dt>
+        <dd>독일 대표 세차·광택 라인. 오염 분해와 발수 왁스 마무리에 씁니다.</dd>
         <dt>케미컬가이 (Chemical Guys)</dt>
-        <dd>세차 샴푸부터 트림·타이어 드레싱까지 라인이 넓어, 마무리 광택과 검은 플라스틱 정리에 활용합니다.</dd>
+        <dd>샴푸부터 트림·타이어 드레싱까지 폭이 넓어 마무리 정리에 활용합니다.</dd>
+        <dt>오토피네스 (Auto Finesse)</dt>
+        <dd>Lather 샴푸·Tough Coat 실런트 계열로 마감합니다.</dd>
         <dt>루미너스 (LUMINUS)</dt>
-        <dd>국내 디테일링 라인. 워터리스 환경에서 도장면 마찰을 줄이는 윤활·세정 조합으로 사용합니다.</dd>
+        <dd>워터리스 환경에서 마찰을 줄이는 윤활 세정 조합으로 사용합니다.</dd>
       </dl>
       <p style="font-size:11px;color:#5b6b7c;margin:8px 0 0">오염 상태에 따라 <b>3PH 세차</b>(산성→알칼리→중성 단계 분해)와 <b>페인트클렌징</b>을 추가합니다.</p>
     </div>
@@ -423,18 +607,32 @@
   <details class="acc">
     <summary>
       <span class="part">휠·타이어</span><span class="use">분진</span>
-      <span class="chips"><i>코흐케미</i><i>케미컬가이</i><i>루미너스</i></span>
+      <span class="chips"><i>코흐케미</i><i>카프로</i><i>소낙스</i><i class="more">+3</i></span>
       <span class="arw">▾</span>
     </summary>
     <div class="body">
+      <div class="brain">
+        <span class="bp"><img src="assets/brands/kochchemie.svg" alt="" loading="lazy"><i>코흐케미</i></span>
+        <span class="bp"><img src="assets/brands/carpro.svg" alt="" loading="lazy"><i>카프로</i></span>
+        <span class="bp"><img src="assets/brands/sonax.svg" alt="" loading="lazy"><i>소낙스</i></span>
+        <span class="bp"><img src="assets/brands/meguiars.svg" alt="" loading="lazy"><i>맥과이어스</i></span>
+        <span class="bp"><img src="assets/brands/chemicalguys.svg" alt="" loading="lazy"><i>케미컬가이</i></span>
+        <span class="bp"><img src="assets/brands/soft99.svg" alt="" loading="lazy"><i>소프트99</i></span>
+      </div>
       <p class="flow">분진 제거 → 브러쉬 디테일 → 타이어 드레싱</p>
       <dl>
         <dt>코흐케미</dt>
-        <dd>브레이크 분진·철분 계열 오염을 녹여내는 산성/중성 세정제로 휠 안쪽부터 접근합니다.</dd>
+        <dd>브레이크 분진·철분 계열 오염을 녹여내는 세정제로 휠 안쪽부터 접근합니다.</dd>
+        <dt>카프로</dt>
+        <dd>Iron.X 철분 제거와 Perl 타이어·트림 드레싱으로 마무리합니다.</dd>
+        <dt>소낙스</dt>
+        <dd>휠 클리너 계열로 분진을 불려내고 헹군 뒤 잔여물을 정리합니다.</dd>
+        <dt>맥과이어스</dt>
+        <dd>휠 클리너·타이어 광택제로 스포크 사이와 사이드월을 정리합니다.</dd>
         <dt>케미컬가이</dt>
-        <dd>휠 클리너와 타이어·트림 드레싱으로 마무리 광을 정리합니다.</dd>
-        <dt>루미너스</dt>
-        <dd>휠 굴곡과 스포크 사이처럼 손이 닿기 어려운 부위의 잔여 오염 마무리에 사용합니다.</dd>
+        <dd>타이어 드레싱으로 검은 색과 광을 고르게 마무리합니다.</dd>
+        <dt>소프트99</dt>
+        <dd>발수·왁스 라인으로 휠 마무리와 오염 부착 억제에 활용합니다.</dd>
       </dl>
     </div>
   </details>
@@ -442,19 +640,37 @@
   <details class="acc">
     <summary>
       <span class="part">실내</span><span class="use">시트·내장재</span>
-      <span class="chips"><i class="soon">COMING SOON</i><i>코흐케미</i><i>케미컬가이</i><i>루미너스</i></span>
+      <span class="chips"><i class="soon">COMING SOON</i><i>코흐케미</i><i>맥과이어스</i><i class="more">+4</i></span>
       <span class="arw">▾</span>
     </summary>
     <div class="body">
-      <p class="flow">건식 먼지 제거 → 소재별 세정 → 마무리 코팅</p>
+      <div class="brain">
+        <span class="bp"><img src="assets/brands/kochchemie.svg" alt="" loading="lazy"><i>코흐케미</i></span>
+        <span class="bp"><img src="assets/brands/meguiars.svg" alt="" loading="lazy"><i>맥과이어스</i></span>
+        <span class="bp"><img src="assets/brands/sonax.svg" alt="" loading="lazy"><i>소낙스</i></span>
+        <span class="bp"><img src="assets/brands/chemicalguys.svg" alt="" loading="lazy"><i>케미컬가이</i></span>
+        <span class="bp"><img src="assets/brands/autofinesse.svg" alt="" loading="lazy"><i>오토피네스</i></span>
+        <span class="bp"><img src="assets/brands/luminus.svg" alt="" loading="lazy"><i>루미너스</i></span>
+      </div>
+      <p class="flow">건식 먼지 제거 → 송풍구·버튼 브러쉬 → 소재별 세정 → 마무리 코팅</p>
       <dl>
         <dt>코흐케미</dt>
         <dd>가죽·패브릭·플라스틱을 구분한 세정제로 오염 부위만 골라 작업합니다.</dd>
+        <dt>맥과이어스</dt>
+        <dd>Quik Interior Detailer 계열로 대시보드·트림 먼지를 빠르게 정리합니다.</dd>
+        <dt>소낙스</dt>
+        <dd>실내 세정·케어 라인으로 시트와 내장재의 묵은 오염을 정리합니다.</dd>
         <dt>케미컬가이</dt>
-        <dd>실내 클리너와 내장재 드레싱으로 먼지 부착을 줄이는 마무리를 합니다.</dd>
+        <dd>실내 클리너·내장재 드레싱으로 먼지 부착을 줄입니다.</dd>
+        <dt>오토피네스</dt>
+        <dd>Hide 가죽 케어·Spritz 실내 클리너 계열로 가죽 시트를 마무리합니다.</dd>
         <dt>루미너스</dt>
-        <dd>국내 실내 케어 라인으로 시트·매트의 묵은 오염 마무리에 사용합니다.</dd>
+        <dd>국내 실내 케어 라인으로 시트·매트의 묻은 오염 마무리에 사용합니다.</dd>
       </dl>
+      <div class="in-photo">
+        <figure><img src="assets/in-vent.jpg" alt="아반떼 AD 송풍구 디테일링 실제 작업" loading="lazy"><figcaption>송풍구 · 아반떼 AD</figcaption></figure>
+        <figure><img src="assets/in-seat.jpg" alt="기아 레이 가죽 시트 폼 케어 실제 작업" loading="lazy"><figcaption>가죽 시트 · 기아 레이</figcaption></figure>
+      </div>
       <div class="coming">
         <span class="tag">런칭 예정</span>
         <span class="t">실내 바이러스 · 공조기(에어컨/히터) 케어를 준비하고 있습니다. 시작되면 안내드립니다</span>
@@ -469,6 +685,10 @@
       <span class="arw">▾</span>
     </summary>
     <div class="body">
+      <div class="brain">
+        <span class="bp"><img src="assets/brands/labocosmetica.svg" alt="" loading="lazy"><i>라보코스메티카</i></span>
+        <span class="bp"><img src="assets/brands/gyeon.svg" alt="" loading="lazy"><i>기온쿼츠</i></span>
+      </div>
       <p class="flow">유막 제거 → 유리 세정 → 발수코팅 → 비딩 확인</p>
       <dl>
         <dt>라보코스메티카 비트레오 (Vitreo)</dt>
@@ -481,7 +701,7 @@
   </details>
 
   <div class="note-box">
-    실외·휠·실내는 <b>대표 라인업 예시</b>로 정리했습니다. 실제 사용 제품은 차량 상태와 작업 범위에 따라 달라지며, 엔진룸 세척·전체 광택은 기본에 포함되지 않습니다.
+    실외·휠·실내는 <b>대표 정품 브랜드 라인업 예시</b>입니다. 실제 사용 제품은 차량 상태와 작업 범위에 따라 달라지며, 유리(라보코스메티카 비트레오 · 기온쿼츠 Q² 뷰)만 실제 사용 제품입니다. 엔진룸 세척·전체 광택은 기본에 포함되지 않습니다.
   </div>
 </section>
 
@@ -494,9 +714,9 @@
       <span class="eyebrow">Portfolio</span>
       <h2 style="margin-bottom:2px">실제 작업 차량</h2>
     </div>
-    <span class="pf-count" id="pfCount">1 / 18</span>
+    <span class="pf-count" id="pfCount">1 / 20</span>
   </div>
-  <p class="lead">고급 차량 순으로 정리했습니다. 옆으로 넘기면 다음 차량이 나옵니다.</p>
+  <p class="lead">고급 차량 순으로 정리했습니다. 옆으로 넘기면 다음 차량이 나옵니다. 마지막 두 장은 실내 디테일링 작업 컷입니다.</p>
 
   <div class="pf-wrap">
     <div class="pf-track" id="pfTrack">
@@ -679,6 +899,26 @@
           <h3>모닝</h3>
           <p>아이를 태우는 차량의 실내 청소 요청. 실내를 먼저 정리하고 유막 제거·발수코팅까지 진행했습니다.</p>
           <a class="link" href="https://blog.naver.com/sechabooo/224406102463" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="pf-slide">
+        <div class="shot"><span class="rank">19 · 기아</span><img src="assets/pf-19-ray-in.jpg" alt="기아 레이 가죽 시트 폼 케어 실내 디테일링" loading="lazy"></div>
+        <div class="pf-body">
+          <div class="meta"><i class="t">실내 디테일링</i><i>가죽 시트</i></div>
+          <h3>기아 레이 · 시트 케어</h3>
+          <p>가죽 시트에 폼을 올려 오염을 불려낸 뒤 브러쉬로 닦아냈습니다. 시트 틈과 레일까지 함께 정리했습니다.</p>
+          <a class="link" href="https://blog.naver.com/sechabooo/224431082719" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
+        </div>
+      </article>
+
+      <article class="pf-slide">
+        <div class="shot"><span class="rank">20 · 쌍용</span><img src="assets/pf-20-tivoli-in.jpg" alt="티볼리 뒷좌석 가죽 시트 폼 케어 실내 디테일링" loading="lazy"></div>
+        <div class="pf-body">
+          <div class="meta"><i class="t">실내 디테일링</i><i>뒷좌석</i></div>
+          <h3>티볼리 · 뒷좌석 시트</h3>
+          <p>낙진 제거 작업과 함께 뒷좌석 시트를 폼으로 케어했습니다. 시트 사이 틈의 먼지까지 정리했습니다.</p>
+          <a class="link" href="https://blog.naver.com/sechabooo/224442360393" target="_blank" rel="noopener">블로그 작업일지 <span>→</span></a>
         </div>
       </article>
 
@@ -909,6 +1149,38 @@
   next.addEventListener('click', function(){ go(idx + 1); });
   window.addEventListener('resize', sync);
   sync();
+
+  /* ── 실내 작업 갤러리 ── */
+  (function(){
+    var t = document.getElementById('igTrack');
+    if (!t) return;
+    var items = Array.prototype.slice.call(t.querySelectorAll('.ic'));
+    var pr = document.getElementById('igPrev'), nx = document.getElementById('igNext'), cn = document.getElementById('igCount');
+    var i = 0, tm = null;
+    function syncRail(){
+      var center = t.scrollLeft + t.clientWidth/2, best = 0, bd = Infinity;
+      items.forEach(function(el, k){
+        var c = el.offsetLeft - t.offsetLeft + el.clientWidth/2;
+        var d = Math.abs(c - center);
+        if (d < bd){ bd = d; best = k; }
+      });
+      i = best;
+      if (cn) cn.textContent = (i+1) + ' / ' + items.length;
+      if (pr) pr.disabled = i === 0;
+      if (nx) nx.disabled = i === items.length-1;
+    }
+    function goRail(k){
+      i = Math.max(0, Math.min(items.length-1, k));
+      var el = items[i];
+      t.scrollTo({left: el.offsetLeft - t.offsetLeft - (t.clientWidth - el.clientWidth)/2, behavior:'smooth'});
+      syncRail();
+    }
+    if (pr) pr.addEventListener('click', function(){ goRail(i-1); });
+    if (nx) nx.addEventListener('click', function(){ goRail(i+1); });
+    t.addEventListener('scroll', function(){ clearTimeout(tm); tm = setTimeout(syncRail, 90); }, {passive:true});
+    window.addEventListener('resize', syncRail);
+    syncRail();
+  })();
 
   /* 영상 자동재생이 막히면 포스터로 대체 */
   var v = document.querySelector('.video-box video');
