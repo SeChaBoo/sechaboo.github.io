@@ -298,6 +298,7 @@
   .prechk li{position:relative; padding:0 0 11px 18px; font-size:13px; line-height:1.6; color:var(--body)}
   .prechk li b{color:var(--ink); font-weight:800}
   .prechk li::before{content:""; position:absolute; left:3px; top:7px; width:6px; height:6px; border-radius:50%; background:var(--accent)}
+  @media (min-width:768px){ .prechk ul{display:grid; grid-template-columns:1fr 1fr; gap:0 24px} }
 
   footer{padding:26px 0 34px; color:var(--gray); font-size:12.5px; line-height:1.75; text-align:center}
   footer b{color:var(--ink); font-size:13.5px}
