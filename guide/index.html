@@ -229,8 +229,10 @@
   .pf-s .shot .zm{position:absolute; right:6px; bottom:6px; width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,.92);
     color:var(--navy); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800}
   .pf-s .cd{padding:7px 9px 8px}
-  .pf-s h4{margin:0 0 1px; font-size:12.5px; font-weight:800; letter-spacing:-0.03em; line-height:1.3}
-  .pf-s .meta{margin:0; font-size:10.5px; color:var(--gray); line-height:1.35}
+  .pf-s h4{margin:0 0 1px; font-size:12.5px; font-weight:800; letter-spacing:-0.03em; line-height:1.3;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .pf-s .meta{margin:0; font-size:10.5px; color:var(--gray); line-height:1.35;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
   .pf-note{margin:12px 0 0; font-size:12px; color:var(--gray); line-height:1.5}
 
   /* ── 라이트박스 ── */
@@ -632,7 +634,7 @@
       </button>
     </div>
 
-    <div class="pfgroup">
+    <div class="pfgroup" id="pfVisitGroup">
       <div class="railhead">
         <h3>출장세차 작업 차량 <span class="cnt">12대</span></h3>
         <div class="railnav">
@@ -694,7 +696,7 @@
       </div>
     </div>
 
-    <div class="pfgroup">
+    <div class="pfgroup" id="pfPickupGroup">
       <div class="railhead">
         <h3>픽업 디테일링 작업 차량 <span class="cnt">8대</span></h3>
         <div class="railnav">
