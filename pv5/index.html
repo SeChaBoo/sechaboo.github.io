@@ -184,6 +184,9 @@
   .vid .vc{margin:0; padding:12px 18px 16px; font-size:14.5px; line-height:1.5; color:#A9C0D6; text-align:center}
   .vid .vc b{color:#fff}
 
+  .work-top{margin-bottom:8px}
+  .vfacts{display:flex; flex-wrap:wrap; gap:8px; margin:0; padding:0; list-style:none}
+  .vfacts li{font-size:14px; font-weight:700; color:#0E5F7E; background:var(--sky-soft); border-radius:999px; padding:6px 12px}
   .subhead{margin:48px 0 6px}
   .subhead h3{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0; font-size:22px; font-weight:800; letter-spacing:-0.035em}
   .subhead p{margin:4px 0 0; font-size:15px; color:var(--gray)}
@@ -317,6 +320,8 @@
     .grid-pf{grid-template-columns:repeat(4,1fr)}
     .why{grid-template-columns:repeat(3,1fr); column-gap:32px}
     .why-item:nth-last-child(-n+3){border-bottom:0}
+    .work-top{display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:center; margin-bottom:24px}
+    .vid{max-width:100%}
     .pricebox .pgrid{display:grid; grid-template-columns:1fr 1fr; gap:0 40px; align-items:start}
     .plist{grid-template-columns:1fr}
     .pricebox .pricegroup+.pricegroup{margin-top:0; padding-top:0; border-top:0}
@@ -668,16 +673,23 @@
 <!-- ══════════ 5. PORTFOLIO ══════════ -->
 <section class="band" id="work">
   <div class="wrap">
-    <span class="kicker">Portfolio</span>
-    <h2>실제 작업 <span class="dim">사진과 영상</span></h2>
-    <p class="lead">촬영한 실제 작업만 올립니다. 사진을 누르면 크게 볼 수 있습니다.</p>
-
-    <div class="vid">
+    <div class="work-top">
+      <div class="work-intro">
+        <span class="kicker">Portfolio</span>
+        <h2>실제 작업 <span class="dim">사진과 영상</span></h2>
+        <p class="lead">촬영한 실제 작업만 올립니다. 영상은 버튼 없이 재생되고, 사진을 누르면 크게 볼 수 있습니다.</p>
+        <ul class="vfacts">
+          <li>7초 실제 촬영 · 무음 반복</li>
+          <li>실내 12컷 · 차량 20대</li>
+        </ul>
+      </div>
+      <div class="vid">
       <div class="vh"><span class="bd">현장 영상</span>유리 유막 제거 · 발수코팅<em>7초 · 반복</em></div>
       <video src="assets/glass-work.mp4?v=5" poster="assets/glass-still.jpg?v=5"
              autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture
              aria-label="유리 유막 제거와 발수코팅 작업 현장 7초 영상"></video>
       <p class="vc">실제 작업 현장을 촬영한 <b>7초 영상</b>입니다. 재생 버튼 없이 계속 재생됩니다.</p>
+      </div>
     </div>
 
     <div class="subhead">
