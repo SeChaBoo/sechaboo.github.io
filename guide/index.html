@@ -165,6 +165,18 @@
     background:rgba(10,28,51,.86); color:#fff}
   .gcap{margin:6px 0 0; font-size:10px; color:#8395a7; line-height:1.45; text-align:center}
 
+  /* 유리 현장 영상 (아코디언 밖 · 재생 버튼 없이 자동 재생) */
+  .gvid{margin:16px 0 0; border-radius:16px; overflow:hidden; background:#071527; box-shadow:0 10px 26px rgba(10,28,51,.16)}
+  .gvid .gv-h{display:flex; align-items:center; gap:7px; padding:10px 13px 9px; color:#fff; font-size:12.5px; font-weight:800; letter-spacing:-0.02em; flex-wrap:wrap}
+  .gvid .gv-h span{font-size:9.5px; font-weight:900; color:#04121f; background:#8fd3ff; border-radius:5px; padding:2px 6px; letter-spacing:0}
+  .gvid .gv-h em{font-style:normal; font-weight:600; font-size:10px; color:#a9c3dc; margin-left:auto}
+  .gvid .gv-box{position:relative; background:#050f1c}
+  .gvid video{display:block; width:100%; aspect-ratio:4/5; max-height:496px; object-fit:cover; background:#050f1c}
+  .gvid.noplay .gv-box::after{content:"탭하면 재생됩니다"; position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
+    font-size:10.5px; font-weight:800; color:#04121f; background:rgba(255,255,255,.94); border-radius:999px; padding:5px 11px; pointer-events:none}
+  .gvid .gv-cap{margin:0; padding:9px 13px 11px; font-size:10.5px; color:#9db9d2; line-height:1.45; text-align:center}
+  .gvid .gv-cap b{color:#fff; font-weight:700}
+
   /* 작업 과정 */
   .video-box{position:relative; border-radius:16px; overflow:hidden; background:#071527; box-shadow:0 10px 26px rgba(10,28,51,.16)}
   .video-box video{width:100%; aspect-ratio:16/9; object-fit:cover; background:#071527}
@@ -192,12 +204,14 @@
   .ig-track{display:flex; gap:9px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
     scrollbar-width:none; padding:2px 18px 6px}
   .ig-track::-webkit-scrollbar{display:none}
-  .ic{flex:0 0 68%; max-width:270px; scroll-snap-align:center; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff}
-  .ic-shot{position:relative; aspect-ratio:4/3; background:#eef4fa}
+  .ic{flex:0 0 70%; max-width:286px; scroll-snap-align:center; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff}
+  .ic-shot{position:relative; aspect-ratio:4/5; background:#eef4fa}
   .ic-shot img{width:100%; height:100%; object-fit:cover}
   .ic-tag{position:absolute; top:7px; left:7px; font-size:9px; font-weight:800; padding:3px 6px; border-radius:999px;
     background:rgba(10,28,51,.86); color:#fff; -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px)}
   .ic-tag.ex{background:rgba(255,255,255,.94); color:#3d5570; border:1px solid #d7e5f2}
+  .ic-car{position:absolute; top:7px; right:7px; font-size:9px; font-weight:800; padding:3px 6px; border-radius:999px;
+    background:rgba(255,255,255,.94); color:#14558a; border:1px solid #d7e5f2}
   .ic-body{padding:9px 11px 11px}
   .ic-body h4{margin:0 0 3px; font-size:12.5px; letter-spacing:-0.02em}
   .ic-body p{margin:0; font-size:11px; color:#4d6175; line-height:1.45}
@@ -480,7 +494,8 @@
   <p class="lead">거품으로 오염을 불려내고, 틈새와 실내를 따로 케어한 뒤 유리까지 마무리합니다.</p>
 
   <div class="video-box">
-    <video src="assets/process.mp4?v=3" poster="assets/process-poster.jpg" autoplay muted loop playsinline preload="metadata" controls
+    <video src="assets/process.mp4?v=4" poster="assets/process-poster.jpg"
+           autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture
            aria-label="세차 시공 과정 예시 영상"></video>
   </div>
   <p class="cap">영상은 예시 컷과 실제 작업 컷을 함께 구성했습니다 · 실제 작업 컷은 촬영 차량을 표기합니다</p>
@@ -508,50 +523,91 @@
     </div>
   </div>
 
-  <div class="ig-head">
+  <!-- 유리 유막·발수 현장 영상 : 아코디언 밖에서 재생 버튼 없이 자동 재생 -->
+  <div class="gvid" id="glassVid">
+    <div class="gv-h"><span>현장 영상</span>유리 유막 제거 · 발수코팅<em>무음 · 반복 재생</em></div>
+    <div class="gv-box">
+      <video src="assets/glass-work.mp4?v=4" poster="assets/glass-still.jpg"
+             autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture
+             aria-label="유리 세정·유막 제거·발수코팅 작업 현장 영상"></video>
+    </div>
+    <p class="gv-cap">실제 작업 현장을 촬영한 <b>6초 영상</b> · 재생 버튼 없이 계속 반복 재생됩니다</p>
+  </div>
+
+  <div class="ig-head" style="margin-top:24px">
     <h3>실내 디테일링 <span class="thin">실제 작업 컷</span></h3>
     <div class="ig-nav">
       <button type="button" id="igPrev" aria-label="이전 사진">‹</button>
-      <span class="ig-count" id="igCount">1 / 6</span>
+      <span class="ig-count" id="igCount">1 / 12</span>
       <button type="button" id="igNext" aria-label="다음 사진">›</button>
     </div>
   </div>
-  <p class="ig-lead">송풍구·버튼, 센터콘솔, 도어트림, 가죽 시트까지 — 손이 닿기 어려운 곳을 폼과 브러쉬로 나눠 케어합니다.</p>
+  <p class="ig-lead">핸들·도어실·송풍구·내비·가죽 시트까지, 손이 닿기 어려운 곳을 폼과 브러쉬로 나눠 케어한 실제 작업 컷입니다. 옆으로 넘겨 보세요.</p>
 
   <div class="ig-wrap">
     <div class="ig-track" id="igTrack">
       <article class="ic">
-        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-vent.jpg" alt="아반떼 AD 송풍구에 세정 폼을 넣어 케어하는 실제 작업 컷" loading="lazy"></div>
-        <div class="ic-body"><h4>아반떼 AD · 송풍구</h4><p>슬랫 사이까지 폼을 넣어 오염을 불려낸 뒤 브러쉬로 마무리했습니다.</p><a href="https://blog.naver.com/sechabooo/224464699820" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+        <div class="ic-shot"><span class="ic-tag">스티어링 휠</span><span class="ic-car">포르쉐</span><img src="assets/interior/01-porsche-steering.jpg" alt="포르쉐 스티어링 휠에 폼을 넣어 브러쉬로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>포르쉐 · 스티어링 휠</h4><p>핸들 테두리와 스포크 사이까지 폼을 넣어 오염을 불린 뒤 브러쉬로 닦아냈습니다.</p></div>
       </article>
 
       <article class="ic">
-        <div class="ic-shot"><span class="ic-tag ex">예시 이미지</span><img src="assets/ex-brush.jpg" alt="디테일링 브러쉬로 송풍구를 닦는 작업 예시 이미지" loading="lazy"></div>
-        <div class="ic-body"><h4>송풍구·버튼 브러쉬</h4><p>버튼 틈과 슬랫 사이는 브러쉬로 한 칸씩 닦아냅니다.</p></div>
+        <div class="ic-shot"><span class="ic-tag">가죽 시트</span><img src="assets/interior/02-seat-foam.jpg" alt="가죽 시트에 세정 폼을 올려 브러쉬로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>가죽 시트 폼 케어</h4><p>시트 전체에 폼을 올려 불린 뒤 브러쉬로 한 칸씩 오염을 걷어냅니다.</p></div>
       </article>
 
       <article class="ic">
-        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-seat.jpg" alt="기아 레이 가죽 시트에 폼을 올려 케어하는 실제 작업 컷" loading="lazy"></div>
-        <div class="ic-body"><h4>기아 레이 · 가죽 시트</h4><p>가죽 시트에 폼을 올려 오염을 불려내고 브러쉬로 닦아냈습니다.</p><a href="https://blog.naver.com/sechabooo/224431082719" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+        <div class="ic-shot"><span class="ic-tag">스티어링 휠</span><img src="assets/interior/03-wheel-tan.jpg" alt="밝은 가죽 스티어링 휠에 폼을 넣어 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>가죽 핸들 케어</h4><p>밝은 가죽 핸들은 오염이 눈에 띄어 스포크 안쪽까지 나눠서 닦았습니다.</p></div>
       </article>
 
       <article class="ic">
-        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-console.jpg" alt="아반떼 AD 센터콘솔과 컵홀더를 세정하는 실제 작업 컷" loading="lazy"></div>
-        <div class="ic-body"><h4>아반떼 AD · 센터콘솔</h4><p>컵홀더·기어 노브 주변까지 세정제로 골라 정리했습니다.</p><a href="https://blog.naver.com/sechabooo/224464699820" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+        <div class="ic-shot"><span class="ic-tag">도어트림·송풍구</span><img src="assets/interior/04-porsche-door-vent.jpg" alt="도어트림과 원형 송풍구 주변을 폼으로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>도어트림 · 송풍구</h4><p>원형 송풍구 주변과 도어 암레스트 틈까지 폼으로 불려 브러쉬로 마무리했습니다.</p></div>
       </article>
 
       <article class="ic">
-        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-door.jpg" alt="아반떼 AD 도어트림을 세정제로 닦아내는 실제 작업 컷" loading="lazy"></div>
-        <div class="ic-body"><h4>아반떼 AD · 도어트림</h4><p>손잡이·암레스트처럼 손이 많이 닿는 부위를 골라 케어했습니다.</p><a href="https://blog.naver.com/sechabooo/224464699820" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+        <div class="ic-shot"><span class="ic-tag">도어트림</span><img src="assets/interior/05-door-panel.jpg" alt="도어트림과 윈도우 스위치 주변을 폼으로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>도어트림 · 버튼 주변</h4><p>윈도우 스위치와 손잡이 주변처럼 손이 닿는 부위를 집중해서 케어했습니다.</p></div>
       </article>
 
       <article class="ic">
-        <div class="ic-shot"><span class="ic-tag">실제 작업</span><img src="assets/in-rear.jpg" alt="티볼리 뒷좌석 가죽 시트를 폼으로 케어하는 실제 작업 컷" loading="lazy"></div>
-        <div class="ic-body"><h4>티볼리 · 뒷좌석</h4><p>뒷좌석 시트 전체를 폼으로 케어하고 마무리했습니다.</p><a href="https://blog.naver.com/sechabooo/224442360393" target="_blank" rel="noopener">블로그 작업일지 →</a></div>
+        <div class="ic-shot"><span class="ic-tag">스티어링 휠</span><span class="ic-car">현대</span><img src="assets/interior/06-palisade-steering.jpg" alt="현대 스티어링 휠에 폼을 넣어 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>현대 · 스티어링 휠</h4><p>크루즈 버튼과 스포크 안쪽까지 폼을 넣어 케어했습니다.</p></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">센터 송풍구</span><img src="assets/interior/07-palisade-vent.jpg" alt="센터 송풍구 슬랫 사이를 폼과 브러쉬로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>센터 송풍구 · 몰딩</h4><p>슬랫 사이와 테두리 몰딩까지 브러쉬로 한 칸씩 닦아냈습니다.</p></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">도어실</span><span class="ic-car">팰리세이드</span><img src="assets/interior/08-palisade-sill.jpg" alt="팰리세이드 도어실 카펫과 스커프 플레이트를 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>팰리세이드 · 도어실</h4><p>도어를 열면 보이는 도어실 카펫과 스커프 플레이트까지 폼으로 정리했습니다.</p></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">스티어링 휠</span><span class="ic-car">기아</span><img src="assets/interior/09-kia-steering.jpg" alt="기아 스티어링 휠과 에어백 커버에 폼을 넣어 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>기아 · 스티어링 휠</h4><p>가죽 테두리와 에어백 커버를 나눠 폼으로 케어했습니다.</p></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">사이드 송풍구</span><img src="assets/interior/10-kia-vent.jpg" alt="사이드 송풍구와 버튼 패널을 폼과 브러쉬로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>송풍구 · 버튼 패널</h4><p>크롬 테두리 안쪽과 아래 버튼 틈까지 브러쉬로 닦아냈습니다.</p></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">내비게이션</span><img src="assets/interior/11-kia-nav.jpg" alt="내비게이션 화면 테두리와 센터페시아를 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>디스플레이 · 센터페시아</h4><p>화면 테두리와 공조 버튼 사이의 먼지를 폼과 브러쉬로 정리했습니다.</p></div>
+      </article>
+
+      <article class="ic">
+        <div class="ic-shot"><span class="ic-tag">도어트림</span><img src="assets/interior/12-kia-door.jpg" alt="도어트림과 윈도우 스위치를 폼으로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100"></div>
+        <div class="ic-body"><h4>도어트림 · 스위치</h4><p>윈도우 스위치와 도어 트림 오염을 부위별로 나눠 케어했습니다.</p></div>
       </article>
     </div>
   </div>
-  <p class="cap">실제 작업 컷은 촬영한 차량명을 표기했고, 브러쉬 컷 1장은 시공 과정 예시 이미지입니다</p>
+  <p class="cap">실제 작업 컷 12장 · 사진에 차종 엠블럼이나 도어실 각인이 확인되는 컷만 차종을 표기했습니다</p>
 </section>
 
 <!-- ───────── 가격 ───────── -->
@@ -686,8 +742,8 @@
         <li><b>마무리</b> — 먼지 부착을 줄이는 코팅으로 마감합니다. 천장(헤드라이너)은 전체 세척 대신 안전 범위만 부분 케어합니다.</li>
       </ol>
       <div class="in-photo">
-        <figure><img src="assets/in-vent.jpg" alt="아반떼 AD 송풍구 디테일링 실제 작업" loading="lazy"><figcaption>송풍구 · 아반떼 AD</figcaption></figure>
-        <figure><img src="assets/in-seat.jpg" alt="기아 레이 가죽 시트 폼 케어 실제 작업" loading="lazy"><figcaption>가죽 시트 · 기아 레이</figcaption></figure>
+        <figure><img src="assets/interior/10-kia-vent.jpg" alt="사이드 송풍구를 폼과 브러쉬로 케어하는 실제 작업" loading="lazy"><figcaption>송풍구 폼 케어</figcaption></figure>
+        <figure><img src="assets/interior/02-seat-foam.jpg" alt="가죽 시트에 폼을 올려 케어하는 실제 작업" loading="lazy"><figcaption>가죽 시트 폼 케어</figcaption></figure>
       </div>
       <div class="coming">
         <span class="tag">런칭 예정</span>
@@ -713,9 +769,9 @@
 
       <div class="gshot">
         <figure>
-          <video src="assets/glass-work.mp4" poster="assets/glass-work-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="유리 세정·발수 작업 현장 영상"></video>
+          <img src="assets/glass-still.jpg" alt="유리에 세정제를 뿌려 유막을 제거하는 실제 현장 영상 컷" loading="lazy">
           <span class="badge">현장 영상</span>
-          <figcaption>유리 세정 현장</figcaption>
+          <figcaption>유막 제거 현장</figcaption>
         </figure>
         <figure>
           <img src="assets/glass-real-1.jpg" alt="유리에 세정제를 뿌려 작업하는 실제 현장 컷" loading="lazy">
@@ -728,7 +784,7 @@
           <figcaption>작업 현장</figcaption>
         </figure>
       </div>
-      <p class="gcap">스레드(<a href="https://www.threads.com/@sechaboo" target="_blank" rel="noopener" style="color:#5b6b7c">@sechaboo</a>)에 올린 작업 영상·사진을 그대로 사용했습니다</p>
+      <p class="gcap">스레드(<a href="https://www.threads.com/@sechaboo" target="_blank" rel="noopener" style="color:#5b6b7c">@sechaboo</a>)에 올린 작업 영상·사진을 그대로 사용했습니다 · 움직이는 현장 영상은 위 <b>‘유리 유막 제거 · 발수코팅’</b>에서 자동 재생됩니다</p>
 
       <p style="font-size:11px;color:#5b6b7c;margin:8px 0 0">유막 제거·발수코팅은 <b>별도 작업</b>이며, 픽업 이용 시 <b>10,000원</b> 이벤트로 진행합니다.</p>
     </div>
@@ -1216,12 +1272,64 @@
     syncRail();
   })();
 
-  /* 영상 자동재생이 막히면 포스터로 대체 */
-  var v = document.querySelector('.video-box video');
-  if (v){
-    var p = v.play();
-    if (p && p.catch) p.catch(function(){ v.setAttribute('poster','assets/process-poster.jpg'); });
-  }
+  /* ── 영상: 재생 버튼 없이 자동 재생 ──
+     화면에 들어오면 바로 재생하고, 벗어나면 멈춰 데이터·배터리를 아낍니다.
+     아이폰 저전력 모드처럼 자동재생이 막힌 경우에만 컨트롤을 켜서 한 번 탭으로 재생되게 합니다. */
+  (function(){
+    var vids = Array.prototype.slice.call(document.querySelectorAll('video[autoplay]'));
+    if (!vids.length) return;
+    function boxOf(v){
+      var b = null;
+      if (v.closest){ b = v.closest('.gvid') || v.closest('.video-box'); }
+      return b;
+    }
+    function arm(v){
+      v.muted = true;
+      v.setAttribute('muted','');
+      var p = v.play();
+      if (p && p.catch){
+        p.catch(function(){
+          v.controls = true;
+          var b = boxOf(v);
+          if (b) b.classList.add('noplay');
+        });
+      }
+    }
+    function loopCheck(v){
+      var r = v.getBoundingClientRect();
+      return r.width > 0 && r.top < window.innerHeight && r.bottom > 0;
+    }
+    vids.forEach(function(v){
+      v.addEventListener('playing', function(){
+        var b = boxOf(v);
+        if (b) b.classList.remove('noplay');
+      });
+      v.addEventListener('canplay', function(){ if (v.paused && loopCheck(v)) arm(v); });
+      if ('IntersectionObserver' in window){
+        new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if (e.isIntersecting){ if (v.paused) arm(v); }
+            else if (!v.paused){ v.pause(); }
+          });
+        }, {threshold: 0.2}).observe(v);
+      } else {
+        arm(v);
+      }
+    });
+    /* 아코디언(details)을 열면 그 안의 영상도 바로 재생 */
+    Array.prototype.forEach.call(document.querySelectorAll('details'), function(d){
+      d.addEventListener('toggle', function(){
+        if (!d.open) return;
+        Array.prototype.forEach.call(d.querySelectorAll('video'), function(v){
+          if (v.paused) arm(v);
+        });
+      });
+    });
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) return;
+      vids.forEach(function(v){ if (v.paused && loopCheck(v)) arm(v); });
+    });
+  })();
 })();
 </script>
 </body>
