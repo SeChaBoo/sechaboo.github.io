@@ -83,7 +83,7 @@
   .btn-primary{background:var(--accent); color:#062033}
   .btn-line{background:rgba(255,255,255,.06); color:#fff; border-color:rgba(255,255,255,.36)}
   .btn-navy{background:var(--navy); color:#fff}
-  .hero-facts{display:flex; flex-wrap:wrap; gap:8px 16px; margin:26px 0 0; padding:0; list-style:none;
+  .hero-facts{display:flex; flex-wrap:wrap; gap:8px 13px; margin:26px 0 0; padding:0; list-style:none;
     font-size:14.5px; font-weight:700; color:#9FB6CE}
   .hero-facts li{display:flex; align-items:center; gap:7px}
   .hero-facts li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--accent)}
@@ -197,7 +197,7 @@
   .grid-int button{padding:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:#EDF2F7; cursor:pointer; position:relative; display:block}
   .grid-int img{width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; transition:transform .25s}
   .grid-int button:active img,.grid-int button:hover img{transform:scale(1.03)}
-  .grid-int .lb{position:absolute; left:6px; bottom:6px; padding:4px 7px; border-radius:6px; font-size:11.5px; font-weight:700; color:#fff; line-height:1.3;
+  .grid-int .clbl{position:absolute; left:6px; bottom:6px; padding:4px 7px; border-radius:6px; font-size:11.5px; font-weight:700; color:#fff; line-height:1.3;
     background:rgba(8,22,39,.82); text-align:left; -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px)}
 
   .grid-pf{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:16px}
@@ -373,8 +373,8 @@
       </div>
       <ul class="hero-facts">
         <li>대표자 직접 시공</li>
-        <li>정기권 월 1·2·4회</li>
-        <li>창원 · 진해 출장</li>
+        <li>월 1·2·4회 정기권</li>
+        <li>창원·진해 출장</li>
       </ul>
     </div>
     <div class="hero-visual">
@@ -614,51 +614,51 @@
     <div class="grid-int" id="intGrid">
       <button type="button" data-group="int" data-src="assets/interior/01-porsche-steering.jpg" data-title="포르쉐 · 스티어링 휠" data-desc="핸들 테두리와 스포크 사이까지 폼을 넣어 오염을 불린 뒤 브러쉬로 닦아냈습니다.">
         <img src="assets/interior/01-porsche-steering.jpg" alt="포르쉐 스티어링 휠을 폼과 브러쉬로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">스티어링 휠</span>
+        <span class="clbl">스티어링 휠</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/02-seat-foam.jpg" data-title="가죽 시트 폼 케어" data-desc="시트 전체에 폼을 올려 불린 뒤 브러쉬로 한 칸씩 오염을 걷어냅니다.">
         <img src="assets/interior/02-seat-foam.jpg" alt="가죽 시트에 세정 폼을 올려 브러쉬로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">가죽 시트</span>
+        <span class="clbl">가죽 시트</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/03-wheel-tan.jpg" data-title="가죽 핸들 케어" data-desc="밝은 가죽 핸들은 오염이 눈에 띄어 스포크 안쪽까지 나눠서 닦았습니다.">
         <img src="assets/interior/03-wheel-tan.jpg" alt="밝은 가죽 스티어링 휠을 폼으로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">가죽 핸들</span>
+        <span class="clbl">가죽 핸들</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/04-porsche-door-vent.jpg" data-title="도어트림 · 송풍구" data-desc="원형 송풍구 주변과 도어 암레스트 틈까지 폼으로 불려 브러쉬로 마무리했습니다.">
         <img src="assets/interior/04-porsche-door-vent.jpg" alt="도어트림과 원형 송풍구 주변을 폼으로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">도어트림·송풍구</span>
+        <span class="clbl">도어트림·송풍구</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/05-door-panel.jpg" data-title="도어트림 · 버튼 주변" data-desc="윈도우 스위치와 손잡이 주변처럼 손이 닿는 부위를 집중해서 케어했습니다.">
         <img src="assets/interior/05-door-panel.jpg" alt="도어트림과 윈도우 스위치 주변을 폼으로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">도어트림</span>
+        <span class="clbl">도어트림</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/06-palisade-steering.jpg" data-title="현대 · 스티어링 휠" data-desc="크루즈 버튼과 스포크 안쪽까지 폼을 넣어 케어했습니다.">
         <img src="assets/interior/06-palisade-steering.jpg" alt="현대 스티어링 휠을 폼으로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">스티어링 휠</span>
+        <span class="clbl">스티어링 휠</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/07-palisade-vent.jpg" data-title="센터 송풍구 · 몰딩" data-desc="슬랫 사이와 테두리 몰딩까지 브러쉬로 한 칸씩 닦아냈습니다.">
         <img src="assets/interior/07-palisade-vent.jpg" alt="센터 송풍구 슬랫 사이를 폼과 브러쉬로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">센터 송풍구</span>
+        <span class="clbl">센터 송풍구</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/08-palisade-sill.jpg" data-title="팰리세이드 · 도어실" data-desc="도어를 열면 보이는 도어실 카펫과 스커프 플레이트까지 폼으로 정리했습니다.">
         <img src="assets/interior/08-palisade-sill.jpg" alt="팰리세이드 도어실 카펫과 스커프 플레이트를 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">도어실</span>
+        <span class="clbl">도어실</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/09-kia-steering.jpg" data-title="기아 · 스티어링 휠" data-desc="가죽 테두리와 에어백 커버를 나눠 폼으로 케어했습니다.">
         <img src="assets/interior/09-kia-steering.jpg" alt="기아 스티어링 휠과 에어백 커버를 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">스티어링 휠</span>
+        <span class="clbl">스티어링 휠</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/10-kia-vent.jpg" data-title="송풍구 · 버튼 패널" data-desc="크롬 테두리 안쪽과 아래 버튼 틈까지 브러쉬로 닦아냈습니다.">
         <img src="assets/interior/10-kia-vent.jpg" alt="사이드 송풍구와 버튼 패널을 폼과 브러쉬로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">사이드 송풍구</span>
+        <span class="clbl">사이드 송풍구</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/11-kia-nav.jpg" data-title="디스플레이 · 센터페시아" data-desc="화면 테두리와 공조 버튼 사이의 먼지를 폼과 브러쉬로 정리했습니다.">
         <img src="assets/interior/11-kia-nav.jpg" alt="내비게이션 화면 테두리와 센터페시아를 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">디스플레이</span>
+        <span class="clbl">디스플레이</span>
       </button>
       <button type="button" data-group="int" data-src="assets/interior/12-kia-door.jpg" data-title="도어트림 · 스위치" data-desc="윈도우 스위치와 도어 트림 오염을 부위별로 나눠 케어했습니다.">
         <img src="assets/interior/12-kia-door.jpg" alt="도어트림과 윈도우 스위치를 폼으로 케어하는 실제 작업 컷" loading="lazy" width="825" height="1100">
-        <span class="lb">도어트림</span>
+        <span class="clbl">도어트림</span>
       </button>
     </div>
 
