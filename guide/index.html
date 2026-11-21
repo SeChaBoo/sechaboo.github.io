@@ -92,23 +92,28 @@
   .hero-strip li b{display:block; font-size:13.5px; color:#fff; font-weight:800; margin-bottom:1px}
 
   /* ── 서비스 (컴팩트) ── */
-  .svc{display:grid; gap:10px}
-  .svc-card{display:grid; grid-template-columns:88px 1fr; gap:13px; align-items:center; padding:11px;
+  .svc{display:grid; gap:12px}
+  .svc-card{display:grid; grid-template-columns:1fr; gap:11px; align-items:start; padding:11px;
     border:1px solid var(--line); border-radius:16px; background:#fff; color:inherit}
-  .svc-card .th{width:88px; height:88px; border-radius:12px; overflow:hidden; background:#EDF2F7}
-  .svc-card .th img{width:100%; height:100%; object-fit:cover; object-position:center 60%}
-  .svc-card h3{margin:0 0 3px; font-size:17px; font-weight:800; letter-spacing:-0.035em; display:flex; align-items:center; gap:6px}
-  .svc-card h3 i{font-style:normal; font-size:13px; color:var(--accent-deep); font-weight:800}
-  .svc-card p{margin:0 0 7px; font-size:13.5px; line-height:1.5; color:var(--body)}
+  .svc-card .th{width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden; background:#EDF2F7}
+  .svc-card .th img{width:100%; height:100%; object-fit:cover; object-position:center}
+  .svc-card .sc{padding:1px 3px 4px}
+  .svc-card h3{margin:0 0 4px; font-size:18px; font-weight:800; letter-spacing:-0.035em; display:flex; align-items:center; gap:6px; flex-wrap:wrap}
+  .svc-card h3 .tag{font-style:normal; font-size:11px; font-weight:800; color:var(--accent-deep); background:var(--sky-soft); border-radius:999px; padding:3px 8px; letter-spacing:-0.01em}
+  .svc-card h3 i{font-style:normal; font-size:13px; color:var(--accent-deep); font-weight:800; margin-left:auto}
+  .svc-card p{margin:0 0 8px; font-size:13.5px; line-height:1.55; color:var(--body)}
   .svc-card .feat{display:flex; flex-wrap:wrap; gap:4px; margin:0; padding:0; list-style:none}
   .svc-card .feat li{font-size:11.5px; font-weight:700; color:#0E5F7E; background:var(--sky-soft); border-radius:999px; padding:3px 8px}
   .svc-card.dark{background:var(--navy); border-color:var(--navy)}
   .svc-card.dark h3{color:#fff}
   .svc-card.dark p{color:#C3D4E6}
   .svc-card.dark h3 i{color:var(--accent)}
+  .svc-card.dark h3 .tag{background:rgba(46,196,241,.16); color:#9FE2F8}
   .svc-card.dark .feat li{background:rgba(46,196,241,.16); color:#9FE2F8}
 
-  .compare{margin-top:14px; background:#fff; border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
+  .compare{margin-top:16px; background:#fff; border:1px solid var(--line); border-radius:var(--r); overflow:hidden; color:var(--ink)}
+  .compare[hidden]{display:none}
+  .pbox .compare{margin-top:16px}
   .compare .ch{padding:16px 16px 2px}
   .compare h3{margin:0; font-size:17px; font-weight:800; letter-spacing:-0.035em}
   .compare .ch p{margin:2px 0 0; font-size:13px; color:var(--gray)}
@@ -300,7 +305,7 @@
     .hero h1{font-size:42px}
     .svc{grid-template-columns:repeat(3,1fr); gap:14px}
     .svc-card{grid-template-columns:1fr; align-items:start; gap:10px; padding:12px}
-    .svc-card .th{width:100%; height:120px}
+    .svc-card .th{width:100%; height:auto; aspect-ratio:16/9}
     .compare{display:grid; grid-template-columns:1fr 1.2fr}
     .compare .ch{padding:20px 18px}
     .compare table{margin-top:0; font-size:13.5px}
@@ -398,54 +403,32 @@
     <p class="lead">방문 세차와 픽업 디테일링은 작업 범위가 다릅니다.</p>
 
     <div class="svc">
-      <a class="svc-card" href="#price">
-        <div class="th"><img src="assets/pf-02-gwagon.jpg" alt="벤츠 G바겐 워터리스 출장세차 실제 작업 차량" loading="lazy" width="825" height="825"></div>
-        <div>
-          <h3>워터리스 출장세차 <i>→</i></h3>
-          <p>주차된 자리에서 물을 뿌리지 않고 진행합니다. 지하주차장에서도 주변에 흐르는 물이 없습니다.</p>
-          <ul class="feat"><li>방문 작업</li><li>월 1·2·4회</li><li>1회 이용</li></ul>
+      <a class="svc-card" href="#price" data-svc-link="visit">
+        <div class="th"><img src="assets/svc-once.jpg" alt="제네시스 GV80 워터리스 출장 디테일링 실제 작업 차량" loading="lazy" width="1280" height="720"></div>
+        <div class="sc">
+          <h3>워터리스 출장 디테일링 <span class="tag">1회성</span> <i>→</i></h3>
+          <p>주차된 자리에서 물을 뿌리지 않고, 외장과 실내를 한 번에 케어합니다.</p>
+          <ul class="feat"><li>방문 작업</li><li>외장 + 실내</li><li>1회 이용</li></ul>
         </div>
       </a>
 
-      <a class="svc-card dark" href="#care">
-        <div class="th"><img src="assets/pf-01-cayenne.jpg" alt="포르쉐 카이엔 쿠페 픽업 디테일링 실제 작업 차량" loading="lazy" width="825" height="825"></div>
-        <div>
+      <a class="svc-card" href="#price" data-svc-link="visit">
+        <div class="th"><img src="assets/svc-regular.jpg" alt="그랜저 진해 아파트 지하주차장 워터리스 정기 출장 디테일링 실제 작업 차량" loading="lazy" width="1280" height="720"></div>
+        <div class="sc">
+          <h3>워터리스 출장 디테일링 <span class="tag">정기권</span> <i>→</i></h3>
+          <p>같은 자리에서 주기적으로 관리합니다. 월 1·2·4회 중 고르고, 4회 정기권이 가장 저렴합니다.</p>
+          <ul class="feat"><li>방문 작업</li><li>월 1·2·4회</li><li>4회 정기권</li></ul>
+        </div>
+      </a>
+
+      <a class="svc-card dark" href="#price" data-svc-link="pickup">
+        <div class="th"><img src="assets/svc-pickup.jpg" alt="포르쉐 카이엔 쿠페 픽업 디테일링 실제 작업 차량" loading="lazy" width="1280" height="720"></div>
+        <div class="sc">
           <h3>픽업 디테일링 <i>→</i></h3>
           <p>차량을 픽업해 전용 공간에서 작업한 뒤 원래 자리로 인도합니다.</p>
           <ul class="feat"><li>픽업 · 인도</li><li>기본케어</li><li>프리미엄</li></ul>
         </div>
       </a>
-
-      <a class="svc-card" href="#price">
-        <div class="th"><img src="assets/pf-12-grandeur.jpg" alt="그랜저 진해 아파트 출장세차 실제 작업 차량" loading="lazy" width="825" height="825"></div>
-        <div>
-          <h3>정기 관리 <i>→</i></h3>
-          <p>한 번에 끝내는 대신 주기적으로 관리합니다. 4회 정기권이 가장 저렴합니다.</p>
-          <ul class="feat"><li>차량별 이력</li><li>4회 정기권</li></ul>
-        </div>
-      </a>
-    </div>
-
-    <div class="compare" id="care">
-      <div class="ch">
-        <h3>기본케어 vs 프리미엄 케어</h3>
-        <p>픽업 디테일링은 두 가지 코스로 진행합니다.</p>
-      </div>
-      <table>
-        <caption>기본케어와 프리미엄 케어 비교</caption>
-        <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
-        <thead>
-          <tr><th scope="col">구분</th><th scope="col">기본케어</th><th scope="col" class="pre">프리미엄 케어</th></tr>
-        </thead>
-        <tbody>
-          <tr><th scope="row">작업 범위</th><td>내·외부</td><td class="pre">+ 틈새·실내</td></tr>
-          <tr><th scope="row">외부</th><td>샴푸 세정</td><td class="pre">오염 불림·정밀</td></tr>
-          <tr><th scope="row">휠·틈새</th><td>기본 세정</td><td class="pre">안쪽·틈새까지</td></tr>
-          <tr><th scope="row">실내·가죽</th><td>먼지 정리</td><td class="pre">브러쉬 + 보호제</td></tr>
-          <tr><th scope="row">추천</th><td>주기 관리</td><td class="pre">한 번 제대로</td></tr>
-        </tbody>
-      </table>
-      <p class="compare-note">프리미엄 케어는 픽업 요금표의 <b>프리미엄</b> 코스입니다. 차량 상태에 따른 추가 작업은 작업 전에 안내합니다.</p>
     </div>
   </div>
 </section>
@@ -511,6 +494,28 @@
         <table class="pt" id="priceTable"></table>
       </div>
       <p class="pt-hint" id="ptHint">단위 원 · 월 1·2·4회는 정기 관리 횟수입니다</p>
+
+      <div class="compare" id="care" hidden>
+        <div class="ch">
+          <h3>기본케어 vs 프리미엄 케어</h3>
+          <p>픽업 디테일링은 두 가지 코스로 진행합니다.</p>
+        </div>
+        <table>
+          <caption>기본케어와 프리미엄 케어 비교</caption>
+          <colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup>
+          <thead>
+            <tr><th scope="col">구분</th><th scope="col">기본케어</th><th scope="col" class="pre">프리미엄 케어</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">작업 범위</th><td>내·외부</td><td class="pre">+ 틈새·실내</td></tr>
+            <tr><th scope="row">외부</th><td>샴푸 세정</td><td class="pre">오염 불림·정밀</td></tr>
+            <tr><th scope="row">휠·틈새</th><td>기본 세정</td><td class="pre">안쪽·틈새까지</td></tr>
+            <tr><th scope="row">실내·가죽</th><td>먼지 정리</td><td class="pre">브러쉬 + 보호제</td></tr>
+            <tr><th scope="row">추천</th><td>주기 관리</td><td class="pre">한 번 제대로</td></tr>
+          </tbody>
+        </table>
+        <p class="compare-note">프리미엄 케어는 위 픽업 요금표의 <b>프리미엄</b> 코스입니다. 차량 상태에 따른 추가 작업은 작업 전에 안내합니다.</p>
+      </div>
 
       <div class="add">
         <h4>픽업비 <span class="badge">2대 이상 동시 이용 시 할인</span></h4>
@@ -875,6 +880,7 @@
   var pickedKey=document.getElementById('pickedKey');
   var pickedSave=document.getElementById('pickedSave');
   var ptHint=document.getElementById('ptHint');
+  var care=document.getElementById('care');
 
   function fmt(n){ return n.toLocaleString('ko-KR'); }
   function won(n){ return fmt(n)+'<span>원</span>'; }
@@ -944,9 +950,13 @@
       b.setAttribute('aria-pressed', b.getAttribute('data-svc')===svc ? 'true' : 'false');
     });
     renderChips(); renderTable(); renderPicked();
+    if(care) care.hidden = svc!=='pickup';
   }
   Array.prototype.forEach.call(document.querySelectorAll('.seg button'),function(b){
     b.addEventListener('click',function(){ svc=b.getAttribute('data-svc'); render(); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-svc-link]'),function(a){
+    a.addEventListener('click',function(){ svc=a.getAttribute('data-svc-link'); render(); });
   });
   render();
 
