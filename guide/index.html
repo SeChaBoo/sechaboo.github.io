@@ -215,15 +215,21 @@
   .int-s img{width:100%; height:auto; aspect-ratio:4/5; object-fit:cover}
   .int-s .clbl{position:absolute; left:0; right:0; bottom:0; padding:18px 9px 7px; font-size:11px; font-weight:700; color:#fff;
     text-align:left; line-height:1.3; background:linear-gradient(rgba(6,16,29,0) 0%,rgba(6,16,29,.82) 100%)}
-  .pf-s{flex:0 0 72%; max-width:262px; scroll-snap-align:center; padding:0; border:1px solid var(--line); border-radius:14px;
+  .pfgroup{margin-top:16px}
+  .pfgroup:first-of-type{margin-top:18px}
+  .pfgroup .railhead{margin:0 0 5px}
+  .pfgroup .railhead h3{font-size:16px}
+  .rail-lead--pf{margin:0 0 7px; font-size:11.5px}
+  .rail--pf{gap:8px; padding-bottom:4px}
+  .pf-s{flex:0 0 47%; max-width:168px; scroll-snap-align:center; padding:0; border:1px solid var(--line); border-radius:12px;
     overflow:hidden; background:#fff; cursor:pointer; display:block; text-align:left}
-  .pf-s .shot{position:relative; aspect-ratio:1/1; background:#EDF2F7}
+  .pf-s .shot{position:relative; aspect-ratio:4/3; background:#EDF2F7}
   .pf-s .shot img{width:100%; height:100%; object-fit:cover}
-  .pf-s .shot .zm{position:absolute; right:7px; bottom:7px; width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.92);
-    color:var(--navy); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800}
-  .pf-s .cd{padding:9px 11px 11px}
-  .pf-s h4{margin:0 0 1px; font-size:14px; font-weight:800; letter-spacing:-0.03em; line-height:1.3}
-  .pf-s .meta{margin:0; font-size:11.5px; color:var(--gray); line-height:1.35}
+  .pf-s .shot .zm{position:absolute; right:6px; bottom:6px; width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,.92);
+    color:var(--navy); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800}
+  .pf-s .cd{padding:7px 9px 8px}
+  .pf-s h4{margin:0 0 1px; font-size:12.5px; font-weight:800; letter-spacing:-0.03em; line-height:1.3}
+  .pf-s .meta{margin:0; font-size:10.5px; color:var(--gray); line-height:1.35}
   .pf-note{margin:12px 0 0; font-size:12px; color:var(--gray); line-height:1.5}
 
   /* ── 라이트박스 ── */
@@ -319,7 +325,7 @@
     .bchip{height:58px}
     .rail{margin:0 -32px; padding:2px 32px 6px}
     .int-s{flex-basis:32%}
-    .pf-s{flex-basis:36%}
+    .pf-s{flex-basis:23%; max-width:none}
     .pbox{padding:32px 26px}
     .diff{grid-template-columns:1fr 1fr}
     .nav-links{display:flex}
@@ -341,6 +347,8 @@
     .rail-wrapper{overflow:hidden; margin:0 -20px; padding:0 20px}
     .int-s{flex:0 0 auto; width:calc(16.666% - 8px); max-width:none}
     .pf-s{flex:0 0 auto; width:calc(20% - 8px); max-width:none}
+    .pf-s h4{font-size:13.5px}
+    .pf-s .meta{font-size:11.5px}
     .railnav{display:none}
     .work-top{display:grid; grid-template-columns:1fr 400px; gap:44px; align-items:center}
     .work-top .vid{max-width:none; margin:0}
@@ -409,7 +417,7 @@
 
     <div class="svc">
       <a class="svc-card" href="#price" data-svc-link="visit">
-        <div class="th"><img src="assets/svc-once.jpg" alt="제네시스 GV80 워터리스 출장 디테일링 실제 작업 차량" loading="lazy" width="1280" height="720"></div>
+        <div class="th"><img src="assets/svc-once.jpg" alt="아파트 주차 공간에서 극세사 타월로 물 없이 차량 외장을 버핑하는 워터리스 출장 디테일링" loading="lazy" width="1280" height="720"></div>
         <div class="sc">
           <h3>워터리스 출장 디테일링 <span class="tag">1회성</span> <i>→</i></h3>
           <p>주차된 자리에서 물을 뿌리지 않고, 외장과 실내를 한 번에 케어합니다.</p>
@@ -418,7 +426,7 @@
       </a>
 
       <a class="svc-card" href="#price" data-svc-link="visit">
-        <div class="th"><img src="assets/svc-regular.jpg" alt="그랜저 진해 아파트 지하주차장 워터리스 정기 출장 디테일링 실제 작업 차량" loading="lazy" width="1280" height="720"></div>
+        <div class="th"><img src="assets/svc-regular.jpg" alt="지하주차장 주차 자리에서 관리해 윤기가 살아난 블랙 세단" loading="lazy" width="1280" height="720"></div>
         <div class="sc">
           <h3>워터리스 출장 디테일링 <span class="tag">정기권</span> <i>→</i></h3>
           <p>같은 자리에서 주기적으로 관리합니다. 월 1·2·4회 중 고르고, 4회 정기권이 가장 저렴합니다.</p>
@@ -427,7 +435,7 @@
       </a>
 
       <a class="svc-card dark" href="#price" data-svc-link="pickup">
-        <div class="th"><img src="assets/svc-pickup.jpg" alt="포르쉐 카이엔 쿠페 픽업 디테일링 실제 작업 차량" loading="lazy" width="1280" height="720"></div>
+        <div class="th"><img src="assets/svc-pickup.jpg" alt="조명을 갖춘 실내 디테일링 샵에서 차량 외장을 정밀 케어하는 픽업 디테일링" loading="lazy" width="1280" height="720"></div>
         <div class="sc">
           <h3>픽업 디테일링 <i>→</i></h3>
           <p>차량을 픽업해 전용 공간에서 작업한 뒤 원래 자리로 인도합니다.</p>
@@ -623,97 +631,114 @@
       </button>
     </div>
 
-    <div class="railhead">
-      <h3>실제 작업 차량 <span class="cnt">20대</span></h3>
-      <div class="railnav">
-        <button type="button" id="pfPrev" aria-label="이전 차량 사진">‹</button>
-        <span class="pos" id="pfPos">1 / 20</span>
-        <button type="button" id="pfNext" aria-label="다음 차량 사진">›</button>
+    <div class="pfgroup">
+      <div class="railhead">
+        <h3>출장세차 작업 차량 <span class="cnt">12대</span></h3>
+        <div class="railnav">
+          <button type="button" id="pfvPrev" aria-label="이전 출장세차 차량">‹</button>
+          <span class="pos" id="pfvPos">1 / 12</span>
+          <button type="button" id="pfvNext" aria-label="다음 출장세차 차량">›</button>
+        </div>
       </div>
-    </div>
-    <p class="rail-lead">촬영한 차량과 실제 진행한 작업만 정리했습니다. 사진을 누르면 작업 내용과 작업일지를 볼 수 있습니다.</p>
-    <div class="rail" id="pfRail">
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-01-cayenne.jpg" data-title="포르쉐 카이엔 쿠페" data-desc="픽업 디테일링 · 창원 프리빌리지 · 유리 곳곳의 유막을 정리하고 전면 유막 제거와 측면 유리 서비스, 실내 세정·코팅, 외장 습식코팅까지 진행했습니다." data-link="https://blog.naver.com/sechabooo/224478992693">
-        <div class="shot"><img src="assets/pf-01-cayenne.jpg" alt="포르쉐 카이엔 쿠페 픽업 디테일링 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
-        <div class="cd"><h4>포르쉐 카이엔 쿠페</h4><p class="meta">픽업 디테일링 · 창원</p></div>
-      </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-02-gwagon.jpg" data-title="벤츠 G바겐" data-desc="워터리스 출장세차 · 면적이 넓고 각진 부분이 많아 먼지가 잘 띄는 차량. 전반 오염을 정리한 뒤 각 부분을 다시 확인하며 마무리했습니다." data-link="https://blog.naver.com/sechabooo/224415101938">
+      <p class="rail-lead rail-lead--pf">고객 주차 공간으로 방문해 진행한 워터리스 출장세차 차량입니다.</p>
+      <div class="rail rail--pf" id="pfvRail">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-02-gwagon.jpg" data-title="벤츠 G바겐" data-desc="워터리스 출장세차 · 면적이 넓고 각진 부분이 많아 먼지가 잘 띄는 차량. 전반 오염을 정리한 뒤 각 부분을 다시 확인하며 마무리했습니다." data-link="https://blog.naver.com/sechabooo/224415101938">
         <div class="shot"><img src="assets/pf-02-gwagon.jpg" alt="벤츠 G바겐 워터리스 출장세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>벤츠 G바겐</h4><p class="meta">워터리스 출장</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-03-macan.jpg" data-title="포르쉐 마칸" data-desc="출장세차 · 진해 남문동 호반베르디움 · 같은 주차장에서 벤츠 E클래스와 2대를 함께 진행했습니다." data-link="https://blog.naver.com/sechabooo/224454105922">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-03-macan.jpg" data-title="포르쉐 마칸" data-desc="출장세차 · 진해 남문동 호반베르디움 · 같은 주차장에서 벤츠 E클래스와 2대를 함께 진행했습니다." data-link="https://blog.naver.com/sechabooo/224454105922">
         <div class="shot"><img src="assets/pf-03-macan.jpg" alt="포르쉐 마칸 출장세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>포르쉐 마칸</h4><p class="meta">출장세차 · 진해 남문동</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-04-gle.jpg" data-title="벤츠 GLE" data-desc="야간 출장 · 창원 마산 · 야간 조명을 활용해 진행했습니다. 스포크 사이까지 확인하며 브레이크 분진을 집중 케어했습니다." data-link="https://blog.naver.com/sechabooo/224390859798">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-04-gle.jpg" data-title="벤츠 GLE" data-desc="야간 출장 · 창원 마산 · 야간 조명을 활용해 진행했습니다. 스포크 사이까지 확인하며 브레이크 분진을 집중 케어했습니다." data-link="https://blog.naver.com/sechabooo/224390859798">
         <div class="shot"><img src="assets/pf-04-gle.jpg" alt="벤츠 GLE 야간 출장세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>벤츠 GLE</h4><p class="meta">야간 출장 · 창원 마산</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-05-gv80.jpg" data-title="제네시스 GV80" data-desc="3PH 세차 · 창원 · 사고 수리 후 처음 맡기신 차량. 물때와 오염이 남아 있어 단계적으로 불려내는 3PH 세차로 진행하고 왁스로 마무리했습니다." data-link="https://blog.naver.com/sechabooo/224430171740">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-05-gv80.jpg" data-title="제네시스 GV80" data-desc="3PH 세차 · 창원 · 사고 수리 후 처음 맡기신 차량. 물때와 오염이 남아 있어 단계적으로 불려내는 3PH 세차로 진행하고 왁스로 마무리했습니다." data-link="https://blog.naver.com/sechabooo/224430171740">
         <div class="shot"><img src="assets/pf-05-gv80.jpg" alt="제네시스 GV80 3PH 세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>제네시스 GV80</h4><p class="meta">3PH 세차 · 창원</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-06-eclass.jpg" data-title="벤츠 E클래스" data-desc="출장세차 · 창원 · 나무 밑 주차 후 수액·꽃가루 같은 낙진이 붙은 차량. 무리하게 문지르지 않고 전용 약품으로 클리닝했습니다." data-link="https://blog.naver.com/sechabooo/224447418305">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-06-eclass.jpg" data-title="벤츠 E클래스" data-desc="출장세차 · 창원 · 나무 밑 주차 후 수액·꽃가루 같은 낙진이 붙은 차량. 무리하게 문지르지 않고 전용 약품으로 클리닝했습니다." data-link="https://blog.naver.com/sechabooo/224447418305">
         <div class="shot"><img src="assets/pf-06-eclass.jpg" alt="벤츠 E클래스 낙진 클리닝 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>벤츠 E클래스</h4><p class="meta">출장세차 · 낙진 클리닝</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-07-bmwx2.jpg" data-title="BMW X2 · 미니쿠퍼" data-desc="픽업 · 프리워시에 시간을 충분히 투자해 오염을 불려낸 뒤 본세차로 진행했습니다. 오염이 심한 부위는 브러쉬로 디테일했습니다." data-link="https://blog.naver.com/sechabooo/224412589964">
-        <div class="shot"><img src="assets/pf-07-bmwx2.jpg" alt="BMW X2 픽업세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
-        <div class="cd"><h4>BMW X2 · 미니쿠퍼</h4><p class="meta">픽업</p></div>
-      </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-08-ev6.jpg" data-title="기아 EV6 · 그랜저 IG" data-desc="픽업 디테일링 · 창원 토월성원아파트 · 검정 EV6는 프리미엄 케어로, 그랜저 IG는 송진 고착 오염 제거와 페인트클렌징으로 진행했습니다." data-link="https://blog.naver.com/sechabooo/224463523398">
-        <div class="shot"><img src="assets/pf-08-ev6.jpg" alt="기아 EV6 픽업 프리미엄 케어 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
-        <div class="cd"><h4>기아 EV6 · 그랜저 IG</h4><p class="meta">픽업 프리미엄 · 창원</p></div>
-      </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-09-ioniq5.jpg" data-title="아이오닉5 · K8 · QM6 · 레이" data-desc="픽업 · 하루에 4대를 픽업해 진행한 작업. 차량별로 유막 제거와 발수코팅까지 포함해 마무리했습니다." data-link="https://blog.naver.com/sechabooo/224404099722">
-        <div class="shot"><img src="assets/pf-09-ioniq5.jpg" alt="아이오닉5 픽업 디테일링 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
-        <div class="cd"><h4>아이오닉5 · K8 · QM6 · 레이</h4><p class="meta">픽업 4대 동시</p></div>
-      </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-10-santafe.jpg" data-title="싼타페" data-desc="픽업 · 표면에 물때가 고르게 남아 있던 차량. 외부 세차와 함께 유막 제거·발수코팅까지 진행했습니다." data-link="https://blog.naver.com/sechabooo/224407252928">
-        <div class="shot"><img src="assets/pf-10-santafe.jpg" alt="싼타페 픽업세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
-        <div class="cd"><h4>싼타페</h4><p class="meta">픽업 · 유막·발수 포함</p></div>
-      </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-11-k5.jpg" data-title="K5 · 그랜저 · 코나" data-desc="출장세차 · 지하주차장에서 세 대를 차례로 진행했습니다. 차종별 크기와 오염에 맞춰 순서와 시간을 나눠 작업했습니다." data-link="https://blog.naver.com/sechabooo/224399953066">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-11-k5.jpg" data-title="K5 · 그랜저 · 코나" data-desc="출장세차 · 지하주차장에서 세 대를 차례로 진행했습니다. 차종별 크기와 오염에 맞춰 순서와 시간을 나눠 작업했습니다." data-link="https://blog.naver.com/sechabooo/224399953066">
         <div class="shot"><img src="assets/pf-11-k5.jpg" alt="기아 K5 출장세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>K5 · 그랜저 · 코나</h4><p class="meta">출장세차</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-12-grandeur.jpg" data-title="그랜저" data-desc="출장세차 · 진해 · 아파트 주차장으로 방문해 진행한 워터리스 출장세차. 실내 먼지와 도장면 오염을 함께 정리했습니다." data-link="https://blog.naver.com/sechabooo/224398116822">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-12-grandeur.jpg" data-title="그랜저" data-desc="출장세차 · 진해 · 아파트 주차장으로 방문해 진행한 워터리스 출장세차. 실내 먼지와 도장면 오염을 함께 정리했습니다." data-link="https://blog.naver.com/sechabooo/224398116822">
         <div class="shot"><img src="assets/pf-12-grandeur.jpg" alt="그랜저 출장세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>그랜저</h4><p class="meta">출장세차 · 진해</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-13-seltos-1.jpg" data-title="셀토스" data-desc="픽업세차 · 진해 여좌국민센터 · 발매트에 붙은 껌부터 유막 제거·발수코팅까지. 손이 많이 가는 오염을 한 번에 정리했습니다." data-link="https://blog.naver.com/sechabooo/224408203622">
-        <div class="shot"><img src="assets/pf-13-seltos-1.jpg" alt="셀토스 픽업세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
-        <div class="cd"><h4>셀토스</h4><p class="meta">픽업세차 · 진해</p></div>
-      </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-14-seltos-2.jpg" data-title="셀토스 (후면 스크래치)" data-desc="픽업 디테일링 · 창원 원풍아파트 · 후면 스크래치 제거까지 요청받은 작업. 도장면 상태를 확인하며 단계를 나눠 진행했습니다." data-link="https://blog.naver.com/sechabooo/224482151983">
-        <div class="shot"><img src="assets/pf-14-seltos-2.jpg" alt="셀토스 후면 스크래치 제거 픽업 디테일링" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
-        <div class="cd"><h4>셀토스 (후면 스크래치)</h4><p class="meta">픽업 디테일링 · 창원</p></div>
-      </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-15-avante.jpg" data-title="아반떼 AD" data-desc="출장세차 · 진해 남문동 · 실내 바닥과 트림 사이 먼지를 먼저 정리하고 외장을 마무리했습니다." data-link="https://blog.naver.com/sechabooo/224464699820">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-15-avante.jpg" data-title="아반떼 AD" data-desc="출장세차 · 진해 남문동 · 실내 바닥과 트림 사이 먼지를 먼저 정리하고 외장을 마무리했습니다." data-link="https://blog.naver.com/sechabooo/224464699820">
         <div class="shot"><img src="assets/pf-15-avante.jpg" alt="아반떼 AD 출장세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>아반떼 AD</h4><p class="meta">출장세차 · 진해 남문동</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-16-ray.jpg" data-title="기아 레이" data-desc="출장세차 · 창원 · 아이를 키우는 차량. 과자 부스러기와 묵은 먼지가 많은 실내를 중심으로 정리했습니다." data-link="https://blog.naver.com/sechabooo/224431082719">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-16-ray.jpg" data-title="기아 레이" data-desc="출장세차 · 창원 · 아이를 키우는 차량. 과자 부스러기와 묵은 먼지가 많은 실내를 중심으로 정리했습니다." data-link="https://blog.naver.com/sechabooo/224431082719">
         <div class="shot"><img src="assets/pf-16-ray.jpg" alt="기아 레이 출장세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>기아 레이</h4><p class="meta">출장세차 · 창원</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-17-tivoli.jpg" data-title="티볼리" data-desc="출장세차 · 나무 밑에 주차해 수액이 맺힌 차량. 도장면에 부담을 주지 않는 방법으로 낙진을 불려내 제거했습니다." data-link="https://blog.naver.com/sechabooo/224442360393">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-17-tivoli.jpg" data-title="티볼리" data-desc="출장세차 · 나무 밑에 주차해 수액이 맺힌 차량. 도장면에 부담을 주지 않는 방법으로 낙진을 불려내 제거했습니다." data-link="https://blog.naver.com/sechabooo/224442360393">
         <div class="shot"><img src="assets/pf-17-tivoli.jpg" alt="티볼리 낙진 제거 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>티볼리</h4><p class="meta">출장세차 · 낙진 제거</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-18-morning.jpg" data-title="모닝" data-desc="픽업 · 아이를 태우는 차량의 실내 청소 요청. 실내를 먼저 정리하고 유막 제거·발수코팅까지 진행했습니다." data-link="https://blog.naver.com/sechabooo/224406102463">
-        <div class="shot"><img src="assets/pf-18-morning.jpg" alt="모닝 실내 청소 픽업세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
-        <div class="cd"><h4>모닝</h4><p class="meta">픽업 · 실내 청소</p></div>
-      </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-19-ray-in.jpg" data-title="기아 레이 · 시트 케어" data-desc="실내 디테일링 · 가죽 시트에 폼을 올려 오염을 불려낸 뒤 브러쉬로 닦아냈습니다. 시트 틈과 레일까지 함께 정리했습니다." data-link="https://blog.naver.com/sechabooo/224431082719">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-19-ray-in.jpg" data-title="기아 레이 · 시트 케어" data-desc="실내 디테일링 · 가죽 시트에 폼을 올려 오염을 불려낸 뒤 브러쉬로 닦아냈습니다. 시트 틈과 레일까지 함께 정리했습니다." data-link="https://blog.naver.com/sechabooo/224431082719">
         <div class="shot"><img src="assets/pf-19-ray-in.jpg" alt="기아 레이 가죽 시트 폼 케어 실내 디테일링" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>기아 레이 · 시트 케어</h4><p class="meta">실내 디테일링</p></div>
       </button>
-      <button type="button" class="pf-s" data-group="pf" data-src="assets/pf-20-tivoli-in.jpg" data-title="티볼리 · 뒷좌석 시트" data-desc="실내 디테일링 · 낙진 제거 작업과 함께 뒷좌석 시트를 폼으로 케어했습니다. 시트 사이 틈의 먼지까지 정리했습니다." data-link="https://blog.naver.com/sechabooo/224442360393">
+      <button type="button" class="pf-s" data-group="pfv" data-src="assets/pf-20-tivoli-in.jpg" data-title="티볼리 · 뒷좌석 시트" data-desc="실내 디테일링 · 낙진 제거 작업과 함께 뒷좌석 시트를 폼으로 케어했습니다. 시트 사이 틈의 먼지까지 정리했습니다." data-link="https://blog.naver.com/sechabooo/224442360393">
         <div class="shot"><img src="assets/pf-20-tivoli-in.jpg" alt="티볼리 뒷좌석 가죽 시트 폼 케어" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
         <div class="cd"><h4>티볼리 · 뒷좌석 시트</h4><p class="meta">실내 디테일링</p></div>
       </button>
+      </div>
     </div>
+
+    <div class="pfgroup">
+      <div class="railhead">
+        <h3>픽업 디테일링 작업 차량 <span class="cnt">8대</span></h3>
+        <div class="railnav">
+          <button type="button" id="pfpPrev" aria-label="이전 픽업 차량">‹</button>
+          <span class="pos" id="pfpPos">1 / 8</span>
+          <button type="button" id="pfpNext" aria-label="다음 픽업 차량">›</button>
+        </div>
+      </div>
+      <p class="rail-lead rail-lead--pf">차량을 픽업해 전용 공간에서 작업한 뒤 인도한 차량입니다.</p>
+      <div class="rail rail--pf" id="pfpRail">
+      <button type="button" class="pf-s" data-group="pfp" data-src="assets/pf-01-cayenne.jpg" data-title="포르쉐 카이엔 쿠페" data-desc="픽업 디테일링 · 창원 프리빌리지 · 유리 곳곳의 유막을 정리하고 전면 유막 제거와 측면 유리 서비스, 실내 세정·코팅, 외장 습식코팅까지 진행했습니다." data-link="https://blog.naver.com/sechabooo/224478992693">
+        <div class="shot"><img src="assets/pf-01-cayenne.jpg" alt="포르쉐 카이엔 쿠페 픽업 디테일링 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
+        <div class="cd"><h4>포르쉐 카이엔 쿠페</h4><p class="meta">픽업 디테일링 · 창원</p></div>
+      </button>
+      <button type="button" class="pf-s" data-group="pfp" data-src="assets/pf-07-bmwx2.jpg" data-title="BMW X2 · 미니쿠퍼" data-desc="픽업 · 프리워시에 시간을 충분히 투자해 오염을 불려낸 뒤 본세차로 진행했습니다. 오염이 심한 부위는 브러쉬로 디테일했습니다." data-link="https://blog.naver.com/sechabooo/224412589964">
+        <div class="shot"><img src="assets/pf-07-bmwx2.jpg" alt="BMW X2 픽업세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
+        <div class="cd"><h4>BMW X2 · 미니쿠퍼</h4><p class="meta">픽업</p></div>
+      </button>
+      <button type="button" class="pf-s" data-group="pfp" data-src="assets/pf-08-ev6.jpg" data-title="기아 EV6 · 그랜저 IG" data-desc="픽업 디테일링 · 창원 토월성원아파트 · 검정 EV6는 프리미엄 케어로, 그랜저 IG는 송진 고착 오염 제거와 페인트클렌징으로 진행했습니다." data-link="https://blog.naver.com/sechabooo/224463523398">
+        <div class="shot"><img src="assets/pf-08-ev6.jpg" alt="기아 EV6 픽업 프리미엄 케어 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
+        <div class="cd"><h4>기아 EV6 · 그랜저 IG</h4><p class="meta">픽업 프리미엄 · 창원</p></div>
+      </button>
+      <button type="button" class="pf-s" data-group="pfp" data-src="assets/pf-09-ioniq5.jpg" data-title="아이오닉5 · K8 · QM6 · 레이" data-desc="픽업 · 하루에 4대를 픽업해 진행한 작업. 차량별로 유막 제거와 발수코팅까지 포함해 마무리했습니다." data-link="https://blog.naver.com/sechabooo/224404099722">
+        <div class="shot"><img src="assets/pf-09-ioniq5.jpg" alt="아이오닉5 픽업 디테일링 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
+        <div class="cd"><h4>아이오닉5 · K8 · QM6 · 레이</h4><p class="meta">픽업 4대 동시</p></div>
+      </button>
+      <button type="button" class="pf-s" data-group="pfp" data-src="assets/pf-10-santafe.jpg" data-title="싼타페" data-desc="픽업 · 표면에 물때가 고르게 남아 있던 차량. 외부 세차와 함께 유막 제거·발수코팅까지 진행했습니다." data-link="https://blog.naver.com/sechabooo/224407252928">
+        <div class="shot"><img src="assets/pf-10-santafe.jpg" alt="싼타페 픽업세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
+        <div class="cd"><h4>싼타페</h4><p class="meta">픽업 · 유막·발수 포함</p></div>
+      </button>
+      <button type="button" class="pf-s" data-group="pfp" data-src="assets/pf-13-seltos-1.jpg" data-title="셀토스" data-desc="픽업세차 · 진해 여좌국민센터 · 발매트에 붙은 껌부터 유막 제거·발수코팅까지. 손이 많이 가는 오염을 한 번에 정리했습니다." data-link="https://blog.naver.com/sechabooo/224408203622">
+        <div class="shot"><img src="assets/pf-13-seltos-1.jpg" alt="셀토스 픽업세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
+        <div class="cd"><h4>셀토스</h4><p class="meta">픽업세차 · 진해</p></div>
+      </button>
+      <button type="button" class="pf-s" data-group="pfp" data-src="assets/pf-14-seltos-2.jpg" data-title="셀토스 (후면 스크래치)" data-desc="픽업 디테일링 · 창원 원풍아파트 · 후면 스크래치 제거까지 요청받은 작업. 도장면 상태를 확인하며 단계를 나눠 진행했습니다." data-link="https://blog.naver.com/sechabooo/224482151983">
+        <div class="shot"><img src="assets/pf-14-seltos-2.jpg" alt="셀토스 후면 스크래치 제거 픽업 디테일링" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
+        <div class="cd"><h4>셀토스 (후면 스크래치)</h4><p class="meta">픽업 디테일링 · 창원</p></div>
+      </button>
+      <button type="button" class="pf-s" data-group="pfp" data-src="assets/pf-18-morning.jpg" data-title="모닝" data-desc="픽업 · 아이를 태우는 차량의 실내 청소 요청. 실내를 먼저 정리하고 유막 제거·발수코팅까지 진행했습니다." data-link="https://blog.naver.com/sechabooo/224406102463">
+        <div class="shot"><img src="assets/pf-18-morning.jpg" alt="모닝 실내 청소 픽업세차 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
+        <div class="cd"><h4>모닝</h4><p class="meta">픽업 · 실내 청소</p></div>
+      </button>
+      </div>
+    </div>
+
     <p class="pf-note">모든 사진은 실제 작업 차량입니다. 사진을 누르면 크게 볼 수 있고, 차량 카드에서는 해당 작업일지로 이어집니다.</p>
   </div>
 </section>
@@ -1004,7 +1029,8 @@
     sync();
   }
   initRail('intRail','intPrev','intNext','intPos');
-  initRail('pfRail','pfPrev','pfNext','pfPos');
+  initRail('pfvRail','pfvPrev','pfvNext','pfvPos');
+  initRail('pfpRail','pfpPrev','pfpNext','pfpPos');
 
   /* ── 라이트박스 ── */
   var lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg'), lbTitle=document.getElementById('lbTitle'),
