@@ -1,24 +1,27 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><title>v6 390 capture</title>
-<style>html,body{margin:0;padding:0;background:#cfd8e3}iframe{width:390px;height:844px;border:0;display:block;margin:0 0 12px}</style></head>
+<style>html,body{margin:0;padding:0;background:#cfd8e3;overflow:hidden}iframe{width:390px;height:844px;border:0;display:none;position:absolute;left:0;top:0}iframe.on{display:block}</style></head>
 <body>
-<iframe id="f1" src="./guide/?v=6a#home" data-sel="" data-off="0"></iframe>
-<iframe id="f2" src="./guide/?v=6a#price" data-sel="" data-off="0"></iframe>
-<iframe id="f3" src="./guide/?v=6a#why" data-sel="" data-off="0"></iframe>
-<iframe id="f4" src="./guide/?v=6a#work" data-sel="intRail" data-off="-70"></iframe>
-<iframe id="f5" src="./guide/?v=6a#work" data-sel="pfRail" data-off="-70"></iframe>
-<iframe id="f6" src="./guide/?v=6a#booking" data-sel="" data-off="0"></iframe>
+<iframe id="f1" src="./guide/?v=6b#home" data-sel="" data-off="0"></iframe>
+<iframe id="f2" src="./guide/?v=6b#price" data-sel="" data-off="0"></iframe>
+<iframe id="f3" src="./guide/?v=6b#why" data-sel="" data-off="0"></iframe>
+<iframe id="f4" src="./guide/?v=6b#work" data-sel="intRail" data-off="-66"></iframe>
+<iframe id="f5" src="./guide/?v=6b#work" data-sel="pfRail" data-off="-66"></iframe>
+<iframe id="f6" src="./guide/?v=6b#booking" data-sel="" data-off="0"></iframe>
 <script>
-document.querySelectorAll('iframe').forEach(function(f){
+var n=(new URLSearchParams(location.search)).get('i')||'1';
+var f=document.getElementById('f'+n);
+if(f) f.className='on';
+document.querySelectorAll('iframe').forEach(function(ff){
   function place(){
     try{
-      var d=f.contentWindow.document, sel=f.getAttribute('data-sel');
-      var off=parseInt(f.getAttribute('data-off'),10)||0;
+      var d=ff.contentWindow.document, sel=ff.getAttribute('data-sel');
+      var off=parseInt(ff.getAttribute('data-off'),10)||0;
       if(sel && d.getElementById(sel)){
-        f.contentWindow.scrollTo({top:d.getElementById(sel).getBoundingClientRect().top+f.contentWindow.scrollY+off,behavior:'instant'});
+        ff.contentWindow.scrollTo({top:d.getElementById(sel).getBoundingClientRect().top+ff.contentWindow.scrollY+off,behavior:'instant'});
       }
     }catch(e){}
   }
-  f.addEventListener('load',function(){ setTimeout(place,400); });
+  ff.addEventListener('load',function(){ setTimeout(place,500); });
 });
 </script>
 </body></html>
