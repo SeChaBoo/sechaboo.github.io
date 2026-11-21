@@ -220,7 +220,8 @@
   .pfgroup .railhead{margin:0 0 5px}
   .pfgroup .railhead h3{font-size:16px}
   .rail-lead--pf{margin:0 0 7px; font-size:11.5px}
-  .rail--pf{gap:8px; padding-bottom:4px}
+  .rail--pf{gap:8px; padding-bottom:4px; scroll-padding-inline:20px}
+  .rail--pf .pf-s{scroll-snap-align:start}
   .pf-s{flex:0 0 47%; max-width:168px; scroll-snap-align:center; padding:0; border:1px solid var(--line); border-radius:12px;
     overflow:hidden; background:#fff; cursor:pointer; display:block; text-align:left}
   .pf-s .shot{position:relative; aspect-ratio:4/3; background:#EDF2F7}
@@ -991,17 +992,17 @@
   render();
 
   /* ── 가로 슬라이더 ── */
-  function initRail(railId, prevId, nextId, posId){
+  function initRail(railId, prevId, nextId, posId, align){
     var rail=document.getElementById(railId);
     if(!rail) return;
     var items=Array.prototype.slice.call(rail.children);
     var prev=document.getElementById(prevId), next=document.getElementById(nextId), pos=document.getElementById(posId);
     var i=0, tm=null, moved=false, sx=0, sy=0;
     function sync(){
-      var center=rail.scrollLeft+rail.clientWidth/2, best=0, bd=Infinity;
+      var anchor=rail.scrollLeft+(align==='start'?0:rail.clientWidth/2), best=0, bd=Infinity;
       items.forEach(function(el,k){
-        var c=el.offsetLeft-rail.offsetLeft+el.clientWidth/2;
-        var d=Math.abs(c-center);
+        var c=el.offsetLeft-rail.offsetLeft+(align==='start'?0:el.clientWidth/2);
+        var d=Math.abs(c-anchor);
         if(d<bd){ bd=d; best=k; }
       });
       i=best;
@@ -1012,7 +1013,9 @@
     function go(k){
       i=Math.max(0,Math.min(items.length-1,k));
       var el=items[i];
-      rail.scrollTo({left:el.offsetLeft-rail.offsetLeft-(rail.clientWidth-el.clientWidth)/2,behavior:'smooth'});
+      var left=(align==='start') ? el.offsetLeft-rail.offsetLeft-20
+        : el.offsetLeft-rail.offsetLeft-(rail.clientWidth-el.clientWidth)/2;
+      rail.scrollTo({left:Math.max(0,left),behavior:'smooth'});
       sync();
     }
     if(prev) prev.addEventListener('click',function(){ go(i-1); });
@@ -1029,8 +1032,8 @@
     sync();
   }
   initRail('intRail','intPrev','intNext','intPos');
-  initRail('pfvRail','pfvPrev','pfvNext','pfvPos');
-  initRail('pfpRail','pfpPrev','pfpNext','pfpPos');
+  initRail('pfvRail','pfvPrev','pfvNext','pfvPos','start');
+  initRail('pfpRail','pfpPrev','pfpNext','pfpPos','start');
 
   /* ── 라이트박스 ── */
   var lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg'), lbTitle=document.getElementById('lbTitle'),
