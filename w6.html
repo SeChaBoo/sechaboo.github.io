@@ -1,0 +1,24 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>v6 390 capture</title>
+<style>html,body{margin:0;padding:0;background:#cfd8e3}iframe{width:390px;height:844px;border:0;display:block;margin:0 0 12px}</style></head>
+<body>
+<iframe id="f1" src="./guide/?v=6a#home" data-sel="" data-off="0"></iframe>
+<iframe id="f2" src="./guide/?v=6a#price" data-sel="" data-off="0"></iframe>
+<iframe id="f3" src="./guide/?v=6a#why" data-sel="" data-off="0"></iframe>
+<iframe id="f4" src="./guide/?v=6a#work" data-sel="intRail" data-off="-70"></iframe>
+<iframe id="f5" src="./guide/?v=6a#work" data-sel="pfRail" data-off="-70"></iframe>
+<iframe id="f6" src="./guide/?v=6a#booking" data-sel="" data-off="0"></iframe>
+<script>
+document.querySelectorAll('iframe').forEach(function(f){
+  function place(){
+    try{
+      var d=f.contentWindow.document, sel=f.getAttribute('data-sel');
+      var off=parseInt(f.getAttribute('data-off'),10)||0;
+      if(sel && d.getElementById(sel)){
+        f.contentWindow.scrollTo({top:d.getElementById(sel).getBoundingClientRect().top+f.contentWindow.scrollY+off,behavior:'instant'});
+      }
+    }catch(e){}
+  }
+  f.addEventListener('load',function(){ setTimeout(place,400); });
+});
+</script>
+</body></html>
