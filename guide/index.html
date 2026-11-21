@@ -55,8 +55,12 @@
   .nav-links a{display:flex; align-items:center; height:40px; padding:0 13px; border-radius:10px;
     color:#CBD9E8; font-size:15.5px; font-weight:700; letter-spacing:-0.02em}
   .nav-links a:hover,.nav-links a:focus-visible{background:rgba(255,255,255,.08); color:#fff}
-  .burger{margin-left:auto; width:44px; height:44px; border:1px solid rgba(255,255,255,.24); border-radius:12px;
-    background:transparent; color:#fff; font-size:19px; line-height:1; cursor:pointer}
+  .burger{margin-left:auto; width:44px; height:44px; padding:0; border:1px solid rgba(255,255,255,.24); border-radius:12px;
+    background:transparent; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px}
+  .burger span{display:block; width:18px; height:2px; border-radius:2px; background:#fff; transition:transform .2s, opacity .2s}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
   .nav-cta{display:none}
   .nav-menu{display:none; border-top:1px solid rgba(255,255,255,.12); background:#0B1F3B; padding:6px 12px 14px}
   .nav-menu.open{display:block}
@@ -349,7 +353,7 @@
       <a href="#faq">FAQ</a>
       <a href="#booking">예약</a>
     </nav>
-    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="메뉴 열기">☰</button>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
   </div>
   <nav class="nav-menu" id="navMenu" aria-label="모바일 메뉴">
     <a href="#home">홈 <span>→</span></a>
@@ -378,7 +382,6 @@
       <ul class="hero-facts">
         <li>대표자 직접 시공</li>
         <li>월 1·2·4회 정기권</li>
-        <li>창원·진해 출장</li>
       </ul>
     </div>
     <div class="hero-visual">
@@ -975,10 +978,9 @@
     var open=menu.classList.toggle('open');
     burger.setAttribute('aria-expanded',open?'true':'false');
     burger.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');
-    burger.textContent=open?'✕':'☰';
   });
   menu.addEventListener('click',function(e){
-    if(e.target.closest('a')){ menu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); burger.textContent='☰'; burger.setAttribute('aria-label','메뉴 열기'); }
+    if(e.target.closest('a')){ menu.classList.remove('open'); burger.setAttribute('aria-expanded','false'); burger.setAttribute('aria-label','메뉴 열기'); }
   });
 
   /* 라이트박스 */
