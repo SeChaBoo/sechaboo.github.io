@@ -92,7 +92,7 @@
   .hero-facts li{display:flex; align-items:center; gap:7px}
   .hero-facts li::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--accent)}
   .hero-visual{margin:34px 0 0; border-radius:20px; overflow:hidden; box-shadow:0 22px 48px rgba(0,0,0,.42)}
-  .hero-visual img{width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; object-position:center 88%}
+  .hero-visual img{width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; object-position:center 100%}
 
   /* ── 서비스 ── */
   .cards3{display:grid; gap:16px}
@@ -171,7 +171,7 @@
   .vals .hi{background:rgba(46,196,241,.14); border-color:rgba(46,196,241,.42)}
   .vals .hi b{color:var(--accent)}
   .addon{display:grid; gap:10px; margin-top:22px}
-  .addon .row{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 18px;
+  .addon .row{display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:16px 18px;
     background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:14px; flex-wrap:wrap}
   .addon .row .k{font-size:15.5px; color:#DCE8F3; line-height:1.45}
   .addon .row .k small{display:block; font-size:13.5px; color:#9FB6CE; margin-top:2px}
@@ -305,6 +305,7 @@
     .grid-pf{grid-template-columns:repeat(3,1fr)}
     .plist{grid-template-columns:1fr 1fr; column-gap:28px}
     .diff{grid-template-columns:1fr 1fr}
+    .addon .row{flex-direction:row; align-items:center; justify-content:space-between; gap:12px}
     .pricebox{padding:44px 32px}
     .book{padding:56px 32px}
     .nav-links{display:flex}
