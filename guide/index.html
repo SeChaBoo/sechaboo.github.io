@@ -92,16 +92,16 @@
   .hero-strip li b{display:block; font-size:13.5px; color:#fff; font-weight:800; margin-bottom:1px}
 
   /* ── 서비스 (컴팩트) ── */
-  .svc{display:grid; gap:12px}
-  .svc-card{display:grid; grid-template-columns:1fr; gap:11px; align-items:start; padding:11px;
+  .svc{display:grid; gap:9px}
+  .svc-card{display:grid; grid-template-columns:96px 1fr; gap:12px; align-items:center; padding:10px;
     border:1px solid var(--line); border-radius:16px; background:#fff; color:inherit}
-  .svc-card .th{width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden; background:#EDF2F7}
+  .svc-card .th{width:96px; height:72px; border-radius:11px; overflow:hidden; background:#EDF2F7}
   .svc-card .th img{width:100%; height:100%; object-fit:cover; object-position:center}
-  .svc-card .sc{padding:1px 3px 4px}
-  .svc-card h3{margin:0 0 4px; font-size:18px; font-weight:800; letter-spacing:-0.035em; display:flex; align-items:center; gap:6px; flex-wrap:wrap}
-  .svc-card h3 .tag{font-style:normal; font-size:11px; font-weight:800; color:var(--accent-deep); background:var(--sky-soft); border-radius:999px; padding:3px 8px; letter-spacing:-0.01em}
-  .svc-card h3 i{font-style:normal; font-size:13px; color:var(--accent-deep); font-weight:800; margin-left:auto}
-  .svc-card p{margin:0 0 8px; font-size:13.5px; line-height:1.55; color:var(--body)}
+  .svc-card .sc{padding:0}
+  .svc-card h3{margin:0 0 3px; font-size:16px; font-weight:800; letter-spacing:-0.035em; display:flex; align-items:center; gap:5px}
+  .svc-card h3 .tag{font-style:normal; font-size:10px; font-weight:800; color:var(--accent-deep); background:var(--sky-soft); border-radius:999px; padding:2px 6px; letter-spacing:-0.01em; white-space:nowrap}
+  .svc-card h3 i{display:none; font-style:normal; font-size:13px; color:var(--accent-deep); font-weight:800; margin-left:auto}
+  .svc-card p{margin:0 0 6px; font-size:12.5px; line-height:1.5; color:var(--body)}
   .svc-card .feat{display:flex; flex-wrap:wrap; gap:4px; margin:0; padding:0; list-style:none}
   .svc-card .feat li{font-size:11.5px; font-weight:700; color:#0E5F7E; background:var(--sky-soft); border-radius:999px; padding:3px 8px}
   .svc-card.dark{background:var(--navy); border-color:var(--navy)}
@@ -306,6 +306,11 @@
     .svc{grid-template-columns:repeat(3,1fr); gap:14px}
     .svc-card{grid-template-columns:1fr; align-items:start; gap:10px; padding:12px}
     .svc-card .th{width:100%; height:auto; aspect-ratio:16/9}
+    .svc-card .sc{padding:1px 3px 4px}
+    .svc-card h3{font-size:17px; flex-wrap:wrap}
+    .svc-card h3 .tag{font-size:11px; padding:3px 8px}
+    .svc-card h3 i{display:inline}
+    .svc-card p{font-size:13.5px; line-height:1.55}
     .compare{display:grid; grid-template-columns:1fr 1.2fr}
     .compare .ch{padding:20px 18px}
     .compare table{margin-top:0; font-size:13.5px}
