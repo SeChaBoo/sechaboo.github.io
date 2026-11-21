@@ -69,7 +69,7 @@
 
   /* ── 히어로 ── */
   .hero{padding:0; background:linear-gradient(168deg,#081729 0%,#0B1F3B 54%,#12395F 100%); color:#fff; position:relative; overflow:hidden;
-    display:flex; flex-direction:column; min-height:calc(100vh - 56px); min-height:calc(100svh - 56px)}
+    display:flex; flex-direction:column; min-height:min(660px, calc(100vh - 56px)); min-height:min(660px, calc(100svh - 56px))}
   .hero::before{content:""; position:absolute; inset:0; pointer-events:none;
     background:radial-gradient(72% 46% at 82% 4%, rgba(46,196,241,.20), rgba(46,196,241,0) 72%)}
   .hero-in{position:relative; flex:1; display:flex; flex-direction:column; justify-content:center;
@@ -150,8 +150,7 @@
   .seg button{font-size:14px; font-weight:800; letter-spacing:-0.02em; color:#BFD8EE; background:transparent; border:0;
     padding:9px 6px; border-radius:9px; cursor:pointer; min-height:40px}
   .seg button[aria-pressed="true"]{background:#fff; color:#0B1F3B}
-  .cars{display:flex; gap:5px; overflow-x:auto; padding:0 0 7px; margin:0 -2px; scrollbar-width:none}
-  .cars::-webkit-scrollbar{display:none}
+  .cars{display:flex; flex-wrap:wrap; gap:5px; padding:0 0 4px; margin:0}
   .cars button{flex:0 0 auto; font-size:12px; font-weight:700; letter-spacing:-0.02em; color:#C6DCF0;
     background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); padding:7px 10px; border-radius:999px; cursor:pointer; white-space:nowrap}
   .cars button[aria-pressed="true"]{background:var(--accent); color:#04121f; border-color:var(--accent); font-weight:900}
@@ -456,12 +455,12 @@
     <p class="lead">장비보다 중요한 건 누가, 어떤 기준으로 작업하느냐입니다.</p>
 
     <div class="why-chips">
-      <div class="wchip"><div class="n">01</div><div><b>워터리스 방식</b><span>물 없이 주차 자리에서 작업</span></div></div>
-      <div class="wchip"><div class="n">02</div><div><b>차량 맞춤 관리</b><span>오염·도장 확인 후 필요한 공정만</span></div></div>
+      <div class="wchip"><div class="n">01</div><div><b>워터리스 방식</b><span>물 없이 주차 자리에서</span></div></div>
+      <div class="wchip"><div class="n">02</div><div><b>차량 맞춤 관리</b><span>상태 확인 후 필요한 공정만</span></div></div>
       <div class="wchip"><div class="n">03</div><div><b>부위별 정품 케미컬</b><span>브랜드 10종 라인업</span></div></div>
       <div class="wchip"><div class="n">04</div><div><b>대표자 직접 시공</b><span>맡긴 차를 직접 마무리</span></div></div>
       <div class="wchip"><div class="n">05</div><div><b>예약 중심 운영</b><span>차 한 대에 충분한 시간</span></div></div>
-      <div class="wchip"><div class="n">06</div><div><b>창원·진해 방문</b><span>남문동·풍호동·석동 등 실제 작업</span></div></div>
+      <div class="wchip"><div class="n">06</div><div><b>창원·진해 방문</b><span>진해·창원 실제 작업 이력</span></div></div>
     </div>
 
     <div class="brandblock">
