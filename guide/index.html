@@ -290,6 +290,15 @@
   .bnote div{display:grid; grid-template-columns:74px 1fr; gap:10px; padding:7px 0; font-size:12.5px; line-height:1.55; color:#C3D4E6}
   .bnote b{color:#fff; font-weight:800}
 
+  /* ── 예약 전 확인사항 ── */
+  .prechk{margin-top:16px; padding:16px 16px 5px; border:1px solid var(--line); border-radius:var(--r); background:#fff}
+  .prechk h3{margin:0 0 3px; font-size:16.5px; font-weight:800; letter-spacing:-0.03em}
+  .prechk .s{margin:0 0 10px; font-size:12.5px; line-height:1.5; color:var(--gray)}
+  .prechk ul{list-style:none; margin:0; padding:0}
+  .prechk li{position:relative; padding:0 0 11px 18px; font-size:13px; line-height:1.6; color:var(--body)}
+  .prechk li b{color:var(--ink); font-weight:800}
+  .prechk li::before{content:""; position:absolute; left:3px; top:7px; width:6px; height:6px; border-radius:50%; background:var(--accent)}
+
   footer{padding:26px 0 34px; color:var(--gray); font-size:12.5px; line-height:1.75; text-align:center}
   footer b{color:var(--ink); font-size:13.5px}
   footer a{color:#465568}
@@ -441,7 +450,7 @@
         <div class="th"><img src="assets/svc-pickup.jpg" alt="조명을 갖춘 실내 디테일링 샵에서 차량 외장을 정밀 케어하는 픽업 디테일링" loading="lazy" width="1280" height="720"></div>
         <div class="sc">
           <h3>픽업 디테일링 <i>→</i></h3>
-          <p>차량을 픽업해 전용 공간에서 작업한 뒤 원래 자리로 인도합니다.</p>
+          <p>차량을 픽업해 계약된 세차장에서 안전하게 작업한 뒤 원래 자리로 인도합니다.</p>
           <ul class="feat"><li>픽업 · 인도</li><li>기본케어</li><li>프리미엄</li></ul>
         </div>
       </a>
@@ -705,7 +714,7 @@
           <button type="button" id="pfpNext" aria-label="다음 픽업 차량">›</button>
         </div>
       </div>
-      <p class="rail-lead rail-lead--pf">차량을 픽업해 전용 공간에서 작업한 뒤 인도한 차량입니다.</p>
+      <p class="rail-lead rail-lead--pf">차량을 픽업해 계약된 세차장에서 작업한 뒤 인도한 차량입니다.</p>
       <div class="rail rail--pf" id="pfpRail">
       <button type="button" class="pf-s" data-group="pfp" data-src="assets/pf-01-cayenne.jpg" data-title="포르쉐 카이엔 쿠페" data-desc="픽업 디테일링 · 창원 프리빌리지 · 유리 곳곳의 유막을 정리하고 전면 유막 제거와 측면 유리 서비스, 실내 세정·코팅, 외장 습식코팅까지 진행했습니다." data-link="https://blog.naver.com/sechabooo/224478992693">
         <div class="shot"><img src="assets/pf-01-cayenne.jpg" alt="포르쉐 카이엔 쿠페 픽업 디테일링 작업 차량" loading="lazy" width="825" height="825"><span class="zm">＋</span></div>
@@ -757,13 +766,26 @@
       <li><div class="n">1</div><div><h3>예약 문의</h3><p>전화 또는 문자로 차종, 주소, 차량번호, 차량 위치를 알려주세요. 희망 날짜와 시간도 함께 주시면 일정을 잡습니다.</p></div></li>
       <li><div class="n">2</div><div><h3>차량 상태 확인</h3><p>오염도와 도장 상태, 실내 소재를 확인합니다. 필요한 추가 작업이 있으면 금액을 먼저 안내합니다.</p></div></li>
       <li><div class="n">3</div><div><h3>예약 및 일정 조율</h3><p>작업 범위와 금액을 확정하고 예약금 20,000원을 안내합니다. 예약 확정 시 계좌를 개별로 안내드립니다.</p></div></li>
-      <li><div class="n">4</div><div><h3>작업 진행</h3><p>출장은 주차된 자리에서, 픽업은 전용 공간에서 진행합니다. 픽업 시 차량을 찾을 때 상태를 사진으로 함께 확인합니다.</p></div></li>
+      <li><div class="n">4</div><div><h3>작업 진행</h3><p>출장은 주차된 자리에서, 픽업은 계약된 세차장에서 진행합니다. 픽업 시 차량을 찾을 때 상태를 사진으로 함께 확인합니다.</p></div></li>
       <li><div class="n">5</div><div><h3>차량 인도 및 관리 안내</h3><p>물기와 잔여 오염까지 검수한 뒤 완료 상태를 사진으로 보내드리고, 원래 자리로 인도합니다.</p></div></li>
     </ol>
 
     <div class="diff">
       <div class="row"><b>출장세차</b><span>내가 있는 자리에서 진행합니다. 물을 쓰지 않아 아파트·지하주차장에서도 주변에 피해 없이 작업합니다.</span></div>
-      <div class="row"><b>픽업 디테일링</b><span>차량을 픽업해 전용 공간에서 작업하고 다시 인도합니다. 픽업비는 진해구 내 15,000원, 창원 시내 15,000~20,000원입니다.</span></div>
+      <div class="row"><b>픽업 디테일링</b><span>차량을 픽업해 계약된 세차장에서 작업하고 다시 인도합니다. 픽업비는 진해구 내 15,000원, 창원 시내 15,000~20,000원입니다.</span></div>
+    </div>
+
+    <div class="prechk" id="check">
+      <h3>예약 전 확인사항</h3>
+      <p class="s">픽업 디테일링은 계약된 세차장에서 작업합니다. 아래 내용을 미리 확인해 주시면 진행이 수월합니다.</p>
+      <ul>
+        <li><b>개인 짐 비우기</b> 귀중품 및 개인 짐은 미리 비워주셔야 구석구석 꼼꼼한 디테일링 작업이 가능합니다.</li>
+        <li><b>1회성 자동차보험</b> 등록은 선택 사항으로, 원하시면 픽업 시 등록해 드립니다.</li>
+        <li><b>도색·랩핑·기존 손상·특수 오염</b>은 작업 전에 미리 알려주세요.</li>
+        <li><b>추가 비용</b> 고성능 브레이크 분진·심한 오염 +5,000원, 엔진룸 +20,000원이며 작업 전에 금액을 먼저 안내합니다.</li>
+        <li><b>작업 범위</b> 천장 전체 세척은 진행하지 않고 안전 범위만 부분 케어합니다.</li>
+        <li><b>예약금·취소</b> 20,000원 선불(예약 확정 시 계좌 개별 안내)이며, 당일 취소·변경은 환불이 어렵고 천재지변·업체 사정은 100% 환불합니다.</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -792,7 +814,7 @@
 
     <details class="qa">
       <summary><span class="q">픽업 디테일링은 어떻게 진행되나요?</span><span class="ic">＋</span></summary>
-      <div class="a">예약 확정 후 차량을 픽업하고, 픽업 시점에 스크래치·오염·파손·짐을 사진으로 함께 확인합니다. 전용 공간에서 기본케어 또는 프리미엄 케어로 작업한 뒤 검수하고, 완료 상태를 사진으로 보내드린 다음 원래 자리로 인도합니다. 픽업비는 진해구 내 15,000원, 창원 시내 15,000~20,000원이며 2대 이상 동시 이용 시 할인됩니다.</div>
+      <div class="a">예약 확정 후 차량을 픽업하고, 픽업 시점에 스크래치·오염·파손·짐을 사진으로 함께 확인합니다. 계약된 세차장에서 기본케어 또는 프리미엄 케어로 작업한 뒤 검수하고, 완료 상태를 사진으로 보내드린 다음 원래 자리로 인도합니다. 귀중품과 개인 짐은 미리 비워주시면 구석구석 꼼꼼하게 작업할 수 있고, 1회성 자동차보험 등록은 선택 사항으로 원하시면 픽업 시 등록해 드립니다. 픽업비는 진해구 내 15,000원, 창원 시내 15,000~20,000원이며 2대 이상 동시 이용 시 할인됩니다.</div>
     </details>
 
     <details class="qa">
@@ -826,7 +848,7 @@
       <p class="sub">창원·진해 어디든 방문합니다. 차종과 주차 위치를 알려주시면 가능한 일정과 요금을 바로 안내드립니다.</p>
       <div class="btns">
         <a class="btn btn-primary" href="tel:01098148253">전화문의</a>
-        <a class="btn btn-line" href="sms:01098148253?&body=%5B%EC%84%B8%EC%B0%A8%EB%A5%BC%EB%B6%80%ED%83%81%ED%95%B4%20%EC%98%88%EC%95%BD%20%EB%AC%B8%EC%9D%98%5D%0A-%20%ED%9D%AC%EB%A7%9D%20%EC%84%9C%EB%B9%84%EC%8A%A4%3A%20%0A-%20%EC%B0%A8%EB%9F%89%20%EC%A3%BC%EC%86%8C%3A%20%0A-%20%EC%97%B0%EB%9D%BD%EC%B2%98%3A%20%0A-%20%EC%B0%A8%EB%9F%89%EB%B2%88%ED%98%B8%3A%20%0A-%20%EC%B0%A8%EC%A2%85%20%2F%20%EC%83%89%EC%83%81%3A%20%0A-%20%EC%B0%A8%EB%9F%89%20%EC%9C%84%EC%B9%98%3A%20%0A%0A%EB%AC%B8%EC%9E%90%20%EB%B3%B4%EB%82%B4%EC%A3%BC%EC%8B%9C%EB%A9%B4%20%EA%B0%80%EB%8A%A5%ED%95%9C%20%EB%B9%A8%EB%A6%AC%20%EB%8B%B5%EB%B3%80%EB%93%9C%EB%A6%AC%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4.">문자예약</a>
+        <a class="btn btn-line" href="sms:01098148253?&body=%5B%EC%84%B8%EC%B0%A8%EB%A5%BC%EB%B6%80%ED%83%81%ED%95%B4%20%EC%98%88%EC%95%BD%20%EB%AC%B8%EC%9D%98%5D%0A-%20%ED%9D%AC%EB%A7%9D%20%EC%84%9C%EB%B9%84%EC%8A%A4%3A%20%28%EC%B6%9C%EC%9E%A5%EC%84%B8%EC%B0%A8%20%2F%20%ED%94%BD%EC%97%85%20%EB%94%94%ED%85%8C%EC%9D%BC%EB%A7%81%29%0A-%20%EC%B0%A8%EB%9F%89%20%EC%A3%BC%EC%86%8C%3A%20%0A-%20%EC%97%B0%EB%9D%BD%EC%B2%98%3A%20%0A-%20%EC%B0%A8%EB%9F%89%EB%B2%88%ED%98%B8%3A%20%0A-%20%EC%B0%A8%EC%A2%85%20%2F%20%EC%83%89%EC%83%81%3A%20%0A-%20%EC%B0%A8%EB%9F%89%20%EC%9C%84%EC%B9%98%3A%20%0A-%20%ED%94%BD%EC%97%85%20%EC%8B%9C%201%ED%9A%8C%EC%84%B1%20%EB%B3%B4%ED%97%98%20%EB%93%B1%EB%A1%9D%3A%20%28%EC%84%A0%ED%83%9D%29%0A-%20%EC%9C%A0%EB%A7%89%C2%B7%EB%B0%9C%EC%88%98%20%EC%9D%B4%EB%B2%A4%ED%8A%B8%3A%20%28%EC%84%A0%ED%83%9D%29%0A%0A%EB%AC%B8%EC%9E%90%20%EB%B3%B4%EB%82%B4%EC%A3%BC%EC%8B%9C%EB%A9%B4%20%EA%B0%80%EB%8A%A5%ED%95%9C%20%EB%B9%A8%EB%A6%AC%20%EB%8B%B5%EB%B3%80%EB%93%9C%EB%A6%AC%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4.">문자예약</a>
       </div>
       <div class="booklnk">
         <a href="https://blog.naver.com/sechabooo" target="_blank" rel="noopener">블로그</a>
@@ -847,7 +869,7 @@
   <div class="wrap">
     <b>세차를부탁해</b><br>
     창원 · 진해 · 마산 프리미엄 워터리스 출장세차 &amp; 픽업 디테일링<br>
-    예약·문의 <a href="tel:01098148253">010-9814-8253</a> · 스마트콜 <a href="tel:050895964390">0508-9596-4390</a><br>
+    예약·문의 <a href="tel:01098148253">010-9814-8253</a><br>
     사진과 영상은 실제 작업 차량과 현장입니다.
   </div>
 </footer>
@@ -855,7 +877,7 @@
 <!-- 하단 고정 CTA -->
 <div class="bottom">
   <a class="tel" href="tel:01098148253">전화문의</a>
-  <a class="sms" href="sms:01098148253?&body=%5B%EC%84%B8%EC%B0%A8%EB%A5%BC%EB%B6%80%ED%83%81%ED%95%B4%20%EC%98%88%EC%95%BD%20%EB%AC%B8%EC%9D%98%5D%0A-%20%ED%9D%AC%EB%A7%9D%20%EC%84%9C%EB%B9%84%EC%8A%A4%3A%20%0A-%20%EC%B0%A8%EB%9F%89%20%EC%A3%BC%EC%86%8C%3A%20%0A-%20%EC%97%B0%EB%9D%BD%EC%B2%98%3A%20%0A-%20%EC%B0%A8%EB%9F%89%EB%B2%88%ED%98%B8%3A%20%0A-%20%EC%B0%A8%EC%A2%85%20%2F%20%EC%83%89%EC%83%81%3A%20%0A-%20%EC%B0%A8%EB%9F%89%20%EC%9C%84%EC%B9%98%3A%20%0A%0A%EB%AC%B8%EC%9E%90%20%EB%B3%B4%EB%82%B4%EC%A3%BC%EC%8B%9C%EB%A9%B4%20%EA%B0%80%EB%8A%A5%ED%95%9C%20%EB%B9%A8%EB%A6%AC%20%EB%8B%B5%EB%B3%80%EB%93%9C%EB%A6%AC%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4.">문자예약</a>
+  <a class="sms" href="sms:01098148253?&body=%5B%EC%84%B8%EC%B0%A8%EB%A5%BC%EB%B6%80%ED%83%81%ED%95%B4%20%EC%98%88%EC%95%BD%20%EB%AC%B8%EC%9D%98%5D%0A-%20%ED%9D%AC%EB%A7%9D%20%EC%84%9C%EB%B9%84%EC%8A%A4%3A%20%28%EC%B6%9C%EC%9E%A5%EC%84%B8%EC%B0%A8%20%2F%20%ED%94%BD%EC%97%85%20%EB%94%94%ED%85%8C%EC%9D%BC%EB%A7%81%29%0A-%20%EC%B0%A8%EB%9F%89%20%EC%A3%BC%EC%86%8C%3A%20%0A-%20%EC%97%B0%EB%9D%BD%EC%B2%98%3A%20%0A-%20%EC%B0%A8%EB%9F%89%EB%B2%88%ED%98%B8%3A%20%0A-%20%EC%B0%A8%EC%A2%85%20%2F%20%EC%83%89%EC%83%81%3A%20%0A-%20%EC%B0%A8%EB%9F%89%20%EC%9C%84%EC%B9%98%3A%20%0A-%20%ED%94%BD%EC%97%85%20%EC%8B%9C%201%ED%9A%8C%EC%84%B1%20%EB%B3%B4%ED%97%98%20%EB%93%B1%EB%A1%9D%3A%20%28%EC%84%A0%ED%83%9D%29%0A-%20%EC%9C%A0%EB%A7%89%C2%B7%EB%B0%9C%EC%88%98%20%EC%9D%B4%EB%B2%A4%ED%8A%B8%3A%20%28%EC%84%A0%ED%83%9D%29%0A%0A%EB%AC%B8%EC%9E%90%20%EB%B3%B4%EB%82%B4%EC%A3%BC%EC%8B%9C%EB%A9%B4%20%EA%B0%80%EB%8A%A5%ED%95%9C%20%EB%B9%A8%EB%A6%AC%20%EB%8B%B5%EB%B3%80%EB%93%9C%EB%A6%AC%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4.">문자예약</a>
 </div>
 
 <!-- 라이트박스 -->
