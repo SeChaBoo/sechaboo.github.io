@@ -112,6 +112,7 @@
   .compare .ch{padding:20px 20px 4px}
   .compare h3{margin:0 0 4px; font-size:20px; font-weight:800; letter-spacing:-0.035em}
   .compare p{margin:0; font-size:15px; color:var(--gray)}
+  .compare caption{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
   .compare table{width:100%; border-collapse:collapse; font-size:15.5px; margin-top:12px}
   .compare th,.compare td{padding:14px 10px; text-align:center; border-top:1px solid var(--line); vertical-align:top}
   .compare thead th{font-size:14.5px; font-weight:800; color:var(--gray); border-top:0; padding-bottom:10px}
@@ -152,6 +153,8 @@
   .pricegroup h3 .tag{font-size:13px; font-weight:800; color:#062033; background:var(--accent); border-radius:7px; padding:4px 9px; letter-spacing:0}
   .pricegroup .pg-sub{margin:0 0 16px; font-size:15px; color:#A9C0D6; line-height:1.55}
   .ptable{width:100%; border-collapse:collapse; table-layout:fixed; font-variant-numeric:tabular-nums}
+  .ptable.t4 th:first-child,.ptable.t4 td:first-child{width:36%}
+  .ptable.t3 th:first-child,.ptable.t3 td:first-child{width:46%}
   .ptable caption{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0)}
   .ptable th,.ptable td{padding:13px 2px; text-align:right; border-bottom:1px solid rgba(255,255,255,.12); white-space:nowrap}
   .ptable th:first-child,.ptable td:first-child{text-align:left; white-space:normal; padding-right:6px}
@@ -185,17 +188,17 @@
   .vid .vc{margin:0; padding:12px 18px 16px; font-size:14.5px; line-height:1.5; color:#A9C0D6; text-align:center}
   .vid .vc b{color:#fff}
 
-  .subhead{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin:48px 0 6px; flex-wrap:wrap}
-  .subhead h3{margin:0; font-size:22px; font-weight:800; letter-spacing:-0.035em}
+  .subhead{margin:48px 0 6px}
+  .subhead h3{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0; font-size:22px; font-weight:800; letter-spacing:-0.035em}
   .subhead p{margin:4px 0 0; font-size:15px; color:var(--gray)}
   .subhead .count{font-size:14px; font-weight:800; color:#0E5F7E; background:var(--sky-soft); border-radius:999px; padding:6px 12px}
 
-  .grid-int{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:16px}
+  .grid-int{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:16px}
   .grid-int button{padding:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:#EDF2F7; cursor:pointer; position:relative; display:block}
   .grid-int img{width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; transition:transform .25s}
   .grid-int button:active img,.grid-int button:hover img{transform:scale(1.03)}
-  .grid-int .lb{position:absolute; left:0; right:0; bottom:0; padding:16px 6px 6px; font-size:12px; font-weight:700; color:#fff; line-height:1.3;
-    background:linear-gradient(180deg, rgba(6,16,29,0), rgba(6,16,29,.82)); text-align:left}
+  .grid-int .lb{position:absolute; left:6px; bottom:6px; padding:4px 7px; border-radius:6px; font-size:11.5px; font-weight:700; color:#fff; line-height:1.3;
+    background:rgba(8,22,39,.82); text-align:left; -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px)}
 
   .grid-pf{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:16px}
   .pcard{border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#fff; text-align:left; padding:0; cursor:pointer; display:block; width:100%}
@@ -209,7 +212,7 @@
   .pf-note{margin:18px 0 0; font-size:14.5px; color:var(--gray); line-height:1.6}
 
   /* ── 라이트박스 ── */
-  .lb{position:fixed; inset:0; z-index:100; display:none; background:rgba(6,14,25,.94); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px)}
+  .lb{position:fixed; inset:0; z-index:100; display:none; background:rgba(5,12,21,.985); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px)}
   .lb.open{display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px}
   .lb-fig{margin:0; max-width:560px; width:100%; display:flex; flex-direction:column; align-items:center}
   .lb-fig img{width:100%; max-height:66vh; object-fit:contain; border-radius:12px; background:#0A1522}
@@ -294,7 +297,7 @@
     .compare table{margin-top:0}
     .why{grid-template-columns:1fr 1fr; column-gap:36px}
     .brandgrid{grid-template-columns:repeat(5,1fr)}
-    .grid-int{grid-template-columns:repeat(6,1fr)}
+    .grid-int{grid-template-columns:repeat(4,1fr)}
     .grid-pf{grid-template-columns:repeat(3,1fr)}
     .diff{grid-template-columns:1fr 1fr}
     .pricebox{padding:44px 32px}
@@ -320,6 +323,8 @@
     .pricebox .pgrid{display:grid; grid-template-columns:1fr 1fr; gap:0 40px; align-items:start}
     .pricebox .pricegroup+.pricegroup{margin-top:0; padding-top:0; border-top:0}
     .nav-links a{font-size:16px}
+    .bottom{display:none}
+    body{padding-bottom:0}
   }
 </style>
 </head>
@@ -361,7 +366,7 @@
         <div><b>세차를부탁해</b><span>창원 · 진해 프리미엄 워터리스 디테일링</span></div>
       </div>
       <h1>차를 맡기는 순간부터<br><em>관리의 차이</em>가 시작됩니다.</h1>
-      <p class="sub">출장세차와 픽업 디테일링을 대표자가 직접 진행합니다. 내 차의 상태에 맞춰, 필요한 곳까지.</p>
+      <p class="sub">대표자가 직접 진행하는 출장세차 · 픽업 디테일링. 내 차 상태에 맞춰 필요한 곳까지 관리합니다.</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="#booking">예약 문의</a>
         <a class="btn btn-line" href="#price">요금 안내</a>
@@ -489,7 +494,7 @@
           <h3>출장세차 <span class="tag">방문</span></h3>
           <p class="pg-sub">주차된 자리에서 진행합니다. 정기권은 월 단위로 관리합니다.</p>
 
-          <table class="ptable">
+          <table class="ptable t4">
             <caption>출장세차 정기권 요금</caption>
             <thead>
               <tr><th scope="col">차종</th><th scope="col">월 1회</th><th scope="col">월 2회</th><th scope="col" class="hi">월 4회<small>가장 저렴</small></th></tr>
@@ -505,7 +510,7 @@
           </table>
           <p class="pg-note">단위 원 · 1회씩 4번 받는 것보다 4회 정기권이 20,000~60,000원 저렴합니다.</p>
 
-          <table class="ptable">
+          <table class="ptable t3">
             <caption>출장세차 단건 요금</caption>
             <thead>
               <tr><th scope="col">차종</th><th scope="col">내부만<small>실내</small></th><th scope="col">1회성<small>내부+외부</small></th></tr>
@@ -524,7 +529,7 @@
         <div class="pricegroup">
           <h3>픽업 디테일링 <span class="tag">픽업</span></h3>
           <p class="pg-sub">기본케어는 내·외부 표준, 프리미엄은 틈새·실내 디테일링까지 포함합니다.</p>
-          <table class="ptable">
+          <table class="ptable t4">
             <caption>픽업 디테일링 차종별 요금</caption>
             <thead>
               <tr><th scope="col">차종</th><th scope="col">외부만</th><th scope="col" class="hi">내·외부<small>기본케어</small></th><th scope="col">프리미엄</th></tr>
@@ -602,11 +607,8 @@
     </div>
 
     <div class="subhead">
-      <div>
-        <h3>실내 디테일링 12컷</h3>
-        <p>핸들·도어·송풍구·가죽 시트까지, 손이 닿기 어려운 곳을 나눠 케어한 실제 작업 컷입니다.</p>
-      </div>
-      <span class="count">12컷</span>
+      <h3>실내 디테일링 12컷 <span class="count">12컷</span></h3>
+      <p>핸들·도어·송풍구·가죽 시트까지, 손이 닿기 어려운 곳을 나눠 케어한 실제 작업 컷입니다.</p>
     </div>
 
     <div class="grid-int" id="intGrid">
@@ -661,11 +663,8 @@
     </div>
 
     <div class="subhead">
-      <div>
-        <h3>실제 작업 차량 20대</h3>
-        <p>촬영한 차량과 실제 진행한 작업만 정리했습니다. 사진을 누르면 작업 내용과 작업일지를 볼 수 있습니다.</p>
-      </div>
-      <span class="count">20대</span>
+      <h3>실제 작업 차량 20대 <span class="count">20대</span></h3>
+      <p>촬영한 차량과 실제 진행한 작업만 정리했습니다. 사진을 누르면 작업 내용과 작업일지를 볼 수 있습니다.</p>
     </div>
 
     <div class="grid-pf" id="pfGrid">
