@@ -1,0 +1,10 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>preview frame</title>
+<style>html,body{margin:0;padding:0;background:#cfd8e3}iframe{border:0;display:block}</style></head>
+<body><iframe id="f"></iframe>
+<script>
+var h=(location.hash||'#390x844').slice(1).split('x');
+var w=parseInt(h[0],10)||390, hh=parseInt(h[1],10)||844;
+var f=document.getElementById('f');
+f.style.width=w+'px'; f.style.height=hh+'px';
+f.src='./index.html?t='+Date.now();
+</script></body></html>
