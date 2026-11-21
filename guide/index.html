@@ -185,6 +185,7 @@
 
   /* ── 포트폴리오 ── */
   .vid{border-radius:18px; overflow:hidden; background:#050F1C; box-shadow:0 14px 30px rgba(11,31,59,.18); max-width:420px; margin:0 auto}
+  .work-top{display:block}
   .vid .vh{display:flex; align-items:center; gap:8px; padding:11px 15px; color:#fff; font-size:14px; font-weight:800; letter-spacing:-0.03em}
   .vid .vh .bd{font-size:11px; font-weight:800; color:#062033; background:var(--accent); border-radius:5px; padding:2px 7px}
   .vid .vh em{margin-left:auto; font-style:normal; font-size:11.5px; font-weight:600; color:#93AEC8}
@@ -331,6 +332,8 @@
     .int-s{flex:0 0 auto; width:calc(16.666% - 8px); max-width:none}
     .pf-s{flex:0 0 auto; width:calc(20% - 8px); max-width:none}
     .railnav{display:none}
+    .work-top{display:grid; grid-template-columns:1fr 400px; gap:44px; align-items:center}
+    .work-top .vid{max-width:none; margin:0}
     .nav-links a{font-size:15.5px}
     .bottom{display:none}
     body{padding-bottom:0}
@@ -535,16 +538,19 @@
 <!-- ══════════ 5. PORTFOLIO ══════════ -->
 <section class="band" id="work">
   <div class="wrap">
-    <span class="kicker">Portfolio</span>
-    <h2>실제 작업 <span class="dim">사진과 영상</span></h2>
-    <p class="lead">촬영한 실제 작업만 올립니다. 영상은 버튼 없이 재생되고, 사진을 누르면 크게 볼 수 있습니다.</p>
-
-    <div class="vid">
-      <div class="vh"><span class="bd">현장 영상</span>유리 유막 제거 · 발수코팅<em>7초 · 반복</em></div>
-      <video src="assets/glass-work.mp4?v=5" poster="assets/glass-still.jpg?v=5"
-             autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture
-             aria-label="유리 유막 제거와 발수코팅 작업 현장 7초 영상"></video>
-      <p class="vc">실제 작업 현장을 촬영한 <b>7초 영상</b>입니다. 재생 버튼 없이 계속 재생됩니다.</p>
+    <div class="work-top">
+      <div>
+        <span class="kicker">Portfolio</span>
+        <h2>실제 작업 <span class="dim">사진과 영상</span></h2>
+        <p class="lead">촬영한 실제 작업만 올립니다. 영상은 버튼 없이 재생되고, 사진을 누르면 크게 볼 수 있습니다.</p>
+      </div>
+      <div class="vid">
+        <div class="vh"><span class="bd">현장 영상</span>유리 유막 제거 · 발수코팅<em>7초 · 반복</em></div>
+        <video src="assets/glass-work.mp4?v=5" poster="assets/glass-still.jpg?v=5"
+               autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture
+               aria-label="유리 유막 제거와 발수코팅 작업 현장 7초 영상"></video>
+        <p class="vc">실제 작업 현장을 촬영한 <b>7초 영상</b>입니다. 재생 버튼 없이 계속 재생됩니다.</p>
+      </div>
     </div>
 
     <div class="railhead">
