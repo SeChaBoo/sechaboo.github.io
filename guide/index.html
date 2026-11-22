@@ -69,27 +69,37 @@
 
   /* ── 히어로 ── */
   .hero{padding:0; background:linear-gradient(168deg,#081729 0%,#0B1F3B 54%,#12395F 100%); color:#fff; position:relative; overflow:hidden;
-    display:flex; flex-direction:column; min-height:min(600px, calc(100vh - 56px)); min-height:min(600px, calc(100svh - 56px))}
+    display:flex; flex-direction:column; min-height:0}
   .hero::before{content:""; position:absolute; inset:0; pointer-events:none;
     background:radial-gradient(72% 46% at 82% 4%, rgba(46,196,241,.20), rgba(46,196,241,0) 72%)}
   .hero-in{position:relative; flex:1; display:flex; flex-direction:column; justify-content:center;
-    max-width:1120px; width:100%; margin:0 auto; padding:34px 20px 28px}
-  .lockup{display:flex; align-items:center; gap:11px; margin-bottom:22px}
+    max-width:1120px; width:100%; margin:0 auto; padding:18px 20px 24px}
+  .lockup{display:flex; align-items:center; gap:11px; margin-bottom:14px}
   .lockup img{width:54px; height:54px; border-radius:50%; object-fit:cover; background:#fff; box-shadow:0 0 0 4px rgba(255,255,255,.10)}
   .lockup b{display:block; font-size:18.5px; font-weight:800; letter-spacing:-0.035em; line-height:1.2}
   .lockup span{display:block; font-size:12.5px; color:#9FB6CE; margin-top:2px; letter-spacing:-0.01em}
   .hero h1{margin:0 0 14px; font-size:32px; line-height:1.26; font-weight:800; letter-spacing:-0.05em}
   .hero h1 em{font-style:normal; color:var(--accent)}
-  .hero .sub{margin:0 0 26px; font-size:16px; line-height:1.6; color:#C8D8E8; max-width:460px}
+  .hero .sub{margin:0 0 18px; font-size:16px; line-height:1.6; color:#C8D8E8; max-width:460px}
   .hero-cta{display:grid; grid-template-columns:1fr 1fr; gap:9px; max-width:420px}
   .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:54px; padding:0 18px;
     border-radius:13px; font-size:16.5px; font-weight:800; letter-spacing:-0.03em; border:1px solid transparent; cursor:pointer}
   .btn-primary{background:var(--accent); color:#062033}
   .btn-line{background:rgba(255,255,255,.06); color:#fff; border-color:rgba(255,255,255,.34)}
-  .hero-strip{margin:28px 0 0; padding:18px 0 0; border-top:1px solid rgba(255,255,255,.13); list-style:none;
+  .hero-strip{margin:16px 0 0; padding:13px 0 0; border-top:1px solid rgba(255,255,255,.13); list-style:none;
     display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
   .hero-strip li{font-size:12.5px; font-weight:700; color:#A8BDD3; line-height:1.4; text-align:center; letter-spacing:-0.02em}
   .hero-strip li b{display:block; font-size:13.5px; color:#fff; font-weight:800; margin-bottom:1px}
+  .hero-copy{position:relative; z-index:1}
+  .hero-shot{position:relative; margin:16px 0 0; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.16);
+    background:#0A1526; box-shadow:0 18px 36px rgba(2,9,18,.45)}
+  .hero-shot img{width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; object-position:center 56%}
+  .hero-shot::after{content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+    background:linear-gradient(158deg, rgba(11,31,59,.32) 0%, rgba(11,31,59,0) 48%)}
+  .hero-shot figcaption{position:absolute; left:10px; top:10px; z-index:2; margin:0; display:inline-flex; align-items:center; gap:6px;
+    padding:5px 10px 5px 8px; border-radius:999px; background:rgba(6,17,30,.66); border:1px solid rgba(255,255,255,.20);
+    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); font-size:11px; font-weight:700; color:#EAF5FC; letter-spacing:-0.01em}
+  .hero-shot figcaption::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px rgba(46,196,241,.22)}
 
   /* ── 서비스 (컴팩트) ── */
   .svc{display:grid; gap:9px}
@@ -168,17 +178,17 @@
   .picked .big .k{font-size:12px; color:#CBD9E8}
   .picked .save{font-size:11.5px; color:#8FD3FF; font-weight:700; margin:4px 0 0; line-height:1.4}
   .ptw{overflow-x:auto; margin:0 -2px}
-  table.pt{width:100%; border-collapse:collapse; font-size:11.5px; font-variant-numeric:tabular-nums}
-  table.pt th,table.pt td{padding:7px 3px; text-align:right; white-space:nowrap}
+  table.pt{width:100%; border-collapse:collapse; font-size:12.5px; font-variant-numeric:tabular-nums}
+  table.pt th,table.pt td{padding:9px 4px; text-align:right; white-space:nowrap}
   table.pt th:first-child,table.pt td:first-child{text-align:left; padding-left:4px}
-  table.pt thead th{font-size:9.5px; font-weight:700; color:#9DB9D2; border-bottom:1px solid rgba(255,255,255,.22); line-height:1.2; vertical-align:bottom}
-  table.pt thead th small{display:block; font-size:8.5px; font-weight:500; color:#7F9CB8}
+  table.pt thead th{font-size:10px; font-weight:700; color:#9DB9D2; border-bottom:1px solid rgba(255,255,255,.22); line-height:1.2; vertical-align:bottom}
+  table.pt thead th small{display:block; font-size:9px; font-weight:500; color:#7F9CB8}
   table.pt tbody tr{cursor:pointer; border-bottom:1px solid rgba(255,255,255,.07)}
   table.pt tbody td{color:#D9E6F2}
   table.pt tbody tr[aria-selected="true"]{background:rgba(46,196,241,.18)}
   table.pt tbody tr[aria-selected="true"] td{color:#fff; font-weight:800}
   table.pt tbody tr[aria-selected="true"] td:first-child{color:#8FD3FF}
-  table.pt td:first-child{font-size:10.5px; color:#C6DCF0; line-height:1.2; padding-right:2px}
+  table.pt td:first-child{font-size:11.5px; color:#C6DCF0; line-height:1.2; padding-right:2px}
   .pt-hint{margin:6px 0 0; font-size:10.5px; color:#8AA5BF}
   .add{margin-top:14px; padding-top:13px; border-top:1px solid rgba(255,255,255,.14)}
   .add h4{margin:0 0 7px; font-size:13px; color:#fff; display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-weight:800}
@@ -320,7 +330,7 @@
     section{padding:64px 0; scroll-margin-top:68px}
     .wrap{padding:0 32px}
     h2{font-size:30px}
-    .hero-in{padding:56px 32px 44px}
+    .hero-in{padding:32px 32px 40px}
     .hero h1{font-size:42px}
     .svc{grid-template-columns:repeat(3,1fr); gap:14px}
     .svc-card{grid-template-columns:1fr; align-items:start; gap:10px; padding:12px}
@@ -351,11 +361,13 @@
   @media (min-width:1024px){
     section{padding:76px 0}
     .hero{min-height:0}
-    .hero-in{padding:110px 32px 96px; max-width:880px; margin:0 auto}
-    .hero h1{font-size:52px; max-width:760px}
-    .hero .sub{font-size:17px; max-width:560px}
-    .hero-strip{max-width:560px; margin-top:36px}
+    .hero-in{display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr); gap:44px; align-items:center;
+      padding:64px 32px 68px; max-width:1120px; margin:0 auto}
+    .hero h1{font-size:clamp(36px,3.9vw,46px); max-width:520px}
+    .hero .sub{font-size:17px; max-width:470px}
+    .hero-strip{max-width:470px; margin-top:28px}
     .hero-strip li{text-align:left}
+    .hero-shot{margin:0; border-radius:20px}
     .rail{overflow:visible; flex-wrap:wrap; margin:0; padding:0; scroll-snap-type:none}
     .rail-wrapper{overflow:hidden; margin:0 -20px; padding:0 20px}
     .int-s{flex:0 0 auto; width:calc(16.666% - 8px); max-width:none}
@@ -403,21 +415,27 @@
 <!-- ══════════ 1. HERO ══════════ -->
 <section class="hero" id="home">
   <div class="hero-in">
-    <div class="lockup">
-      <img src="assets/brand-logo.jpg" alt="세차를부탁해 공식 로고" width="54" height="54" fetchpriority="high">
-      <div><b>세차를부탁해</b><span>창원 · 진해 프리미엄 워터리스 디테일링</span></div>
+    <div class="hero-copy">
+      <div class="lockup">
+        <img src="assets/brand-logo.jpg" alt="세차를부탁해 공식 로고" width="54" height="54" fetchpriority="high">
+        <div><b>세차를부탁해</b><span>창원 · 진해 프리미엄 워터리스 디테일링</span></div>
+      </div>
+      <h1>차를 맡기는 순간부터<br><em>관리의 차이</em>가 시작됩니다.</h1>
+      <p class="sub">대표자가 직접 진행하는 출장세차 · 픽업 디테일링. 내 차 상태에 맞춰 필요한 곳까지 관리합니다.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#booking">예약 문의</a>
+        <a class="btn btn-line" href="#price">요금 안내</a>
+      </div>
+      <ul class="hero-strip">
+        <li><b>대표자 직접</b>시공 · 마무리 검수</li>
+        <li><b>워터리스</b>물 흐르지 않는 작업</li>
+        <li><b>창원 · 진해</b>방문 · 픽업 가능</li>
+      </ul>
     </div>
-    <h1>차를 맡기는 순간부터<br><em>관리의 차이</em>가 시작됩니다.</h1>
-    <p class="sub">대표자가 직접 진행하는 출장세차 · 픽업 디테일링. 내 차 상태에 맞춰 필요한 곳까지 관리합니다.</p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#booking">예약 문의</a>
-      <a class="btn btn-line" href="#price">요금 안내</a>
-    </div>
-    <ul class="hero-strip">
-      <li><b>대표자 직접</b>시공 · 마무리 검수</li>
-      <li><b>워터리스</b>물 흐르지 않는 작업</li>
-      <li><b>창원 · 진해</b>방문 · 픽업 가능</li>
-    </ul>
+    <figure class="hero-shot">
+      <img src="assets/hero-shot.jpg" alt="야간 출장세차를 마치고 윤기가 살아난 벤츠 GLE 앞모습" width="900" height="506" fetchpriority="high">
+      <figcaption>실제 작업 · 벤츠 GLE 야간 출장세차</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -442,8 +460,8 @@
         <div class="th"><img src="assets/svc-regular.jpg" alt="지하주차장 주차 자리에서 관리해 윤기가 살아난 블랙 세단" loading="lazy" width="1280" height="720"></div>
         <div class="sc">
           <h3>워터리스 출장 디테일링 <span class="tag">정기권</span> <i>→</i></h3>
-          <p>같은 자리에서 주기적으로 관리합니다. 월 1·2·4회 중 고르고, 4회 정기권이 가장 저렴합니다.</p>
-          <ul class="feat"><li>방문 작업</li><li>월 1·2·4회</li><li>4회 정기권</li></ul>
+          <p>같은 자리에서 주기적으로 관리합니다. 월 2·4회 중 고르고, 4회 정기권이 가장 저렴합니다.</p>
+          <ul class="feat"><li>방문 작업</li><li>월 2·4회</li><li>4회 정기권</li></ul>
         </div>
       </a>
 
@@ -513,13 +531,13 @@
       <div class="picked">
         <p class="who">선택한 차종 <b id="pickedName">경차</b><span id="pickedEx"> · 모닝, 레이 등</span></p>
         <p class="big"><span class="v" id="pickedVal">40,000<span>원</span></span><span class="k" id="pickedKey">월 4회 정기권</span></p>
-        <p class="save" id="pickedSave">1회씩 4번 받는 것보다 20,000원 저렴합니다</p>
+        <p class="save" id="pickedSave">4회 기준 회당 10,000원</p>
       </div>
 
       <div class="ptw">
         <table class="pt" id="priceTable"></table>
       </div>
-      <p class="pt-hint" id="ptHint">단위 원 · 월 1·2·4회는 정기 관리 횟수입니다</p>
+      <p class="pt-hint" id="ptHint">단위 원 · 월 2·4회는 정기 관리 횟수입니다</p>
 
       <div class="compare" id="care" hidden>
         <div class="ch">
@@ -825,7 +843,7 @@
 
     <details class="qa">
       <summary><span class="q">정기권은 어떻게 이용하나요?</span><span class="ic">＋</span></summary>
-      <div class="a">월 1회·2회·4회 중 선택합니다. 4회 정기권이 가장 저렴하며, 1회씩 4번 받는 것보다 20,000~60,000원 적습니다. 정기권은 차량별로 관리 이력을 남기고, 가능한 요일은 예약 시 함께 조율합니다.</div>
+      <div class="a">월 2회·4회 중 선택합니다. 4회 정기권이 가장 저렴하고, 회당 금액이 낮아집니다. 정기권은 차량별로 관리 이력을 남기고, 가능한 요일은 예약 시 함께 조율합니다.</div>
     </details>
 
     <details class="qa">
@@ -908,12 +926,12 @@
 
   /* ── 요금 데이터 ── */
   var VISIT = {tabs:[
-    {key:'light', name:'경차',        ex:'모닝, 레이 등',           once:15000, m2:25000, m4:40000, inner:10000, full:40000},
-    {key:'small', name:'소형·준중형', ex:'아반떼, K3 등',           once:20000, m2:30000, m4:50000, inner:15000, full:45000},
-    {key:'mid',   name:'중형·대형',   ex:'그랜저, K5, E클래스 등',  once:25000, m2:35000, m4:60000, inner:15000, full:50000},
-    {key:'suvS',  name:'소형 SUV',    ex:'셀토스, 코나, 티볼리 등', once:25000, m2:35000, m4:60000, inner:15000, full:55000},
-    {key:'suvM',  name:'중형 SUV',    ex:'싼타페, 쏘렌토, GV80 등', once:30000, m2:40000, m4:70000, inner:15000, full:60000},
-    {key:'suvL',  name:'대형 SUV',    ex:'팰리세이드, G바겐 등',    once:35000, m2:45000, m4:80000, inner:20000, full:65000}
+    {key:'light', name:'경차',        ex:'모닝, 레이 등',           m2:25000, m4:40000, inner:10000, full:40000},
+    {key:'small', name:'소형·준중형', ex:'아반떼, K3 등',           m2:30000, m4:50000, inner:15000, full:45000},
+    {key:'mid',   name:'중형·대형',   ex:'그랜저, K5, E클래스 등',  m2:35000, m4:60000, inner:15000, full:50000},
+    {key:'suvS',  name:'소형 SUV',    ex:'셀토스, 코나, 티볼리 등', m2:35000, m4:60000, inner:15000, full:55000},
+    {key:'suvM',  name:'중형 SUV',    ex:'싼타페, 쏘렌토, GV80 등', m2:40000, m4:70000, inner:15000, full:60000},
+    {key:'suvL',  name:'대형 SUV',    ex:'팰리세이드, G바겐 등',    m2:45000, m4:80000, inner:20000, full:65000}
   ]};
   var PICKUP = {tabs:[
     {key:'pLight', name:'경차',        ex:'모닝, 레이 등',        ext:45000, inout:55000, pre:70000},
@@ -962,13 +980,13 @@
   function renderTable(){
     var rows=list(), h='';
     if(svc==='visit'){
-      h='<thead><tr><th>차종</th><th>월 1회</th><th>월 2회</th><th>월 4회</th><th>내부<small>실내만</small></th><th>1회성<small>내부+외부</small></th></tr></thead><tbody>';
+      h='<thead><tr><th>차종</th><th>월 2회</th><th>월 4회</th><th>내부<small>실내만</small></th><th>1회성<small>내부+외부</small></th></tr></thead><tbody>';
       rows.forEach(function(c){
         h+='<tr data-key="'+c.key+'" aria-selected="'+(c.key===sel[svc])+'">'
-          +'<td>'+c.name+'</td><td>'+fmt(c.once)+'</td><td>'+fmt(c.m2)+'</td><td>'+fmt(c.m4)+'</td>'
+          +'<td>'+c.name+'</td><td>'+fmt(c.m2)+'</td><td>'+fmt(c.m4)+'</td>'
           +'<td>'+fmt(c.inner)+'</td><td>'+fmt(c.full)+'</td></tr>';
       });
-      ptHint.textContent='단위 원 · 월 1·2·4회는 정기 관리 횟수입니다';
+      ptHint.textContent='단위 원 · 월 2·4회는 정기 관리 횟수입니다';
     } else {
       h='<thead><tr><th>차종</th><th>외부<small>외부만</small></th><th>내·외부</th><th>프리미엄<small>틈새·실내</small></th></tr></thead><tbody>';
       rows.forEach(function(c){
@@ -990,10 +1008,7 @@
     if(svc==='visit'){
       pickedVal.innerHTML=won(c.m4);
       pickedKey.textContent='월 4회 정기권';
-      var diff=c.once*4-c.m4;
-      pickedSave.textContent = diff>0
-        ? '1회씩 4번 받는 것보다 '+fmt(diff)+'원 저렴합니다 (1회 '+fmt(c.once)+'원)'
-        : '1회 '+fmt(c.once)+'원 · 월 4회 '+fmt(c.m4)+'원';
+      pickedSave.textContent='4회 기준 회당 '+fmt(c.m4/4)+'원 · 월 2회는 '+fmt(c.m2)+'원입니다';
     } else {
       pickedVal.innerHTML=won(c.inout);
       pickedKey.textContent='내·외부 기준';
