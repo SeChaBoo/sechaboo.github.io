@@ -72,34 +72,38 @@
     display:flex; flex-direction:column; min-height:0}
   .hero::before{content:""; position:absolute; inset:0; pointer-events:none;
     background:radial-gradient(72% 46% at 82% 4%, rgba(46,196,241,.20), rgba(46,196,241,0) 72%)}
-  .hero-in{position:relative; flex:1; display:flex; flex-direction:column; justify-content:center;
-    max-width:1120px; width:100%; margin:0 auto; padding:18px 20px 24px}
-  .lockup{display:flex; align-items:center; gap:11px; margin-bottom:14px}
+  .hero-in{position:relative; flex:1; display:flex; flex-direction:column; justify-content:flex-start;
+    max-width:1120px; width:100%; margin:0 auto; padding:30px 20px 34px}
+  .hero-copy{position:relative; z-index:1; width:100%}
+  .lockup{display:flex; align-items:center; gap:11px; margin:0 0 20px}
   .lockup img{width:54px; height:54px; border-radius:50%; object-fit:cover; background:#fff; box-shadow:0 0 0 4px rgba(255,255,255,.10)}
   .lockup b{display:block; font-size:18.5px; font-weight:800; letter-spacing:-0.035em; line-height:1.2}
   .lockup span{display:block; font-size:12.5px; color:#9FB6CE; margin-top:2px; letter-spacing:-0.01em}
-  .hero h1{margin:0 0 14px; font-size:32px; line-height:1.26; font-weight:800; letter-spacing:-0.05em}
+  .hero h1{margin:0 0 16px; font-size:34px; line-height:1.24; font-weight:800; letter-spacing:-0.055em}
   .hero h1 em{font-style:normal; color:var(--accent)}
-  .hero .sub{margin:0 0 18px; font-size:16px; line-height:1.6; color:#C8D8E8; max-width:460px}
+  .hero .sub{margin:0 0 24px; font-size:15px; line-height:1.7; color:#BFD2E4; max-width:460px; letter-spacing:-0.008em}
   .hero-cta{display:grid; grid-template-columns:1fr 1fr; gap:9px; max-width:420px}
   .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:54px; padding:0 18px;
     border-radius:13px; font-size:16.5px; font-weight:800; letter-spacing:-0.03em; border:1px solid transparent; cursor:pointer}
   .btn-primary{background:var(--accent); color:#062033}
   .btn-line{background:rgba(255,255,255,.06); color:#fff; border-color:rgba(255,255,255,.34)}
-  .hero-strip{margin:16px 0 0; padding:13px 0 0; border-top:1px solid rgba(255,255,255,.13); list-style:none;
-    display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
-  .hero-strip li{font-size:12.5px; font-weight:700; color:#A8BDD3; line-height:1.4; text-align:center; letter-spacing:-0.02em}
-  .hero-strip li b{display:block; font-size:13.5px; color:#fff; font-weight:800; margin-bottom:1px}
-  .hero-copy{position:relative; z-index:1}
-  .hero-shot{position:relative; margin:16px 0 0; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.16);
-    background:#0A1526; box-shadow:0 18px 36px rgba(2,9,18,.45)}
-  .hero-shot img{width:100%; height:auto; aspect-ratio:16/9; object-fit:cover; object-position:center 56%}
-  .hero-shot::after{content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
-    background:linear-gradient(158deg, rgba(11,31,59,.32) 0%, rgba(11,31,59,0) 48%)}
-  .hero-shot figcaption{position:absolute; left:10px; top:10px; z-index:2; margin:0; display:inline-flex; align-items:center; gap:6px;
-    padding:5px 10px 5px 8px; border-radius:999px; background:rgba(6,17,30,.66); border:1px solid rgba(255,255,255,.20);
-    -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); font-size:11px; font-weight:700; color:#EAF5FC; letter-spacing:-0.01em}
-  .hero-shot figcaption::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px rgba(46,196,241,.22)}
+  .hero-strip{margin:28px 0 0; padding:18px 0 0; border-top:1px solid rgba(255,255,255,.12); list-style:none;
+    display:grid; grid-template-columns:repeat(3,1fr); gap:8px; max-width:470px}
+  .hero-strip li{font-size:11.5px; font-weight:600; color:#8FA7BE; line-height:1.45; text-align:left; letter-spacing:-0.005em}
+  .hero-strip li b{display:block; font-size:13.5px; color:#fff; font-weight:800; margin-bottom:4px; letter-spacing:-0.03em}
+  .hero-tags{list-style:none; margin:20px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:8px; max-width:480px}
+  .hero-tags li{font-size:12px; font-weight:700; letter-spacing:-0.01em; color:#E8F3FB; line-height:1; white-space:nowrap;
+    background:rgba(46,196,241,.10); border:1px solid rgba(46,196,241,.32); border-radius:999px; padding:8px 13px}
+  .hero-meta{margin:20px 0 0; padding:18px 0 0; border-top:1px solid rgba(255,255,255,.12); max-width:480px}
+  .hero-price{display:flex; flex-wrap:wrap; align-items:baseline; gap:0 6px; margin:0 0 7px;
+    font-size:12px; line-height:1.5; color:#93AEC8; letter-spacing:-0.01em; font-variant-numeric:tabular-nums}
+  .hero-price b{color:var(--accent); font-weight:800; font-size:13.5px}
+  .hero-price .div{color:rgba(255,255,255,.22)}
+  .hero-area{margin:0; font-size:11.5px; line-height:1.55; color:#8AA1B8; letter-spacing:-0.01em}
+  .hero-proof{display:flex; flex-wrap:wrap; gap:0 10px; margin:9px 0 0; font-size:11.5px; line-height:1.5;
+    color:#7E96AD; letter-spacing:-0.01em}
+  .hero-proof span{position:relative; padding-left:9px}
+  .hero-proof span::before{content:""; position:absolute; left:0; top:7px; width:3px; height:3px; border-radius:50%; background:rgba(46,196,241,.75)}
 
   /* ── 서비스 (컴팩트) ── */
   .svc{display:grid; gap:9px}
@@ -376,13 +380,19 @@
   @media (min-width:1024px){
     section{padding:76px 0}
     .hero{min-height:0}
-    .hero-in{display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr); gap:44px; align-items:center;
-      padding:64px 32px 68px; max-width:1120px; margin:0 auto}
-    .hero h1{font-size:clamp(36px,3.9vw,46px); max-width:520px}
-    .hero .sub{font-size:17px; max-width:470px}
-    .hero-strip{max-width:470px; margin-top:28px}
-    .hero-strip li{text-align:left}
-    .hero-shot{margin:0; border-radius:20px}
+    .hero-in{display:block; padding:64px 32px 70px; max-width:1120px; margin:0 auto}
+    .hero-copy{max-width:660px; margin:0 auto}
+    .hero h1{font-size:clamp(38px,3.35vw,48px); line-height:1.16; max-width:640px; margin-bottom:18px}
+    .hero .sub{font-size:16.5px; line-height:1.7; max-width:520px; margin-bottom:26px}
+    .hero-cta{max-width:400px}
+    .hero-strip{max-width:540px; margin-top:32px; padding-top:22px}
+    .hero-strip li{font-size:12px}
+    .hero-strip li b{font-size:14px}
+    .hero-tags{margin-top:22px; max-width:560px}
+    .hero-tags li{font-size:12.5px; padding:9px 15px}
+    .hero-meta{margin-top:22px; padding-top:22px; max-width:560px}
+    .hero-price{font-size:12.5px}
+    .hero-price b{font-size:14px}
     .rail{overflow:visible; flex-wrap:wrap; margin:0; padding:0; scroll-snap-type:none}
     .rail-wrapper{overflow:hidden; margin:0 -20px; padding:0 20px}
     .int-s{flex:0 0 auto; width:calc(16.666% - 8px); max-width:none}
@@ -446,11 +456,19 @@
         <li><b>워터리스</b>물 흐르지 않는 작업</li>
         <li><b>창원 · 진해</b>방문 · 픽업 가능</li>
       </ul>
+      <ul class="hero-tags">
+        <li>출장세차</li>
+        <li>픽업 디테일링</li>
+        <li>워터리스</li>
+        <li>월 2·4회 정기권</li>
+        <li>야간 작업 가능</li>
+      </ul>
+      <div class="hero-meta">
+        <p class="hero-price"><span>경차 1회성 <b>40,000원</b>부터</span><span class="div" aria-hidden="true">·</span><span>정기권 월 2회 <b>25,000원</b>부터</span></p>
+        <p class="hero-area">창원시 · 진해구 · 마산 방문 · 예약 확정 시 계좌 개별 안내</p>
+        <p class="hero-proof"><span>실제 작업 차량 20대</span><span>실내 디테일링 12컷</span><span>현장 영상 7초</span></p>
+      </div>
     </div>
-    <figure class="hero-shot">
-      <img src="assets/hero-shot.jpg" alt="야간 출장세차를 마치고 윤기가 살아난 벤츠 GLE 앞모습" width="900" height="506" fetchpriority="high">
-      <figcaption>실제 작업 · 벤츠 GLE 야간 출장세차</figcaption>
-    </figure>
   </div>
 </section>
 
