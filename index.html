@@ -36,6 +36,28 @@
   button:disabled { opacity: 0.45; cursor: not-allowed; }
   /* iOS 사파리에서 label 클릭으로 파일 선택창이 확실히 열리도록 display:none 대신 화면 밖에 둡니다 */
   input[type="file"] { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; }
+  .stickerbar {
+    display: flex; gap: 8px; overflow-x: auto; padding: 8px 12px; background: #10161d;
+    border-bottom: 1px solid #26313d; align-items: center;
+  }
+  .stickerbar .sb-label {
+    flex: 0 0 auto; font-size: 11px; font-weight: 700; color: #7d8fa3; letter-spacing: .04em;
+    margin-right: 2px;
+  }
+  .sticker-chip {
+    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px 4px 4px;
+    border-radius: 999px; border: 1px solid #334155; background: #1a2430; color: #cbd5e1;
+    font-size: 12px; font-weight: 700; cursor: pointer; line-height: 1.2; white-space: nowrap;
+  }
+  .sticker-chip .sw {
+    width: 24px; height: 24px; border-radius: 999px; overflow: hidden; display: block;
+    background: #f8fafc; flex: 0 0 auto;
+  }
+  .sticker-chip .sw img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .sticker-chip.active {
+    border-color: #60a5fa; background: #1d4ed826; color: #fff;
+  }
+  .sticker-chip.active::after { content: "✓"; font-size: 10px; color: #93c5fd; margin-left: 1px; }
   .thumbs {
     display: flex; gap: 8px; overflow-x: auto; padding: 8px 12px; background: #0f1419;
     border-bottom: 1px solid #26313d; min-height: 64px; align-items: center;
@@ -95,6 +117,16 @@
     </label>
   </div>
 
+  <div class="stickerbar" id="stickerBar" role="group" aria-label="번호판 스티커 선택">
+    <span class="sb-label">스티커</span>
+    <button type="button" class="sticker-chip active" data-sticker="sechaboo" aria-pressed="true">
+      <span class="sw"><img id="chipDefaultImg" alt="" /></span>세차를부탁해
+    </button>
+    <button type="button" class="sticker-chip" data-sticker="foam" aria-pressed="false">
+      <span class="sw"><img src="assets/foamfoam-badge.png?v=1" alt="" /></span>FOAMFOAM #04
+    </button>
+  </div>
+
   <div class="thumbs" id="thumbs">
     <span style="font-size:12px;color:#64748b;">사진을 여러 장 고르면 여기에 목록이 뜹니다.</span>
   </div>
@@ -102,7 +134,7 @@
   <div class="stage-wrap" id="stageWrap">
     <div class="empty" id="emptyBox">
       <img id="previewSticker" alt="세차를 부탁해 번호판" /><br />
-      <b>'세차를 부탁해'</b> 번호판 스티커가 기본 내장돼 있어요.<br />
+      번호판 스티커는 <b>'세차를 부탁해'</b>가 기본이고, 위 <b>스티커</b>에서 <b>FOAMFOAM #04</b>로 바꿀 수 있어요.<br />
       위에서 <b>📷 차량 사진 고르기</b>를 누르면 <b>번호판을 자동으로 찾아</b> 스티커가 덮입니다.<br />
       각도(기울기)까지 맞춰지고, 어긋나면 파란 점 4개로 살짝 밀어 주세요.
     </div>
@@ -116,6 +148,38 @@ const DEFAULT_STICKER = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBA
 const stickerImg = new Image();
 stickerImg.src = DEFAULT_STICKER;
 document.getElementById("previewSticker").src = DEFAULT_STICKER;
+
+/* 번호판 스티커 선택 — 기본(세차를부탁해) + FOAMFOAM #04 원형 스탬프 */
+const STICKER_PRESETS = {
+  sechaboo: { name: "세차를부탁해", src: DEFAULT_STICKER },
+  foam: { name: "FOAMFOAM #04", src: "assets/foamfoam-plate.png?v=1" }
+};
+let currentSticker = "sechaboo";
+document.getElementById("chipDefaultImg").src = DEFAULT_STICKER;
+
+function selectSticker(key, silent) {
+  const preset = STICKER_PRESETS[key];
+  if (!preset) return;
+  currentSticker = key;
+  stickerImg.onload = () => {
+    items.forEach(it => it.blob = null);
+    if (currentIdx >= 0) render(true);
+  };
+  if (stickerImg.getAttribute("src") !== preset.src) {
+    stickerImg.src = preset.src;
+  }
+  document.getElementById("previewSticker").src = preset.src;
+  document.querySelectorAll(".sticker-chip").forEach((btn) => {
+    const on = btn.dataset.sticker === key;
+    btn.classList.toggle("active", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  if (!silent) toast(`${preset.name} 스티커로 바꿨어요`, 1600);
+}
+
+document.querySelectorAll(".sticker-chip").forEach((btn) => {
+  btn.addEventListener("click", () => selectSticker(btn.dataset.sticker));
+});
 
 const items = []; // { name, img, corners: [{x,y}x4], done }
 let currentIdx = -1;
@@ -1035,7 +1099,16 @@ document.getElementById("stickerInput").addEventListener("change", (e) => {
   const file = e.target.files?.[0];
   if (!file) return;
   const url = URL.createObjectURL(file);
-  stickerImg.onload = () => { items.forEach(it => it.blob = null); render(true); };
+  currentSticker = "custom";
+  document.querySelectorAll(".sticker-chip").forEach((btn) => {
+    btn.classList.remove("active");
+    btn.setAttribute("aria-pressed", "false");
+  });
+  stickerImg.onload = () => {
+    items.forEach(it => it.blob = null);
+    document.getElementById("previewSticker").src = url;
+    if (currentIdx >= 0) render(true);
+  };
   stickerImg.src = url;
 });
 
