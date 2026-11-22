@@ -293,6 +293,11 @@
   .book .btns .btn{min-height:56px; font-size:17px}
   .book .btns .btn-primary{background:var(--accent); color:#062033}
   .book .btns .btn-line{background:rgba(255,255,255,.08)}
+  .book .btns .btn-copy{min-height:46px; margin-top:3px; font-size:14px; font-weight:700; color:#C9DCEC;
+    background:transparent; border-color:rgba(255,255,255,.22)}
+  .book .btns .btn-copy svg{width:16px; height:16px; flex:0 0 auto}
+  .book .btns .btn-copy:active{background:rgba(255,255,255,.12)}
+  .book .btns .btn-copy.done{color:#8FE6FF; border-color:rgba(46,196,241,.55)}
   .booklnk{display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin:16px 0 0}
   .booklnk a{display:inline-flex; align-items:center; min-height:40px; padding:0 14px; border-radius:999px;
     border:1px solid rgba(255,255,255,.28); font-size:13px; font-weight:700; color:#DCE8F3}
@@ -323,6 +328,16 @@
     font-size:16.5px; font-weight:800; letter-spacing:-0.02em}
   .bottom a.tel{background:var(--navy); color:#fff}
   .bottom a.sms{background:var(--accent); color:#062033}
+
+  /* ── 토스트 ── */
+  .toast{position:fixed; left:50%; bottom:calc(84px + env(safe-area-inset-bottom)); z-index:90;
+    transform:translate(-50%,10px); max-width:calc(100% - 32px); margin:0; padding:12px 16px; border-radius:14px;
+    background:rgba(11,31,59,.96); border:1px solid rgba(46,196,241,.55); color:#fff;
+    font-size:13.5px; font-weight:700; line-height:1.5; letter-spacing:-0.02em; text-align:center;
+    box-shadow:0 14px 30px rgba(2,9,18,.32); opacity:0; pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease}
+  .toast.show{opacity:1; transform:translate(-50%,0)}
+  @media (min-width:1024px){ .toast{bottom:28px} }
 
   /* ── 태블릿 ── */
   @media (min-width:768px){
@@ -867,7 +882,11 @@
       <p class="sub">창원·진해 어디든 방문합니다. 차종과 주차 위치를 알려주시면 가능한 일정과 요금을 바로 안내드립니다.</p>
       <div class="btns">
         <a class="btn btn-primary" href="tel:01098148253">전화문의</a>
-        <a class="btn btn-line" href="sms:01098148253?&body=%5B%EC%84%B8%EC%B0%A8%EB%A5%BC%EB%B6%80%ED%83%81%ED%95%B4%20%EC%98%88%EC%95%BD%20%EB%AC%B8%EC%9D%98%5D%0A-%20%ED%9D%AC%EB%A7%9D%20%EC%84%9C%EB%B9%84%EC%8A%A4%3A%20%28%EC%B6%9C%EC%9E%A5%EC%84%B8%EC%B0%A8%20%2F%20%ED%94%BD%EC%97%85%20%EB%94%94%ED%85%8C%EC%9D%BC%EB%A7%81%29%0A-%20%EC%B0%A8%EB%9F%89%20%EC%A3%BC%EC%86%8C%3A%20%0A-%20%EC%97%B0%EB%9D%BD%EC%B2%98%3A%20%0A-%20%EC%B0%A8%EB%9F%89%EB%B2%88%ED%98%B8%3A%20%0A-%20%EC%B0%A8%EC%A2%85%20%2F%20%EC%83%89%EC%83%81%3A%20%0A-%20%EC%B0%A8%EB%9F%89%20%EC%9C%84%EC%B9%98%3A%20%0A-%20%ED%94%BD%EC%97%85%20%EC%8B%9C%201%ED%9A%8C%EC%84%B1%20%EB%B3%B4%ED%97%98%20%EB%93%B1%EB%A1%9D%3A%20%28%EC%84%A0%ED%83%9D%29%0A-%20%EC%9C%A0%EB%A7%89%C2%B7%EB%B0%9C%EC%88%98%20%EC%9D%B4%EB%B2%A4%ED%8A%B8%3A%20%28%EC%84%A0%ED%83%9D%29%0A%0A%EB%AC%B8%EC%9E%90%20%EB%B3%B4%EB%82%B4%EC%A3%BC%EC%8B%9C%EB%A9%B4%20%EA%B0%80%EB%8A%A5%ED%95%9C%20%EB%B9%A8%EB%A6%AC%20%EB%8B%B5%EB%B3%80%EB%93%9C%EB%A6%AC%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4.">문자예약</a>
+        <a class="btn btn-line" data-sms href="sms:01098148253">문자예약</a>
+        <button class="btn btn-copy" id="copyBody" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+          <span class="copy-label">예약 문구 복사</span>
+        </button>
       </div>
       <div class="booklnk">
         <a href="https://blog.naver.com/sechabooo" target="_blank" rel="noopener">블로그</a>
@@ -896,8 +915,11 @@
 <!-- 하단 고정 CTA -->
 <div class="bottom">
   <a class="tel" href="tel:01098148253">전화문의</a>
-  <a class="sms" href="sms:01098148253?&body=%5B%EC%84%B8%EC%B0%A8%EB%A5%BC%EB%B6%80%ED%83%81%ED%95%B4%20%EC%98%88%EC%95%BD%20%EB%AC%B8%EC%9D%98%5D%0A-%20%ED%9D%AC%EB%A7%9D%20%EC%84%9C%EB%B9%84%EC%8A%A4%3A%20%28%EC%B6%9C%EC%9E%A5%EC%84%B8%EC%B0%A8%20%2F%20%ED%94%BD%EC%97%85%20%EB%94%94%ED%85%8C%EC%9D%BC%EB%A7%81%29%0A-%20%EC%B0%A8%EB%9F%89%20%EC%A3%BC%EC%86%8C%3A%20%0A-%20%EC%97%B0%EB%9D%BD%EC%B2%98%3A%20%0A-%20%EC%B0%A8%EB%9F%89%EB%B2%88%ED%98%B8%3A%20%0A-%20%EC%B0%A8%EC%A2%85%20%2F%20%EC%83%89%EC%83%81%3A%20%0A-%20%EC%B0%A8%EB%9F%89%20%EC%9C%84%EC%B9%98%3A%20%0A-%20%ED%94%BD%EC%97%85%20%EC%8B%9C%201%ED%9A%8C%EC%84%B1%20%EB%B3%B4%ED%97%98%20%EB%93%B1%EB%A1%9D%3A%20%28%EC%84%A0%ED%83%9D%29%0A-%20%EC%9C%A0%EB%A7%89%C2%B7%EB%B0%9C%EC%88%98%20%EC%9D%B4%EB%B2%A4%ED%8A%B8%3A%20%28%EC%84%A0%ED%83%9D%29%0A%0A%EB%AC%B8%EC%9E%90%20%EB%B3%B4%EB%82%B4%EC%A3%BC%EC%8B%9C%EB%A9%B4%20%EA%B0%80%EB%8A%A5%ED%95%9C%20%EB%B9%A8%EB%A6%AC%20%EB%8B%B5%EB%B3%80%EB%93%9C%EB%A6%AC%EA%B2%A0%EC%8A%B5%EB%8B%88%EB%8B%A4.">문자예약</a>
+  <a class="sms" data-sms href="sms:01098148253">문자예약</a>
 </div>
+
+<!-- 토스트 -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!-- 라이트박스 -->
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="작업 사진 크게 보기" aria-hidden="true">
@@ -1149,6 +1171,85 @@
   document.addEventListener('visibilitychange',function(){
     if(!document.hidden) vids.forEach(function(v){ if(v.paused&&inView(v)) arm(v); });
   });
+
+  /* ── 문자예약: 플랫폼별 sms 링크 + 예약 문구 복사 ── */
+  var SMS_NUM='01098148253';
+  var SMS_BODY='[세차를부탁해 예약 문의]\n'
+    +'- 희망 서비스: (출장세차 / 픽업 디테일링)\n'
+    +'- 차량 주소: \n'
+    +'- 연락처: \n'
+    +'- 차량번호: \n'
+    +'- 차종 / 색상: \n'
+    +'- 차량 위치: \n'
+    +'- 픽업 시 1회성 보험 등록: (선택)\n'
+    +'- 유막·발수 이벤트: (선택)\n'
+    +'\n'
+    +'문자 보내주시면 가능한 빨리 답변드리겠습니다.';
+
+  /* iPhone·iPad·iPod: sms:번호&body= / 그 외: sms:번호?body= */
+  function isAppleMobile(){
+    var ua=navigator.userAgent||'';
+    if(/iPhone|iPad|iPod/i.test(ua)) return true;
+    return navigator.platform==='MacIntel' && navigator.maxTouchPoints>1; /* iPadOS 13+ */
+  }
+  /* encodeURIComponent가 남기는 ! ' ( ) * 도 RFC 5724 형식에 맞게 인코딩 */
+  function smsEncode(text){
+    return encodeURIComponent(text).replace(/[!'()*]/g,function(c){
+      return '%'+c.charCodeAt(0).toString(16).toUpperCase();
+    });
+  }
+  var smsHref='sms:'+SMS_NUM+(isAppleMobile()?'&body=':'?body=')+smsEncode(SMS_BODY);
+  Array.prototype.forEach.call(document.querySelectorAll('a[data-sms]'),function(a){
+    a.setAttribute('href',smsHref);
+  });
+
+  var toast=document.getElementById('toast'), toastTm=null;
+  function showToast(msg){
+    if(!toast) return;
+    toast.textContent=msg;
+    toast.classList.add('show');
+    clearTimeout(toastTm);
+    toastTm=setTimeout(function(){ toast.classList.remove('show'); },3000);
+  }
+
+  function copyText(text){
+    function legacy(){
+      try{
+        var ta=document.createElement('textarea');
+        ta.value=text; ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed; top:0; left:0; width:1px; height:1px; padding:0; border:0; opacity:0';
+        document.body.appendChild(ta);
+        ta.select(); ta.setSelectionRange(0,ta.value.length);
+        var ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        if(!ok) throw new Error('copy failed');
+      }catch(err){ throw err; }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(text).catch(function(){ legacy(); });
+    }
+    try{ legacy(); return Promise.resolve(); }
+    catch(err){ return Promise.reject(err); }
+  }
+
+  var copyBtn=document.getElementById('copyBody');
+  if(copyBtn){
+    var copyLabel=copyBtn.querySelector('.copy-label');
+    copyBtn.addEventListener('click',function(){
+      copyText(SMS_BODY).then(function(){
+        showToast('예약 문구를 복사했어요. 문자에 붙여넣어 주세요.');
+        copyBtn.classList.add('done');
+        if(copyLabel) copyLabel.textContent='복사 완료';
+        clearTimeout(copyBtn._tm);
+        copyBtn._tm=setTimeout(function(){
+          copyBtn.classList.remove('done');
+          if(copyLabel) copyLabel.textContent='예약 문구 복사';
+        },2600);
+      },function(){
+        showToast('복사가 안 됐어요. 문자예약 버튼을 눌러 주세요.');
+      });
+    });
+  }
 })();
 </script>
 </body>
