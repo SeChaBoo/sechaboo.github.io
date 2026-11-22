@@ -8,6 +8,18 @@
   iframe{width:390px;height:844px;border:0;display:block;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18)}
 </style></head>
 <body>
-  <div class="cap"><b>hero 390x844</b><iframe src="/guide/?cap=6" title="hero capture"></iframe></div>
-  <div class="cap"><b>price 390x844</b><iframe src="/guide/?cap=6#price" title="price capture"></iframe></div>
+  <div class="cap"><b>hero 390x844</b><iframe src="/guide/?cap=7" title="hero capture"></iframe></div>
+  <div class="cap"><b>price 390x844</b><iframe src="/guide/?cap=7#price" title="price capture"></iframe></div>
+  <script>
+    // 캡처 전용: 폰 뷰포트에는 없는 데스크톱 스크롤바 흔적만 감춘다 (사이트 파일은 그대로)
+    function hideScrollbars(f){
+      try{var d=f.contentDocument; if(!d) return;
+        var s=d.createElement('style');
+        s.textContent='html::-webkit-scrollbar{width:0 !important;height:0 !important;display:none !important}html{scrollbar-width:none !important}';
+        d.head.appendChild(s);
+      }catch(e){}
+    }
+    var frames=document.querySelectorAll('iframe');
+    for(var i=0;i<frames.length;i++){ (function(f){ f.addEventListener('load',function(){ hideScrollbars(f); }); if(f.contentDocument&&f.contentDocument.readyState==='complete') hideScrollbars(f); })(frames[i]); }
+  </script>
 </body></html>
