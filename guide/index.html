@@ -258,6 +258,7 @@
   .lb-cap b{display:block; font-size:16px; font-weight:800; letter-spacing:-0.03em}
   .lb-cap p{margin:3px 0 0; font-size:13.5px; color:#B9CBDE; line-height:1.5}
   .lb-cap a{display:inline-flex; align-items:center; gap:6px; margin-top:8px; font-size:13.5px; font-weight:800; color:var(--accent); min-height:40px}
+  .lb-cap a[hidden]{display:none !important}
   .lb-x{position:absolute; top:calc(12px + env(safe-area-inset-top)); right:14px; width:42px; height:42px; border-radius:50%;
     border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.08); color:#fff; font-size:17px; cursor:pointer}
   .lb-prev,.lb-next{position:absolute; top:50%; transform:translateY(-50%); z-index:2; width:42px; height:42px; border-radius:50%;
@@ -907,9 +908,9 @@
         </button>
       </div>
       <div class="booklnk">
-        <a href="https://blog.naver.com/sechabooo" target="_blank" rel="noopener">블로그</a>
-        <a href="https://litt.ly/sechaboo" target="_blank" rel="noopener">링크 모음</a>
-        <a href="https://www.threads.com/@sechaboo" target="_blank" rel="noopener">스레드</a>
+        <a href="https://blog.naver.com/sechabooo">블로그</a>
+        <a href="https://litt.ly/sechaboo">링크 모음</a>
+        <a href="https://www.threads.com/@sechaboo">스레드</a>
       </div>
       <div class="bnote">
         <div><b>예약금</b><span>20,000원 선불 · 예약 확정 시 계좌 개별 안내</span></div>
@@ -947,7 +948,7 @@
   <button class="lb-next" id="lbNext" type="button" aria-label="다음 사진">›</button>
   <figure class="lb-fig">
     <img id="lbImg" src="" alt="">
-    <figcaption class="lb-cap"><b id="lbTitle"></b><p id="lbDesc"></p><a id="lbLink" href="#" target="_blank" rel="noopener" hidden>작업일지 보기 →</a></figcaption>
+    <figcaption class="lb-cap"><b id="lbTitle"></b><p id="lbDesc"></p><a id="lbLink" href="#" hidden>작업일지 보기 →</a></figcaption>
   </figure>
 </div>
 
